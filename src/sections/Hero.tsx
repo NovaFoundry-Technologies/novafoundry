@@ -51,7 +51,7 @@ const Hero = () => {
             </p>
           </div>
           <div className="w-full">
-            <div className="text-center text-5xl font-semibold leading-[1.2]">
+            <div className="font-['Syne'] text-center text-5xl font-semibold leading-[1.2]">
               <h1 className="bg-gradient-to-r from-[#171717] via-[#3f4b86] to-[#7c8dff] bg-clip-text text-transparent">
                 Premium digital products.
               </h1>
@@ -65,7 +65,7 @@ const Hero = () => {
               </h1>
             </div>
 
-            <p className="mt-8 text-center text-sm text-gray-500">
+            <p className="mt-8 font-[Helvetica] text-center text-sm text-gray-500">
               Web design and Mobile app design agency, we deliver digital
               product with speed and accuracy.
             </p>

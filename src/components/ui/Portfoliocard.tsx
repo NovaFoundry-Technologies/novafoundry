@@ -25,8 +25,8 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
         />
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-black text-center font-medium">{item.title}</p>
-        <p className="text-sm text-gray-500 text-center">
+        <p className="text-black text-center font-medium font-[Helvetica]">{item.title}</p>
+        <p className="text-sm text-gray-500 text-center font-[inter]">
           [ {item.year} ] &nbsp; {item.category}
         </p>
       </div>

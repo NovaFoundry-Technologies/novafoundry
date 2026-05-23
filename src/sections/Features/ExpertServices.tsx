@@ -7,7 +7,7 @@ const ExpertServices = () => {
       <div className="flex justify-center items-center">
         <SectionBadge label="What we do" />
       </div>
-      <div className="mt-2 text-center text-2xl leading-tight">
+      <div className="mt-2 text-center text-2xl leading-tight font-[Syne]">
         <p>Expert Services Designed to</p>
         <p className="bg-gradient-to-r from-[#6b5bd6] via-[#8c5cf6] to-[#a56dff] bg-clip-text text-transparent">
           Empower You

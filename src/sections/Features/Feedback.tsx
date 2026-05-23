@@ -50,7 +50,7 @@ const Feedback = () => {
               background: "linear-gradient(to right, #5A4B99, #FDCD86)",
             }}
           ></span>
-          <p>Client feedback</p>
+          <p className="font-[Creato Display]">Client feedback</p>
         </div>
         <div className="w-xl">
           <ExpandingCard title="C.O.O Tiwa Ayodeji" />
@@ -78,7 +78,7 @@ const Feedback = () => {
           </div>
         </div>
 
-        <p className="max-w-2xl leading-loose text-sm">
+        <p className="max-w-2xl leading-loose text-sm font-[Helvetica]">
           We’re a creative agency driven by design, strategy, and storytelling.
           Our mission is to help brands stand out through bold ideas, thoughtful
           design, and impactful digital experiences.

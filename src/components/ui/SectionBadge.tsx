@@ -36,7 +36,7 @@ const SectionBadge: React.FC<SectionBadgeProps> = ({
           }}
         />
 
-        <span className="relative z-[2]">{label}</span>
+        <span className="relative z-[2] font-[inter]">{label}</span>
       </span>
 
       <img src={BadgeDivider} alt="" className="rotate-180" />

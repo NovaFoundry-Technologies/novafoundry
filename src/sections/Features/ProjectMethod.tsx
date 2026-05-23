@@ -50,12 +50,12 @@ const StatItem: React.FC<{ stat: Stat; started: boolean; index: number }> = ({
   return (
     <div className="flex flex-col items-center gap-1 flex-1 min-w-0">
       <span
-        className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900"
+        className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 font-[inter]"
         style={{ fontVariantNumeric: "tabular-nums" }}
       >
         {started ? display : stat.value}
       </span>
-      <span className="text-xs text-gray-500 text-center whitespace-nowrap">
+      <span className="text-xs text-gray-500 text-center whitespace-nowrap font-[inter]">
         {stat.label}
       </span>
     </div>
@@ -85,13 +85,13 @@ const ProjectMethod = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6 mb-10">
         <div className="flex flex-col space-y-4">
           <SectionBadge label="Who we are" />
-          <h1 className="bg-gradient-to-r from-[#1b1d2a] via-[#2f3554] to-[#7c4dff] bg-clip-text text-2xl font-semibold text-transparent">
+          <h1 className="bg-gradient-to-r from-[#1b1d2a] via-[#2f3554] to-[#7c4dff] bg-clip-text text-2xl font-semibold font-[Syne] text-transparent">
             Novafoundry's Method
           </h1>
         </div>
 
         <div>
-          <p className="leading-loose text-sm">
+          <p className="leading-loose text-sm font-[Syne]">
             We're a Digital agency driven by design, strategy, and storytelling.
             Our mission is to help brands stand out through bold ideas,
             thoughtful design, and impactful digital experiences.

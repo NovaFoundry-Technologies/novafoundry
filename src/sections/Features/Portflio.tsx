@@ -31,7 +31,14 @@ const Portfolio = () => {
   return (
     <div className="w-full max-w-6xl mx-auto mt-10 mb-6">
       <SectionBadge label="Case studies" />
-      <h1 className="text-2xl my-2">The word speaks loud</h1>
+      <h1 className="my-2 font-[Syne] text-2xl">
+        <span className="bg-gradient-to-r from-[#252633] via-[#2d2f3d] to-[#343646] bg-clip-text text-transparent">
+          The work speaks
+        </span>{" "}
+        <span className="bg-gradient-to-r from-[#6250c9] via-[#7b5be0] to-[#946df4] bg-clip-text text-transparent">
+          loud
+        </span>
+      </h1>
 
       <div className="mt-6 overflow-hidden">
         <PortfolioCarousel
@@ -71,8 +78,8 @@ const Portfolio = () => {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
           >
-            <p className="my-2 font-medium text-black">{featuredItem.title}</p>
-            <p className="text-sm text-gray-500">
+            <p className="my-2 font-medium text-black font-[Helvetica]">{featuredItem.title}</p>
+            <p className="text-sm text-gray-500 font-[inter]">
               {featuredItem.year} {featuredItem.category}
             </p>
           </motion.div>

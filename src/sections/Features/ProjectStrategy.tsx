@@ -1,41 +1,64 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Button from "../../components/ui/Button";
 import { serviceItems } from "../../components/ui/Card";
 import SectionBadge from "../../components/ui/SectionBadge";
+import HeaderBackground from "../../assets/Background (3).png";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
+    transition: {
+      duration: 0.5,
+      delay: i * 0.1,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
   }),
 };
-
 const ProjectStrategy = () => {
   return (
-    <div className="w-full max-w-6xl mx-auto my-10">
+    <div className="relative w-full max-w-6xl mx-auto my-10 mt-37 overflow-visible">
+      <div
+        className="absolute pointer-events-none z-0"
+        style={{
+          width: "360px",
+          height: "360px",
+          top: "50%",
+          left: "90%",
+          transform: "translate(-50%, -50%)",
+          background: "#8CD5FE3D",
+          filter: "blur(50px)",
+        }}
+      />
       {/* Header */}
       <motion.div
-        className="flex flex-col justify-center items-center my-6"
+        className="relative isolate z-10 flex flex-col justify-center items-center my-6 overflow-visible font-[Syne]"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
       >
-        <motion.div variants={fadeUp} custom={0}>
+        <img
+          src={HeaderBackground}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-28 w-[36rem] max-w-none -translate-x-1/2 -translate-y-1/2 -rotate-12 object-contain opacity-35"
+        />
+
+        <motion.div className="relative z-10" variants={fadeUp} custom={0}>
           <SectionBadge label="The Process" />
         </motion.div>
 
         <motion.h1
-          className="text-2xl text-center mt-2"
+          className="relative z-10 text-2xl text-center mt-2"
           variants={fadeUp}
           custom={1}
         >
           Expert Services Designed to
         </motion.h1>
-
-        <motion.span
-          className="text-2xl"
+    
+       <motion.span
+          className="relative z-10 text-2xl"
           variants={fadeUp}
           custom={2}
           style={{
@@ -51,7 +74,7 @@ const ProjectStrategy = () => {
 
       {/* Cards */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -88,7 +111,7 @@ const ProjectStrategy = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-md font-medium text-black">{item.title}</p>
+              <p className="text-md font-medium text-black font-[Helvetica]">{item.title}</p>
               <p className="text-xs text-gray-800 leading-relaxed">
                 {item.description}
               </p>
@@ -99,7 +122,7 @@ const ProjectStrategy = () => {
 
       {/* Button */}
       <motion.div
-        className="my-10 flex justify-center items-center"
+        className="relative z-10 my-10 flex justify-center items-center"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}

@@ -20,7 +20,7 @@ export default function Button() {
             shadow-[inset_0_4px_10px_rgba(255,255,255,0.35)]
           "
         >
-          <span className="text-md font-normal font-extralight text-black">
+          <span className="text-md font-normal font-extralight font-['inter'] text-black">
             Book a free call
           </span>
             <div className="bg-white  rounded-lg border border-white/40">
