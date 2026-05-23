@@ -12,6 +12,7 @@ import {
   Speech,
 } from "./sections/Features";
 import Navbar from "./components/layout/Navbar";
+import TrustedPartners from "./sections/Features/TrustedPartners";
 
 const SITE_URL = "https://novafoundry.org";
 
@@ -27,7 +28,7 @@ function App() {
           url={SITE_URL}
         />
 
-        <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-16 text-slate-900 md:px-10">
+        <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pt-16 pb-2 text-slate-900 md:px-10">
           <Navbar />
           {/* <p className="mb-4 inline-block w-fit rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700">
             React + TypeScript + Tailwind + SEO-ready
@@ -41,6 +42,8 @@ function App() {
             visibility best practices.
           </p> */}
         </main>
+
+        <TrustedPartners />
 
         <ExpertServices />
         <ProjectStrategy />
