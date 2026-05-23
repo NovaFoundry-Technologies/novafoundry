@@ -1,4 +1,3 @@
-import React from 'react'
 import Wave from "../components/shapes/Wave";
 
 function Hero() {
@@ -12,4 +11,3 @@ function Hero() {
 }
 
 export default Hero
-

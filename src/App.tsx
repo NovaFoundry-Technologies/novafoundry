@@ -5,6 +5,7 @@ const SITE_URL = 'https://novafoundry.org'
 function App() {
   return (
     <>
+    <div>
       <Hero />
       <Seo
         title="Build Products Faster"
@@ -24,6 +25,7 @@ function App() {
           and sitemap.xml so your app starts with search visibility best practices.
         </p>
       </main>
+    </div>
     </>
   )
 }

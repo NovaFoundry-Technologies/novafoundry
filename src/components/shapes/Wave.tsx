@@ -1,56 +1,42 @@
-export default function VerticalStripeBackground() {
+const stripes = [
+  "h-[22rem]",
+  "h-[17rem]",
+  "h-[25rem]",
+  "h-[19rem]",
+  "h-[14rem]",
+  "h-[21rem]",
+  "h-[12rem]",
+  "h-[16rem]",
+  "h-[23rem]",
+  "h-[18rem]",
+  "h-[13rem]",
+  "h-[20rem]",
+  "h-[15rem]",
+  "h-[24rem]",
+  "h-[17rem]",
+];
+
+export default function Wave() {
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden bg-zinc-950">
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-white">
+      <div className="absolute inset-x-0 top-0 h-[68vh] bg-gradient-to-r from-amber-200/75 via-fuchsia-200/55 via-45% to-cyan-100/80 [mask-image:linear-gradient(to_bottom,black_0%,black_28%,rgba(0,0,0,.45)_58%,transparent_100%)]" />
 
-      <div className="flex h-full items-center justify-center gap-24">
-
-        {/* Plain */}
-        <div className="flex gap-4">
-          {[...Array(4)].map((_, i) => (
-            <div
-              key={i}
-              className={`
-                w-24 h-[500px]
-                rounded-xl
-                opacity-80
-                blur-[1px]
-                shadow-[0_0_50px_rgba(139,92,246,.4)]
-                bg-gradient-to-b
-                ${i % 2 === 0
-                  ? "from-pink-500 via-purple-500 to-cyan-400"
-                  : "from-orange-500 via-red-500 to-purple-600 translate-y-10"
-                }
-              `}
-            />
-          ))}
-        </div>
-
-        {/* Trapezium */}
-        <div className="flex gap-4">
-          {[...Array(4)].map((_, i) => (
-            <div
-              key={i}
-              style={{
-                clipPath:
-                  "polygon(25% 0%,100% 0%,75% 100%,0% 100%)",
-              }}
-              className={`
-                w-24 h-[500px]
-                opacity-80
-                blur-[1px]
-                shadow-[0_0_50px_rgba(59,130,246,.4)]
-                bg-gradient-to-b
-                ${i % 2 === 0
-                  ? "from-fuchsia-500 via-violet-500 to-blue-500"
-                  : "from-amber-400 via-pink-500 to-indigo-600 translate-y-10"
-                }
-              `}
-            />
-          ))}
-        </div>
-
+      <div className="absolute inset-x-0 top-0 flex h-[28rem] overflow-hidden opacity-65 blur-[.4px] [mask-image:linear-gradient(to_bottom,black_0%,rgba(0,0,0,.78)_58%,transparent_100%)]">
+        {stripes.map((height, i) => (
+          <div
+            key={height + i}
+            className={`${height} flex-1 border-r border-white/35 bg-gradient-to-b ${
+              i % 3 === 0
+                ? "from-amber-300/55 via-pink-300/35 to-transparent"
+                : i % 3 === 1
+                  ? "from-fuchsia-300/45 via-violet-300/35 to-transparent"
+                  : "from-cyan-200/55 via-blue-200/35 to-transparent"
+            }`}
+          />
+        ))}
       </div>
 
+      <div className="absolute inset-x-0 top-0 h-[34rem] bg-gradient-to-b from-white/0 via-white/45 to-white" />
     </div>
   );
 }
