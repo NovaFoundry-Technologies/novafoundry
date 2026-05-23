@@ -31,12 +31,12 @@ function App() {
 
         <TrustedPartners />
 
-        <ExpertServices />
         <ProjectStrategy />
         <ProjectMethod />
+        <Feedback />
+        <ExpertServices />
         <Portflio />
         <ClientReviews />
-        <Feedback />
         <Insight />
         <Speech />
         <ContactUs />
