@@ -20,8 +20,8 @@ export default function Button() {
             shadow-[inset_0_4px_10px_rgba(255,255,255,0.35)]
           "
         >
-          <span className="text-md font-normal text-black">
-            Book A Free Call
+          <span className="text-md font-normal font-extralight text-black">
+            Book a free call
           </span>
             <div className="bg-white  rounded-lg border border-white/40">
             <span

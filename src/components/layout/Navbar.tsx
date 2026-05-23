@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../../assets/novahero.png";
 import Button from "../ui/Button";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const updateNavbarPosition = () => {
+      setIsScrolled(window.scrollY > 8);
+    };
+
+    updateNavbarPosition();
+    window.addEventListener("scroll", updateNavbarPosition, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", updateNavbarPosition);
+    };
+  }, []);
 
   return (
     <div
-      className="
+      className={`
         fixed top-0 left-0 right-0
-        w-full max-w-5xl mx-auto mt-6
-        rounded-2xl bg-white
+        w-full max-w-5xl mx-auto
+        bg-white
         border border-gray-100
         shadow-[0px_1px_2px_rgba(16,24,40,0.04),0px_6px_12px_rgba(16,24,40,0.06)]
         transition-all duration-200
@@ -18,7 +32,8 @@ const Navbar = () => {
         hover:shadow-[0px_2px_4px_rgba(16,24,40,0.05),0px_10px_18px_rgba(16,24,40,0.08)]
         overflow-hidden
         z-50
-      "
+        ${isScrolled ? "mt-0 rounded-b-2xl rounded-t-none" : "mt-6 rounded-2xl"}
+      `}
     >
       {/* Main bar */}
       <div className="flex justify-between items-center py-2 px-4 mx-4">

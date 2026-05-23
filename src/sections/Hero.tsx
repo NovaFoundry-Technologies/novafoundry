@@ -45,7 +45,7 @@ const Hero = () => {
               ))}
             </div>
 
-            <p className="text-md font-medium text-black">
+            <p className="text-md font-medium text-gray-700">
               1000+ satisfied clients
             </p>
           </div>
@@ -64,7 +64,7 @@ const Hero = () => {
               </h1>
             </div>
 
-            <p className="mt-8 text-center text-sm">
+            <p className="mt-8 text-center text-sm text-gray-500">
               Web design and Mobile app design agency, we deliver digital
               product with speed and accuracy.
             </p>
