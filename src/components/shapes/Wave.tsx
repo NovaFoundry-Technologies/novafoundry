@@ -1,3 +1,5 @@
+import StripeSweep from "../animations/StripeSweep";
+
 const stripes = [
   { height: "h-[30rem]", width: 16, color: "rgba(244, 114, 22, .56)" },
   { height: "h-[27rem]", width: 14, color: "rgba(236, 72, 153, .52)" },
@@ -38,6 +40,7 @@ export default function Wave() {
             className={`${height} border-r border-white/35`}
           />
         ))}
+        <StripeSweep />
       </div>
 
       <div className="absolute inset-x-0 top-0 h-[34rem] bg-gradient-to-b from-white/0 via-white/45 to-white" />

@@ -1,0 +1,55 @@
+.stripe-sweep {
+  --stripe-sweep-speed: 1600ms;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.stripe-sweep__glow {
+  position: absolute;
+  inset-block: -12%;
+  left: 0;
+  width: 34%;
+  opacity: 0;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.12) 18%,
+      rgba(255, 255, 255, 0.86) 48%,
+      rgba(103, 232, 249, 0.44) 66%,
+      transparent 100%
+    );
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  transition:
+    transform var(--stripe-sweep-speed) cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 420ms ease;
+  will-change: transform, opacity;
+}
+
+.stripe-sweep[data-direction="rtl"] .stripe-sweep__glow {
+  transform: translateX(330%);
+}
+
+.stripe-sweep[data-direction="ltr"] .stripe-sweep__glow {
+  transform: translateX(-130%);
+}
+
+.stripe-sweep.is-running .stripe-sweep__glow {
+  opacity: 0.95;
+}
+
+.stripe-sweep.is-running[data-direction="rtl"] .stripe-sweep__glow {
+  transform: translateX(-130%);
+}
+
+.stripe-sweep.is-running[data-direction="ltr"] .stripe-sweep__glow {
+  transform: translateX(330%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stripe-sweep {
+    display: none;
+  }
+}
