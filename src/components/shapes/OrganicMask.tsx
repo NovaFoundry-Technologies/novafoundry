@@ -1,13 +1,43 @@
-import type { SVGProps } from "react";
+import type { CSSProperties, ReactNode, SVGProps } from "react";
 
 export const organicImageMaskPath =
   "M32 0H488C506 0 520 14 520 32V42C520 60 534 74 552 74H948C966 74 980 88 980 106V875H520V850H32C14 850 0 836 0 818V32C0 14 14 0 32 0Z";
 
-export function OrganicImageMask(props: SVGProps<SVGSVGElement>) {
+type OrganicImageMaskProps = SVGProps<SVGSVGElement> & {
+  children?: ReactNode;
+  maskId?: string;
+};
+
+export function OrganicImageMask({
+  children,
+  className,
+  maskId = "organic-image-mask",
+  style,
+  ...props
+}: OrganicImageMaskProps) {
+  if (children) {
+    return (
+      <div
+        className={className}
+        style={
+          {
+            clipPath: `url(#${maskId})`,
+            ...style,
+          } as CSSProperties
+        }
+      >
+        <OrganicImageMaskDefs id={maskId} />
+        {children}
+      </div>
+    );
+  }
+
   return (
     <svg
       aria-hidden="true"
+      className={className}
       fill="none"
+      style={style}
       viewBox="0 0 980 875"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
