@@ -1,10 +1,11 @@
 import Seo from './Seo'
-
+import Hero from './sections/Hero'
 const SITE_URL = 'https://novafoundry.org'
 
 function App() {
   return (
     <>
+      <Hero />
       <Seo
         title="Build Products Faster"
         description="NovaFoundry builds modern web experiences with performance, SEO, and scalability from day one."
