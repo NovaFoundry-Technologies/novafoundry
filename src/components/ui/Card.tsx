@@ -70,3 +70,82 @@ export const serviceItems: ServiceItem[] = [
     icon: <ServiceIcon />,
   },
 ];
+
+export interface TestimonialItem {
+  id: number;
+  rating: number;
+  review: string;
+  name: string;
+  role: string;
+  company: string;
+  avatar: string;
+}
+
+export const testimonialItems: TestimonialItem[] = [
+  {
+    id: 1,
+    rating: 5,
+    review:
+      "I came to them with a vague idea, and they helped me refine it into a concrete plan. Throughout the process, they kept me informed and involved, ensuring I was happy with the direction.",
+    name: "Alisa Olivia",
+    role: "CTO",
+    company: "Ritzvex",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
+  },
+  {
+    id: 2,
+    rating: 5,
+    review:
+      "Working with them was a true pleasure. They were responsive, communicative, and always willing to go the extra mile. I especially appreciated their attention to detail.",
+    name: "Jordan Walk",
+    role: "Software Engineer",
+    company: "Briko",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+  },
+  {
+    id: 3,
+    rating: 5,
+    review:
+      "Throughout the process, they kept me informed and involved, ensuring I was happy with the direction. I came to them with a vague idea, and they helped me refine it into a concrete plan.",
+    name: "Ema Watson",
+    role: "Founder",
+    company: "Kitof",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+  },
+  {
+    id: 4,
+    rating: 5,
+    review:
+      "The team exceeded every expectation. From kickoff to launch, the communication was seamless and the quality of work was outstanding. I will definitely be working with them again.",
+    name: "Marcus Chen",
+    role: "Product Manager",
+    company: "Loopify",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100",
+  },
+  {
+    id: 5,
+    rating: 5,
+    review:
+      "They brought creative solutions to every challenge we faced. The end result was a product that not only looked beautiful but performed exceptionally well for our users.",
+    name: "Sophia Adeyemi",
+    role: "CEO",
+    company: "Stackra",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+  },
+  {
+    id: 6,
+    rating: 5,
+    review:
+      "Incredible attention to detail and a genuine passion for design. They transformed our outdated brand into something modern and compelling. Highly recommend to any serious business.",
+    name: "Liam Okafor",
+    role: "Creative Director",
+    company: "Nuvex",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100",
+  },
+];
