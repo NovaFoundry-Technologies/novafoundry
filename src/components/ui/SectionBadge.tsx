@@ -29,15 +29,6 @@ const SectionBadge: React.FC<SectionBadgeProps> = ({
         }}
       >
         <span
-          className="absolute rounded-full pointer-events-none z-0"
-          style={{
-            inset: "0 10%",
-            background: "#8CD5FE3D",
-            filter: "blur(10px)",
-          }}
-        />
-
-        <span
           className="absolute inset-0 rounded-full pointer-events-none z-[1]"
           style={{
             background:

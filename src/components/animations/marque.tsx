@@ -1,5 +1,3 @@
-import React from "react";
-
 const logos = [
   {
     name: "Vercel",
@@ -47,7 +45,7 @@ const MarqueeTrack = ({ reverse = false }: { reverse?: boolean }) => (
       {[...logos, ...logos].map((logo, i) => (
         <div
           key={i}
-          className="flex items-center gap-2 text-gray-400 hover:text-gray-700 transition-colors duration-200 shrink-0"
+          className="flex items-center gap-2 text-gray-900 hover:text-gray-700 transition-colors duration-200 shrink-0"
           style={{ opacity: 0.5 }}
         >
           <span

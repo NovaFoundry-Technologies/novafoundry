@@ -6,15 +6,16 @@ import Button from "../components/ui/Button";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen">
+    <section className="relative overflow-hidden">
       <Wave />
 
       <div
         className="
-          absolute top-32 left-1/2 -translate-x-1/2
+          relative
           z-10
+          mx-auto
           w-full max-w-6xl
-          px-6 md:px-10
+          px-6 pt-32 pb-12 md:px-10
 
           flex justify-center
         "

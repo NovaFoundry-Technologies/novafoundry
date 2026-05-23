@@ -80,12 +80,14 @@ const ProjectMethod = () => {
   }, []);
 
   return (
-    <section className="w-full max-w-6xl mx-auto my-4 px-2">
+    <section className="relative w-full max-w-6xl mx-auto my-4 px-2">
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6 mb-10">
         <div className="flex flex-col space-y-4">
           <SectionBadge label="Who we are" />
-          <h1 className="text-2xl">Novafoundry's Method</h1>
+          <h1 className="bg-gradient-to-r from-[#1b1d2a] via-[#2f3554] to-[#7c4dff] bg-clip-text text-2xl font-semibold text-transparent">
+            Novafoundry's Method
+          </h1>
         </div>
 
         <div>
@@ -96,14 +98,27 @@ const ProjectMethod = () => {
           </p>
         </div>
 
-        <div className="relative h-32 lg:h-full">
-          <div
-            className="absolute pointer-events-none"
+        <div className="relative z-30 h-32 lg:h-full">
+
+            <div
+            className="absolute pointer-events-none z-30"
             style={{
               width: "260px",
-              height: "260px",
+              height: "260px", 
+              top: "80%",
+              left: "30%",
+              transform: "translate(-50%, -50%)",
+              background: "#FFC46A42",
+              filter: "blur(50px)",
+            }}
+          />
+          <div
+            className="absolute pointer-events-none z-30"
+            style={{
+              width: "260px",
+              height: "260px", 
               top: "60%",
-              left: "50%",
+              left: "90%",
               transform: "translate(-50%, -50%)",
               background: "#8CD5FE3D",
               filter: "blur(50px)",
@@ -114,13 +129,13 @@ const ProjectMethod = () => {
 
       <div
         ref={statsRef}
-        className="relative w-full rounded-2xl px-6 py-6 overflow-hidden"
+        className="relative z-10 w-full rounded-2xl px-6 py-6 overflow-visible"
       >
         <div className="absolute inset-0 rounded-2xl" />
 
         <div className="absolute top-0 left-6 right-6 h-px" />
 
-        <div className="relative flex items-center justify-between gap-4">
+        <div className="relative z-20 flex items-center justify-between gap-4">
           {stats.map((stat, i) => (
             <React.Fragment key={stat.label}>
               <StatItem stat={stat} started={started} index={i} />
