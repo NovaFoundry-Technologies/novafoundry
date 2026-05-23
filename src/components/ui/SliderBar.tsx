@@ -3,47 +3,58 @@ import React, { useEffect, useRef, useState } from "react";
 interface ExpandingCardProps {
   title: string;
   onClick?: () => void;
-  startWidth?: string; // default "40%"
-  delay?: number; // stagger delay in ms, default 0
+  startWidth?: string;
+  delay?: number;
+  colorFrom?: string;
+  colorTo?: string;
 }
 
 const ExpandingCard: React.FC<ExpandingCardProps> = ({
   title,
+  onClick,
   startWidth = "40%",
   delay = 0,
+  colorFrom = "#FFDFAF",
+  colorTo = "#B5B5FF1A",
 }) => {
   const [visible, setVisible] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
+        if (entry.isIntersecting && !visible) {
+          setVisible(true);
+          setExpanded(true);
+          // after expand (700ms) + hold (400ms), shrink back
+          setTimeout(() => setExpanded(false), delay + 700 + 400);
+        }
       },
       { threshold: 0.3 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
+  }, [visible, delay]);
+
+  const currentWidth = expanded ? "100%" : startWidth;
 
   return (
     <div ref={ref} className="w-full flex justify-start">
       <div
         className="flex items-center justify-between px-5 py-4 rounded-full"
         style={{
-          width: visible ? "100%" : startWidth,
-          background: visible
-            ? "linear-gradient(105deg, #FFDFAF 0%, rgba(181,181,255,0.4) 60%, rgba(181,181,255,0.1) 100%)"
-            : "linear-gradient(105deg, #FFDFAF 0%, rgba(181,181,255,0.15) 100%)",
-          boxShadow: visible
-            ? "0 0 40px rgba(255,210,150,0.25), 0 0 80px rgba(181,181,255,0.15)"
+          width: visible ? currentWidth : startWidth,
+          background: `linear-gradient(105deg, ${colorFrom} 0%, ${colorTo} 100%)`,
+          boxShadow: expanded
+            ? `0 0 40px ${colorFrom}60, 0 0 80px ${colorTo}`
             : "none",
           opacity: visible ? 1 : 0.6,
-          transition: `width 700ms ${delay}ms ease-out, background 700ms ${delay}ms ease-out, box-shadow 700ms ${delay}ms ease-out, opacity 500ms ${delay}ms ease-out`,
+          transition: `width 700ms ${expanded ? delay : 0}ms ease-in-out, box-shadow 700ms ease-out, opacity 500ms ${delay}ms ease-out`,
         }}
       >
         <span
-          className="text-sm font-medium text-gray-700"
+          className="text-sm font-medium text-gray-800"
           style={{
             opacity: visible ? 1 : 0,
             transition: `opacity 400ms ${delay + 300}ms ease-out`,
@@ -53,6 +64,7 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
         </span>
 
         <button
+          onClick={onClick}
           className="flex items-center justify-center rounded-full active:scale-95 hover:brightness-105 transition-transform duration-150"
           style={{
             width: "50px",
