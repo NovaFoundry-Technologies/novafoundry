@@ -1,6 +1,6 @@
 import Wave from "../components/shapes/Wave";
 
-function Hero() {
+const Hero = () => {
   return (
     <div>
         <div>

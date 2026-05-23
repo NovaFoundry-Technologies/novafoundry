@@ -1,5 +1,17 @@
 import Seo from './Seo'
 import Hero from './sections/Hero'
+import {
+  ClientReviews,
+  ContactUs,
+  ExpertServices,
+  Feedback,
+  Insight,
+  Portflio,
+  ProjectMethod,
+  ProjectStrategy,
+  Speech,
+} from './sections/Features'
+
 const SITE_URL = 'https://novafoundry.org'
 
 function App() {
@@ -7,6 +19,7 @@ function App() {
     <>
     <div>
       <Hero />
+      
       <Seo
         title="Build Products Faster"
         description="NovaFoundry builds modern web experiences with performance, SEO, and scalability from day one."
@@ -25,6 +38,16 @@ function App() {
           and sitemap.xml so your app starts with search visibility best practices.
         </p>
       </main>
+
+      <ExpertServices />
+      <ProjectStrategy />
+      <ProjectMethod />
+      <Portflio />
+      <ClientReviews />
+      <Feedback />
+      <Insight />
+      <Speech />
+      <ContactUs />
     </div>
     </>
   )

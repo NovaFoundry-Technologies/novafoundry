@@ -1,0 +1,9 @@
+export { default as ClientReviews } from "./ClientReviews";
+export { default as ContactUs } from "./ContactUs";
+export { default as ExpertServices } from "./ExpertServices";
+export { default as Feedback } from "./Feedback";
+export { default as Insight } from "./Insight";
+export { default as Portflio } from "./Portflio";
+export { default as ProjectMethod } from "./ProjectMethod";
+export { default as ProjectStrategy } from "./ProjectStrategy";
+export { default as Speech } from "./Speech";
