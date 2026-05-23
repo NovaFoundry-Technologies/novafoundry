@@ -7,10 +7,51 @@ const ExpertServices = () => {
       <div className="flex justify-center items-center">
         <SectionBadge label="What we do" />
       </div>
-      <p className="text-2xl my-2 text-center leading-loose">
-        Expert Services Designed to Empower You
-      </p>
+      <div className="mt-2 text-center text-2xl leading-tight">
+        <p>Expert Services Designed to</p>
+        <p className="bg-gradient-to-r from-[#6b5bd6] via-[#8c5cf6] to-[#a56dff] bg-clip-text text-transparent">
+          Empower You
+        </p>
+      </div>
+        <div className="relative z-30 h-32 lg:h-full">
 
+            <div
+            className="absolute pointer-events-none z-30"
+            style={{
+              width: "360px",
+              height: "260px", 
+              top: "80%",
+
+              transform: "translate(-50%, -50%)",
+              background: "#FFC46A42",
+              filter: "blur(50px)",
+            }}
+          />
+          <div
+            className="absolute pointer-events-none z-30"
+            style={{
+              width: "360px",
+              height: "260px", 
+              top: "90%",
+              left: "30%",
+              transform: "translate(-50%, -50%)",
+              background: "#8CD5FE3D",
+              filter: "blur(50px)",
+            }}
+          />
+           <div
+            className="absolute pointer-events-none z-30"
+            style={{
+              width: "360px",
+              height: "260px", 
+              top: "60%",
+              left: "100%",
+              transform: "translate(-50%, -50%)",
+              background: "#8CD5FE3D",
+              filter: "blur(50px)",
+            }}
+          />
+        </div>
       <div className="flex w-full flex-col gap-3 my-6 relative">
         <ExpandingCard
           startWidth="60%"
