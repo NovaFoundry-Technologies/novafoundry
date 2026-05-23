@@ -3,10 +3,15 @@ import type { PortfolioItem } from "../../data/portfolio";
 
 interface PortfolioCardProps {
   item: PortfolioItem;
+  heightClassName?: string;
   onClick?: (item: PortfolioItem) => void;
 }
 
-const PortfolioCard: React.FC<PortfolioCardProps> = ({ item, onClick }) => {
+const PortfolioCard: React.FC<PortfolioCardProps> = ({
+  item,
+  heightClassName = "h-80",
+  onClick,
+}) => {
   return (
     <div
       className="w-full flex flex-col gap-4 cursor-pointer group"
@@ -16,7 +21,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ item, onClick }) => {
         <img
           src={item.image}
           alt={item.title}
-          className="w-full h-100 object-cover transition-transform duration-500 group-hover:scale-105"
+          className={`w-full ${heightClassName} object-cover transition-[height,transform] duration-500 ease-out group-hover:scale-105`}
         />
       </div>
       <div className="flex flex-col gap-1">
