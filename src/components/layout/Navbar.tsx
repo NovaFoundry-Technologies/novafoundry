@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Logo from "../../assets/novahero.png";
 import Button from "../ui/Button";
 
