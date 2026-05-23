@@ -23,24 +23,23 @@ export default function Button() {
           <span className="text-md font-normal text-black">
             Book A Free Call
           </span>
+            <div className="bg-white  rounded-lg border border-white/40">
+            <span
+                className="
+                p-1.5 rounded-lg translate-x-px translate-y-px
 
-          <span
-            className="
-              p-1.5 rounded-lg
+                flex items-center justify-center
 
-              flex items-center justify-center
+                bg-gradient-to-b
+                from-[#F6D28B]
+                to-[#EFC677]
 
-              bg-gradient-to-b
-              from-[#F6D28B]
-              to-[#EFC677]
-
-              shadow-[0_6px_14px_rgba(0,0,0,0.12),inset_0_2px_6px_rgba(255,255,255,0.4)]
-
-              border border-white/40
-            "
-          >
+                shadow-[2px_3px_2px_rgba(0,0,0,0.16),inset_0_2px_6px_rgba(255,255,255,0.4)]
+                "
+            >
             <FiArrowRight className="text-white text-sm" />
           </span>
+          </div>
         </button>
       </div>
     </div>
