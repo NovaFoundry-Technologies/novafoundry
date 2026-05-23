@@ -1,5 +1,5 @@
 import React from "react";
-import BadgeDivider from "../../assets/BadgeDivider.svg";
+import BadgeDivider from "../../assets/Horizontal Divider.svg";
 
 interface SectionBadgeProps {
   label: string;
