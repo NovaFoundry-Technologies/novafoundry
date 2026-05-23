@@ -5,6 +5,7 @@ import { portfolioItems } from "../../data/portfolio";
 import PortfolioCard from "../../components/ui/Portfoliocard";
 import PortfolioCarousel from "../../components/animations/PortfolioCarousel";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import Button from "../../components/ui/Button";
 
 const Portfolio = () => {
   const [featuredIndex, setFeaturedIndex] = useState(0);
@@ -81,7 +82,7 @@ const Portfolio = () => {
             type="button"
             aria-label="Previous portfolio item"
             onClick={showPreviousFeaturedItem}
-            className="inline-flex size-12 items-center justify-center rounded-full border border-[#f4b83f] bg-[transparent] text-[#f4b83f] transition duration-200 hover:-translate-y-0.5 hover:bg-[#111111] hover:text-[#ffd16a] active:scale-95"
+            className="inline-flex size-12 items-center justify-center rounded-full border border-[#f4b83f] bg-[transparent] transition duration-200 hover:-translate-y-0.5 hover:bg-[#111111] hover:text-[#ffd16a] active:scale-95"
           >
             <FiArrowLeft aria-hidden="true" size={18} />
           </button>
@@ -89,12 +90,15 @@ const Portfolio = () => {
             type="button"
             aria-label="Next portfolio item"
             onClick={showNextFeaturedItem}
-            className="inline-flex size-12 items-center justify-center rounded-full border border-[#f4b83f] bg-[transparent] text-[#f4b83f] transition duration-200 hover:-translate-y-0.5 hover:bg-[#111111] hover:text-[#ffd16a] active:scale-95"
+            className="inline-flex size-12 items-center justify-center rounded-full border border-[#f4b83f] bg-[transparent]  transition duration-200 hover:-translate-y-0.5 hover:bg-[#111111] hover:text-[#ffd16a] active:scale-95"
           >
             <FiArrowRight aria-hidden="true" size={18} />
           </button>
         </div>
       </div>
+        <div className="mt-15 flex items-center justify-center">
+            <Button />
+        </div>
     </div>
   );
 };
