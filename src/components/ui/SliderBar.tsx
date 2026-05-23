@@ -20,6 +20,7 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,7 +28,6 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
         if (entry.isIntersecting && !visible) {
           setVisible(true);
           setExpanded(true);
-          // after expand (700ms) + hold (400ms), shrink back
           setTimeout(() => setExpanded(false), delay + 700 + 400);
         }
       },
@@ -37,14 +37,14 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
     return () => observer.disconnect();
   }, [visible, delay]);
 
-  const currentWidth = expanded ? "100%" : startWidth;
-
   return (
     <div ref={ref} className="w-full flex justify-start">
       <div
-        className="flex items-center justify-between px-5 py-4 rounded-full"
+        className="overflow-hidden rounded-full"
+        onMouseEnter={() => setExpanded(true)}
+        onMouseLeave={() => setExpanded(false)}
         style={{
-          width: visible ? currentWidth : startWidth,
+          width: expanded ? "100%" : startWidth,
           background: `linear-gradient(105deg, ${colorFrom} 0%, ${colorTo} 100%)`,
           boxShadow: expanded
             ? `0 0 40px ${colorFrom}60, 0 0 80px ${colorTo}`
@@ -53,39 +53,44 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
           transition: `width 700ms ${expanded ? delay : 0}ms ease-in-out, box-shadow 700ms ease-out, opacity 500ms ${delay}ms ease-out`,
         }}
       >
-        <span
-          className="text-sm font-medium text-gray-800"
-          style={{
-            opacity: visible ? 1 : 0,
-            transition: `opacity 400ms ${delay + 300}ms ease-out`,
-          }}
+        <div
+          ref={contentRef}
+          className="flex w-full items-center justify-between gap-4 px-5 py-4"
         >
-          {title}
-        </span>
+          <span
+            className="whitespace-nowrap text-sm font-medium text-gray-700"
+            style={{
+              opacity: visible ? 1 : 0,
+              transition: `opacity 400ms ${delay + 300}ms ease-out`,
+            }}
+          >
+            {title}
+          </span>
 
-        <button
-          onClick={onClick}
-          className="flex items-center justify-center rounded-full active:scale-95 hover:brightness-105 transition-transform duration-150"
-          style={{
-            width: "50px",
-            height: "40px",
-            flexShrink: 0,
-            background: "linear-gradient(160deg, #f5f5f8 0%, #e8e8ef 100%)",
-            boxShadow:
-              "0 2px 0 rgba(255,255,255,0.9) inset, 0 -1px 0 rgba(0,0,0,0.08) inset, 0 3px 8px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)",
-            border: "0.5px solid rgba(0,0,0,0.06)",
-          }}
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M3 8h10M9 4l4 4-4 4"
-              stroke="#555"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+          <button
+            className="flex items-center justify-center rounded-full active:scale-95 hover:brightness-105 transition-transform duration-150"
+            onClick={onClick}
+            style={{
+              width: "50px",
+              height: "40px",
+              flexShrink: 0,
+              background: "linear-gradient(160deg, #f5f5f8 0%, #e8e8ef 100%)",
+              boxShadow:
+                "0 2px 0 rgba(255,255,255,0.9) inset, 0 -1px 0 rgba(0,0,0,0.08) inset, 0 3px 8px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)",
+              border: "0.5px solid rgba(0,0,0,0.06)",
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke="#555"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   );

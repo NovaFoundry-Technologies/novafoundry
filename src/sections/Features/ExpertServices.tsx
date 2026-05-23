@@ -1,4 +1,3 @@
-import React from "react";
 import SectionBadge from "../../components/ui/SectionBadge";
 import ExpandingCard from "../../components/ui/SliderBar";
 

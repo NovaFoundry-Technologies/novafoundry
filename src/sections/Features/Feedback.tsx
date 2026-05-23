@@ -1,9 +1,47 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
+import FeedbackVideo from "../../assets/f_d_b_amp_.mp4";
 import ExpandingCard from "../../components/ui/SliderBar";
+import VideoPlayPauseButton from "../../components/ui/VideoPlayPauseButton";
 
 const Feedback = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => setIsPlaying(false));
+          return;
+        }
+
+        video.pause();
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(video);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      void video.play();
+      return;
+    }
+
+    video.pause();
+  };
+
   return (
-    <div className="w-full max-w-6xl mx-auto min-h-[50vh] flex flex-col space-y-6">
+    <div className="w-full max-w-6xl mx-auto min-h-[50vh] flex flex-col mt-16 px-4">
       <div className="flex justify-between items-center ">
         <div className="flex items-center gap-3">
           <span
@@ -19,7 +57,26 @@ const Feedback = () => {
         </div>
       </div>
       <div className="my-6">
-        <div className="w-full h-[50vh] mb-2 border border-[#FFC46A] rounded-2xl"></div>
+        <div className="group relative mb-2 h-[50vh] w-full overflow-hidden rounded-2xl ">
+          <video
+            ref={videoRef}
+            src={FeedbackVideo}
+            className="h-full w-full object-cover"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+          />
+
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100">
+            <VideoPlayPauseButton
+              isPlaying={isPlaying}
+              onClick={toggleVideo}
+            />
+          </div>
+        </div>
 
         <p className="max-w-2xl leading-loose text-sm">
           We’re a creative agency driven by design, strategy, and storytelling.
