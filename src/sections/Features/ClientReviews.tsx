@@ -19,13 +19,13 @@ const StarIcon = () => (
 );
 
 const TestimonialCard = ({ item }: { item: (typeof testimonialItems)[0] }) => (
-  <div className="flex flex-col gap-4 p-6 mx-1 my-2 rounded-2xl bg-white shrink-0 w-[340px] shadow-md">
+  <div className="flex flex-col gap-4 p-6 mx-1 my-2 rounded-2xl bg-white shrink-0 w-[340px] shadow-md font-[inter]">
     <div className="flex items-center gap-0.5">
       {Array.from({ length: item.rating }).map((_, i) => (
         <StarIcon key={i} />
       ))}
     </div>
-    <p className="text-sm text-gray-600 leading-relaxed">{item.review}</p>
+    <p className="text-sm text-gray-600 leading-relaxed ">{item.review}</p>
     <div className="flex items-center gap-3 mt-auto pt-2 border-t border-gray-50">
       <img
         src={item.avatar}
@@ -48,9 +48,9 @@ const ClientReviews = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full max-w-6xl mx-auto my-10 overflow-hidden">
+    <div className="w-full max-w-6xl mx-auto my-10 overflow-hidden mt-47">
       <motion.div
-        className="flex flex-col justify-center items-center my-6"
+        className="flex flex-col justify-center items-center font-[Syne] my-6 "
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
@@ -59,7 +59,7 @@ const ClientReviews = () => {
           <SectionBadge label="Feedback" />
         </motion.div>
         <motion.h1
-          className="text-2xl text-center mt-2"
+          className="text-2xl text-center mt-2 "
           variants={fadeUp}
           custom={1}
         >
