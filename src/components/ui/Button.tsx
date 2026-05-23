@@ -2,7 +2,7 @@ import { FiArrowRight } from "react-icons/fi";
 
 export default function Button() {
   return (
-    <div className="p-1 rounded-2xl bg-[#F3CB7A] inline-block">
+    <div className="inline-block rounded-2xl bg-gradient-to-b from-[#F8D38A]/75 to-[#F3CB7A]/60 p-1">
       <div className="p-0.5 rounded-[14px] bg-white/90">
         <button
           className="
