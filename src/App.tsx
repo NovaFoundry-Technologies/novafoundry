@@ -9,7 +9,6 @@ import {
   Portflio,
   ProjectMethod,
   ProjectStrategy,
-  Speech,
 } from "./sections/Features";
 import Navbar from "./components/layout/Navbar";
 import TrustedPartners from "./sections/Features/TrustedPartners";
@@ -39,7 +38,6 @@ function App() {
 
         <ClientReviews />
         <Insight />
-        <Speech />
         <ContactUs />
       </div>
     </>
