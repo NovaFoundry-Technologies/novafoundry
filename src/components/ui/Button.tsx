@@ -2,8 +2,9 @@ import { FiArrowRight } from "react-icons/fi";
 
 export default function Button() {
   return (
-    <div className="inline-block rounded-2xl bg-gradient-to-b from-[#F8D38A]/75 to-[#F3CB7A]/60 p-1">
-      <div className="p-0.5 rounded-[14px] bg-white/90">
+    <div className="relative inline-block rounded-2xl  p-1">
+      <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-b from-[#F8D38A]/55 to-[#F3CB7A]/40 blur-md " />
+      <div className="relative p-0.5 rounded-[14px] bg-white/90">
         <button
           className="
             flex items-center justify-between gap-5
@@ -18,6 +19,7 @@ export default function Button() {
             to-[#F3CB7A]
 
             shadow-[inset_0_4px_10px_rgba(255,255,255,0.35)]
+            -mt-1.5
           "
         >
           <span className="text-md font-normal font-extralight font-['inter'] text-black">
