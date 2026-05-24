@@ -20,7 +20,7 @@ const StarIcon = () => (
 );
 
 const TestimonialCard = ({ item }: { item: (typeof testimonialItems)[0] }) => (
-  <div className="flex flex-col gap-4 p-6 mx-1 my-2 rounded-2xl bg-white shrink-0 w-[340px] shadow-md font-[inter]">
+  <div className="flex flex-col gap-4 p-6 mx-1 my-2 rounded-2xl bg-[#F6F6F9] shrink-0 w-[340px] shadow-md font-[inter]">
     <div className="flex items-center gap-0.5">
       {Array.from({ length: item.rating }).map((_, i) => (
         <StarIcon key={i} />
@@ -64,7 +64,7 @@ const ClientReviews = () => {
           variants={fadeUp}
           custom={1}
         >
-          What Our Clients Say About
+          Feedback from
         </motion.h1>
         <motion.span
           className="text-2xl"
@@ -77,7 +77,7 @@ const ClientReviews = () => {
             backgroundClip: "text",
           }}
         >
-          Working With Us
+          Our clients
         </motion.span>
       </motion.div>
 

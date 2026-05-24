@@ -38,8 +38,8 @@ function App() {
         <ProjectStrategy />
 
         <ClientReviews />
-        <Insight />
         <OurVision />
+        <Insight />
         <ContactUs />
       </div>
     </>
