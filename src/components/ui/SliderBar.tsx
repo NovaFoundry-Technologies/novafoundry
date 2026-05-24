@@ -19,16 +19,19 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !visible) {
           setVisible(true);
-          setExpanded(true);
-          setTimeout(() => setExpanded(false), delay + 700 + 400);
+          setTimeout(() => {
+            setExpanded(true);
+            // hold at full width for 1.2s then slowly collapse back
+            setTimeout(() => setExpanded(false), 1200);
+          }, delay);
         }
       },
       { threshold: 0.3 },
@@ -37,31 +40,31 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
     return () => observer.disconnect();
   }, [visible, delay]);
 
+  const isWide = expanded || hovered;
+
   return (
     <div ref={ref} className="w-full flex justify-start">
       <div
         className="overflow-hidden rounded-full"
-        onMouseEnter={() => setExpanded(true)}
-        onMouseLeave={() => setExpanded(false)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         style={{
-          width: expanded ? "100%" : startWidth,
+          width: isWide ? "100%" : startWidth,
           background: `linear-gradient(105deg, ${colorFrom} 0%, ${colorTo} 100%)`,
-          boxShadow: expanded
+          boxShadow: isWide
             ? `0 0 40px ${colorFrom}60, 0 0 80px ${colorTo}`
             : "none",
           opacity: visible ? 1 : 0.6,
-          transition: `width 700ms ${expanded ? delay : 0}ms ease-in-out, box-shadow 700ms ease-out, opacity 500ms ${delay}ms ease-out`,
+          // expand: 1400ms   collapse: 1200ms — both very slow and cinematic
+          transition: `width ${isWide ? 1400 : 1200}ms cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 800ms ease-out, opacity 600ms ${delay}ms ease-out`,
         }}
       >
-        <div
-          ref={contentRef}
-          className="flex w-full items-center justify-between gap-4 px-5 py-4"
-        >
+        <div className="flex w-full items-center justify-between gap-4 px-5 py-4">
           <span
             className="whitespace-nowrap text-sm font-medium text-gray-700"
             style={{
               opacity: visible ? 1 : 0,
-              transition: `opacity 400ms ${delay + 300}ms ease-out`,
+              transition: `opacity 500ms ${delay + 400}ms ease-out`,
             }}
           >
             {title}

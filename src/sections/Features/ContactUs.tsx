@@ -59,7 +59,6 @@ const ContactSection = () => {
         />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0">
-          {/* Left form side */}
           <div className="p-10">
             <motion.div
               initial="hidden"
@@ -103,7 +102,7 @@ const ContactSection = () => {
                   <input
                     type="email"
                     placeholder="Enter the e-mail"
-                    className="w-full bg-transparent border-b border-gray-200 py-2 text-sm text-gray-600 placeholder:text-gray-300 outline-none focus:border-gray-400 transition-colors"
+                    className="w-full bg-transparent border-b border-gray-200 py-2 px-2 text-sm text-gray-600 placeholder:text-gray-300 outline-none focus:border-gray-400 transition-colors"
                   />
                 </div>
 
@@ -112,7 +111,7 @@ const ContactSection = () => {
                     What's the type of your company?
                   </label>
                   <div className="relative">
-                    <select className="w-full bg-transparent border-b border-gray-200 py-2 text-sm text-gray-300 outline-none appearance-none focus:border-gray-400 transition-colors">
+                    <select className="w-full bg-transparent border-b border-gray-200 py-2 px-2 text-sm text-gray-500 outline-none appearance-none focus:border-gray-400 transition-colors">
                       <option value="" disabled selected>
                         Select the type of your company
                       </option>
@@ -121,7 +120,7 @@ const ContactSection = () => {
                       <option value="enterprise">Enterprise</option>
                       <option value="freelance">Freelance</option>
                     </select>
-                    <span className="absolute right-0 bottom-2.5 text-gray-400 text-xs pointer-events-none">
+                    <span className="absolute right-0 bottom-2.5 text-gray-400 text-sm pointer-events-none">
                       ▾
                     </span>
                   </div>
@@ -132,7 +131,7 @@ const ContactSection = () => {
                     What you need from us?
                   </label>
                   <div className="relative">
-                    <select className="w-full bg-transparent border-b border-gray-200 py-2 text-sm text-gray-300 outline-none appearance-none focus:border-gray-400 transition-colors">
+                    <select className="w-full bg-transparent border-b border-gray-200 py-2 px-2 text-sm text-gray-500 outline-none appearance-none focus:border-gray-400 transition-colors">
                       <option value="" disabled selected>
                         Select the Services Needed
                       </option>
@@ -141,14 +140,13 @@ const ContactSection = () => {
                       <option value="product">Product Design</option>
                       <option value="ui">UI/UX Design</option>
                     </select>
-                    <span className="absolute right-0 bottom-2.5 text-gray-400 text-xs pointer-events-none">
+                    <span className="absolute right-0 bottom-2.5 text-gray-400 text-sm pointer-events-none">
                       ▾
                     </span>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Contact info */}
               <motion.div
                 className="flex flex-col gap-3 mt-2"
                 variants={fadeUp}
@@ -200,7 +198,6 @@ const ContactSection = () => {
             </motion.div>
           </div>
 
-          {/* Right images */}
           <div className="hidden lg:flex flex-col gap-3 p-6 justify-center">
             <motion.div
               className="grid grid-cols-2 gap-3 h-full"

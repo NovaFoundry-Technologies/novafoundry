@@ -13,6 +13,7 @@ import {
 } from "./sections/Features";
 import Navbar from "./components/layout/Navbar";
 import TrustedPartners from "./sections/Features/TrustedPartners";
+import Footer from "./components/layout/Footer";
 
 const SITE_URL = "https://novafoundry.org";
 
@@ -41,6 +42,7 @@ function App() {
         <OurVision />
         <Insight />
         <ContactUs />
+        <Footer />
       </div>
     </>
   );

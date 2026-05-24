@@ -13,51 +13,51 @@ const ExpertServices = () => {
           Empower You
         </p>
       </div>
-        <div className="relative z-30 h-32 lg:h-full">
+      <div className="relative z-30 h-32 lg:h-full">
+        <div
+          className="absolute pointer-events-none z-30"
+          style={{
+            width: "360px",
+            height: "260px",
+            top: "80%",
 
-            <div
-            className="absolute pointer-events-none z-30"
-            style={{
-              width: "360px",
-              height: "260px", 
-              top: "80%",
-
-              transform: "translate(-50%, -50%)",
-              background: "#FFC46A42",
-              filter: "blur(50px)",
-            }}
-          />
-          <div
-            className="absolute pointer-events-none z-30"
-            style={{
-              width: "360px",
-              height: "260px", 
-              top: "90%",
-              left: "30%",
-              transform: "translate(-50%, -50%)",
-              background: "#8CD5FE3D",
-              filter: "blur(50px)",
-            }}
-          />
-           <div
-            className="absolute pointer-events-none z-30"
-            style={{
-              width: "360px",
-              height: "260px", 
-              top: "60%",
-              left: "100%",
-              transform: "translate(-50%, -50%)",
-              background: "#8CD5FE3D",
-              filter: "blur(50px)",
-            }}
-          />
-        </div>
+            transform: "translate(-50%, -50%)",
+            background: "#FFC46A42",
+            filter: "blur(50px)",
+          }}
+        />
+        <div
+          className="absolute pointer-events-none z-30"
+          style={{
+            width: "360px",
+            height: "260px",
+            top: "90%",
+            left: "30%",
+            transform: "translate(-50%, -50%)",
+            background: "#8CD5FE3D",
+            filter: "blur(50px)",
+          }}
+        />
+        <div
+          className="absolute pointer-events-none z-30"
+          style={{
+            width: "360px",
+            height: "260px",
+            top: "60%",
+            left: "100%",
+            transform: "translate(-50%, -50%)",
+            background: "#8CD5FE3D",
+            filter: "blur(50px)",
+          }}
+        />
+      </div>
       <div className="flex w-full flex-col gap-3 my-6 relative">
         <ExpandingCard
           startWidth="60%"
           title="Product Design"
           colorFrom="#FFDFAF"
           colorTo="#B5B5FF1A"
+          delay={0}
         />
 
         <div className="w-full rounded-full border border-[#B5B5FF] p-1">
@@ -66,6 +66,7 @@ const ExpertServices = () => {
             title="Web Design"
             colorFrom="#FFF0D9"
             colorTo="#B5B5FF"
+            delay={300}
           />
         </div>
 
@@ -74,12 +75,15 @@ const ExpertServices = () => {
           title="UI/UX Design"
           colorFrom="#B5B5FF1A"
           colorTo="#FFE4BB"
+          delay={600}
         />
+
         <ExpandingCard
           startWidth="50%"
-          title="Brand Identity "
+          title="Brand Identity"
           colorFrom="#B5B5FF1A"
-          colorTo="#B5B5FF  "
+          colorTo="#B5B5FF"
+          delay={900}
         />
 
         <div
