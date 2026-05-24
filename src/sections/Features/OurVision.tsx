@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import VisionVideo from "../../assets/mp_.mp4";
+import VisionPoster from "../../assets/IMG_20260524_192825.png";
 import SectionBadge from "../../components/ui/SectionBadge";
 import ExpandingCard from "../../components/ui/SliderBar";
 import Positive from "../../assets/positive.svg";
@@ -144,6 +145,7 @@ const OurVision = () => {
           >
             <OrganicVideoMask className="h-full w-full">
               <video
+                poster={VisionPoster}
                 ref={videoRef}
                 src={VisionVideo}
                 className="h-full w-full object-cover"

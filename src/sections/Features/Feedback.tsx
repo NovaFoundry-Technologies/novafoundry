@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import type { PointerEvent } from "react";
 import FeedbackVideo from "../../assets/f_d_b_amp_.mp4";
+import FeedbackPoster from "../../assets/IMG_20260524_191845.png";
 import ExpandingCard from "../../components/ui/SliderBar";
 import VideoPlayPauseButton from "../../components/ui/VideoPlayPauseButton";
 
@@ -90,6 +91,7 @@ const Feedback = () => {
           onPointerDown={handleVideoCardPointerDown}
         >
           <video
+            poster={FeedbackPoster}
             ref={videoRef}
             src={FeedbackVideo}
             className="h-full w-full object-cover"
