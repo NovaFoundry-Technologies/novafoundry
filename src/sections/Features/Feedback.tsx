@@ -82,7 +82,7 @@ const Feedback = () => {
           <p className="font-[Creato Display]">Client feedback</p>
         </div>
         <div className="w-full sm:w-xl">
-          <ExpandingCard title="C.O.O Tiwa Ayodeji" />
+          <ExpandingCard startWidth="60%" title="C.O.O Tiwa Ayodeji" />
         </div>
       </div>
       <div className="my-6">

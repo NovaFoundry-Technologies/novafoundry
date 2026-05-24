@@ -75,7 +75,7 @@ const ExpertServices = () => {
         </div>
 
         <ExpandingCard
-          startWidth="60%"
+          startWidth="70%"
           title="UI/UX Design"
           colorFrom="#B5B5FF1A"
           colorTo="#FFE4BB"
