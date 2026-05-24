@@ -3,7 +3,7 @@ import ExpandingCard from "../../components/ui/SliderBar";
 
 const ExpertServices = () => {
   return (
-    <div className="mx-auto my-14 min-h-0 w-full max-w-3xl overflow-x-clip px-4 sm:my-6 sm:min-h-[50vh]">
+    <div className="mx-auto my-14 min-h-0 w-full max-w-3xl px-4 max-sm:overflow-x-clip sm:my-6 sm:min-h-[50vh]">
       <div className="flex justify-center items-center">
         <SectionBadge label="What we do" />
       </div>
@@ -13,7 +13,7 @@ const ExpertServices = () => {
           Empower You
         </p>
       </div>
-      <div className="pointer-events-none relative z-0 hidden h-32 overflow-hidden sm:block lg:h-full">
+      <div className="pointer-events-none relative z-0 hidden h-32 sm:block lg:h-full">
         <div
           className="absolute pointer-events-none z-30"
           style={{
@@ -51,7 +51,7 @@ const ExpertServices = () => {
           }}
         />
       </div>
-      <div className="relative my-6 flex w-full flex-col gap-3 overflow-hidden">
+      <div className="relative my-6 flex w-full flex-col gap-3 max-sm:overflow-hidden">
         <ExpandingCard
           startWidth="60%"
           title="Product Design"

@@ -14,11 +14,13 @@ body {
   background: #ffffff;
 }
 
-html,
-body,
-#root {
-  width: 100%;
-  overflow-x: clip;
+@media (max-width: 639px) {
+  html,
+  body,
+  #root {
+    width: 100%;
+    overflow-x: clip;
+  }
 }
 
 @keyframes float {

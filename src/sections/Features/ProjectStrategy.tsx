@@ -18,7 +18,7 @@ const fadeUp: Variants = {
 };
 const ProjectStrategy = () => {
   return (
-    <div className="relative mx-auto my-14 w-full max-w-6xl overflow-hidden px-4 sm:my-10 sm:mt-37 sm:px-0">
+    <div className="relative mx-auto my-14 w-full max-w-6xl overflow-visible px-4 sm:my-10 sm:mt-37 sm:px-0">
       <div
         className="absolute pointer-events-none z-0"
         style={{
@@ -33,7 +33,7 @@ const ProjectStrategy = () => {
       />
       {/* Header */}
       <motion.div
-        className="relative isolate z-10 my-6 flex flex-col items-center justify-center overflow-visible font-[Syne]"
+        className="relative isolate z-10 my-6 flex flex-col items-center justify-center overflow-hidden font-[Syne] sm:overflow-visible"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
