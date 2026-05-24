@@ -71,7 +71,7 @@ const Hero = () => {
             </p>
 
             <div className="relative mx-auto mt-5 w-full max-w-[22rem] sm:mt-4 sm:max-w-2xl">
-              <div className="absolute right-2 top-1 z-10 origin-top-right scale-75 sm:-top-2 sm:right-0 sm:scale-100">
+              <div className="absolute -top-2 right-0 z-10 origin-top-right scale-75 sm:scale-100">
                 <Button />
               </div>
 
