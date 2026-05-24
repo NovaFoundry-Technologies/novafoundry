@@ -58,7 +58,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
 const Insight = () => {
   return (
-    <div className="w-full mt-10 min-h-[50vh] max-w-3xl mx-auto flex flex-col justify-center items-center">
+    <div className="w-full my-10 min-h-[50vh] max-w-3xl mx-auto flex flex-col justify-center items-center">
       <motion.div
         className="flex flex-col justify-center items-center my-6"
         initial="hidden"
@@ -102,7 +102,7 @@ const Insight = () => {
       </motion.div>
 
       <div className="hidden lg:flex items-center justify-between gap-6 w-full max-w-5xl">
-        <div className="flex flex-col gap-6">
+        <div className="relative flex flex-col gap-6">
           {leftCards.map((card, i) => (
             <FeatureCard
               key={card.id}
@@ -113,6 +113,17 @@ const Insight = () => {
               align="left"
             />
           ))}
+
+          <div
+            className="absolute bottom-0 left-0 pointer-events-none rounded-full"
+            style={{
+              width: "300px",
+              height: "100%",
+
+              background: "#FFC46A42",
+              filter: "blur(60px)",
+            }}
+          />
         </div>
 
         <motion.div
@@ -127,12 +138,12 @@ const Insight = () => {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
             <div
-              className="absolute inset-0 z-0 pointer-events-none"
+              className="absolute bottom-1 pointer-events-none rounded-full"
               style={{
-                background:
-                  "radial-gradient(ellipse at 50% 60%, #B5B5FF40 0%, transparent 70%)",
-                filter: "blur(30px)",
-                transform: "scale(1.2)",
+                width: "300px",
+                height: "300px",
+                background: "#B5B5FF59",
+                filter: "blur(50px)",
               }}
             />
             <img
@@ -143,7 +154,7 @@ const Insight = () => {
           </motion.div>
         </motion.div>
 
-        <div className="flex flex-col gap-6">
+        <div className="relative flex flex-col gap-6">
           {rightCards.map((card, i) => (
             <FeatureCard
               key={card.id}
@@ -154,6 +165,16 @@ const Insight = () => {
               align="right"
             />
           ))}
+
+          <div
+            className="absolute bottom-1 pointer-events-none rounded-full"
+            style={{
+              width: "260px",
+              height: "260px",
+              background: "#8CD5FE3D",
+              filter: "blur(50px)",
+            }}
+          />
         </div>
       </div>
 
