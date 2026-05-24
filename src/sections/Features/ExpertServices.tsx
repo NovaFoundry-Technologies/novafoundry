@@ -83,7 +83,7 @@ const ExpertServices = () => {
         />
 
         <ExpandingCard
-          startWidth="50%"
+          startWidth="60%"
           title="Brand Identity"
           colorFrom="#B5B5FF1A"
           colorTo="#B5B5FF"
