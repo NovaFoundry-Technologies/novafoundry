@@ -86,7 +86,7 @@ const OurVision = () => {
   };
 
   return (
-    <div className="mx-auto my-14 w-full max-w-5xl px-4 sm:my-10 sm:mt-37 sm:px-0">
+    <div className="mx-auto my-14 w-full max-w-5xl overflow-x-clip px-4 sm:my-10 sm:mt-37 sm:px-0">
       <div className="space-y-3">
         <motion.div
           className="flex items-center gap-3"

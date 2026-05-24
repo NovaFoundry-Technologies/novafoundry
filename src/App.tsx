@@ -20,7 +20,7 @@ const SITE_URL = "https://novafoundry.org";
 function App() {
   return (
     <>
-      <div>
+      <div className="w-full overflow-x-clip">
         <Navbar />
         <Hero />
 

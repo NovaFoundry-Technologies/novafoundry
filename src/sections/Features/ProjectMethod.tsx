@@ -80,7 +80,7 @@ const ProjectMethod = () => {
   }, []);
 
   return (
-    <section className="relative mx-auto my-8 w-full max-w-6xl px-4 sm:my-4 sm:px-2">
+    <section className="relative mx-auto my-8 w-full max-w-6xl overflow-x-clip px-4 sm:my-4 sm:px-2">
       {/* Grid */}
       <div className="mb-6 grid grid-cols-1 items-center gap-4 text-center sm:mb-10 sm:grid-cols-2 sm:gap-6 sm:text-left lg:grid-cols-3">
         <div className="flex flex-col items-center space-y-3 sm:items-start sm:space-y-4">
@@ -98,7 +98,7 @@ const ProjectMethod = () => {
           </p>
         </div>
 
-        <div className="pointer-events-none relative z-0 hidden h-32 sm:block lg:h-full">
+        <div className="pointer-events-none relative z-0 hidden h-32 overflow-hidden sm:block lg:h-full">
 
             <div
             className="absolute pointer-events-none z-30"
@@ -129,7 +129,7 @@ const ProjectMethod = () => {
 
       <div
         ref={statsRef}
-        className="relative z-10 w-full overflow-visible rounded-2xl px-2 py-4 sm:px-6 sm:py-6"
+        className="relative z-10 w-full overflow-hidden rounded-2xl px-2 py-4 sm:px-6 sm:py-6"
       >
         <div className="absolute inset-0 rounded-2xl" />
 
