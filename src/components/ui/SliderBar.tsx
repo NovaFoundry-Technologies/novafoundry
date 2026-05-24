@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 
 interface ExpandingCardProps {
   title: string;
@@ -99,4 +99,4 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
   );
 };
 
-export default ExpandingCard;
+export default memo(ExpandingCard);

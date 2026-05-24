@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import SectionBadge from "../../components/ui/SectionBadge";
@@ -18,7 +19,10 @@ const fadeUp: Variants = {
 
 const ContactSection = () => {
   return (
-    <div className="mx-auto my-14 w-full max-w-5xl px-4 sm:my-16">
+    <div
+      id="contact"
+      className="mx-auto my-14 w-full max-w-5xl scroll-mt-24 px-4 sm:my-16"
+    >
       <motion.div
         className="relative w-full overflow-hidden rounded-3xl"
         style={{
@@ -242,4 +246,4 @@ const ContactSection = () => {
   );
 };
 
-export default ContactSection;
+export default memo(ContactSection);

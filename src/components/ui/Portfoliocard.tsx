@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import type { PortfolioItem } from "../../data/portfolio";
 
 interface PortfolioCardProps {
@@ -34,4 +34,4 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   );
 };
 
-export default PortfolioCard;
+export default memo(PortfolioCard);

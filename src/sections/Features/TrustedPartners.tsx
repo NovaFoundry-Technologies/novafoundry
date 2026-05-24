@@ -1,3 +1,4 @@
+import { memo } from "react";
 import LogoMarquee from "../../components/animations/marque";
 
 const TrustedPartners = () => {
@@ -16,4 +17,4 @@ const TrustedPartners = () => {
   );
 };
 
-export default TrustedPartners;
+export default memo(TrustedPartners);

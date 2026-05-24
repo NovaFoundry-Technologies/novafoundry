@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion, type Variants } from "framer-motion";
 import Button from "../../components/ui/Button";
 import { serviceItems } from "../../components/ui/Card";
@@ -134,4 +135,4 @@ const ProjectStrategy = () => {
   );
 };
 
-export default ProjectStrategy;
+export default memo(ProjectStrategy);

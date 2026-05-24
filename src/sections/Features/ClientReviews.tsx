@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import { motion, type Variants } from "framer-motion";
 import SectionBadge from "../../components/ui/SectionBadge";
 import { testimonialItems } from "../../components/ui/Card";
@@ -16,13 +16,14 @@ const fadeUp: Variants = {
   }),
 };
 
-const StarIcon = () => (
+const StarIcon = memo(() => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B">
     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
-);
+));
 
-const TestimonialCard = ({ item }: { item: (typeof testimonialItems)[0] }) => (
+const TestimonialCard = memo(
+  ({ item }: { item: (typeof testimonialItems)[0] }) => (
   <div className="mx-1 my-2 flex w-[min(82vw,340px)] shrink-0 flex-col gap-4 rounded-2xl bg-[#F6F6F9] p-5 font-[inter] shadow-md sm:p-6">
     <div className="flex items-center gap-0.5">
       {Array.from({ length: item.rating }).map((_, i) => (
@@ -44,6 +45,7 @@ const TestimonialCard = ({ item }: { item: (typeof testimonialItems)[0] }) => (
       </div>
     </div>
   </div>
+  ),
 );
 
 const track = [...testimonialItems, ...testimonialItems];
@@ -124,4 +126,4 @@ const ClientReviews = () => {
   );
 };
 
-export default ClientReviews;
+export default memo(ClientReviews);

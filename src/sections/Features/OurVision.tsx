@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import type { PointerEvent } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
@@ -40,8 +41,10 @@ const fadeUp: Variants = {
 
 const OurVision = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [controlsVisible, setControlsVisible] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -63,6 +66,31 @@ const OurVision = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
+    };
+  }, []);
+
+  const showTransientControls = useCallback(() => {
+    setControlsVisible(true);
+
+    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
+
+    controlsTimerRef.current = setTimeout(() => {
+      setControlsVisible(false);
+    }, 2200);
+  }, []);
+
+  const handleVideoCardPointerDown = useCallback(
+    (event: PointerEvent<HTMLDivElement>) => {
+      if (event.pointerType === "touch" || event.pointerType === "pen") {
+        showTransientControls();
+      }
+    },
+    [showTransientControls],
+  );
 
   const toggleVideo = () => {
     const video = videoRef.current;
@@ -108,6 +136,7 @@ const OurVision = () => {
           {/* left grid  */}
           <motion.div
             className="group relative h-[24rem] w-full sm:h-100"
+            onPointerDown={handleVideoCardPointerDown}
             variants={fadeLeft}
             initial="hidden"
             whileInView="visible"
@@ -130,7 +159,11 @@ const OurVision = () => {
               />
             </OrganicVideoMask>
 
-            <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100">
+            <div
+              className={`absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100 ${
+                controlsVisible ? "opacity-100" : ""
+              }`}
+            >
               <VideoPlayPauseButton
                 isPlaying={isPlaying}
                 onClick={toggleVideo}
@@ -141,7 +174,9 @@ const OurVision = () => {
               type="button"
               aria-label={isMuted ? "Unmute video" : "Mute video"}
               onClick={toggleMute}
-              className="absolute bottom-5 right-5 z-20 inline-flex size-9 items-center justify-center rounded-full border border-white/30 bg-[transparent] p-1 opacity-0 shadow-[0_8px_18px_rgba(0,0,0,0.18)] transition duration-200 group-hover:opacity-100 hover:scale-105 focus:opacity-100 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f4c36c]"
+              className={`absolute bottom-5 right-5 z-20 inline-flex size-9 items-center justify-center rounded-full border border-white/30 bg-[transparent] p-1 opacity-0 shadow-[0_8px_18px_rgba(0,0,0,0.18)] transition duration-200 group-hover:opacity-100 hover:scale-105 focus:opacity-100 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f4c36c] ${
+                controlsVisible ? "opacity-100" : ""
+              }`}
             >
               <span className="inline-flex size-full items-center justify-center rounded-full border border-white/80 bg-gradient-to-b from-[#ffd98d] to-[#f2b958] shadow-[inset_0_2px_5px_rgba(255,255,255,0.65),inset_0_-3px_8px_rgba(150,87,12,0.18)]">
                 {isMuted ? (
@@ -251,4 +286,4 @@ const OurVision = () => {
   );
 };
 
-export default OurVision;
+export default memo(OurVision);

@@ -1,14 +1,21 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
 import Logo from "../../assets/novahero.png";
 import Button from "../ui/Button";
 
-const navItems = ["Who We Are", "What We Do", "Case Studies", "Contact"];
+const navItems = [
+  { label: "Who We Are", targetId: "who-we-are" },
+  { label: "What We Do", targetId: "what-we-do" },
+  { label: "Case Studies", targetId: "case-studies" },
+  { label: "Contact", targetId: "contact" },
+];
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const updateNavbarPosition = () => {
@@ -18,6 +25,36 @@ const Navbar = () => {
     window.addEventListener("scroll", updateNavbarPosition, { passive: true });
     return () => window.removeEventListener("scroll", updateNavbarPosition);
   }, []);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+    lenisRef.current = lenis;
+
+    let animationFrameId = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    };
+
+    animationFrameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  const scrollToSection = (targetId: string) => {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    setMenuOpen(false);
+    lenisRef.current?.scrollTo(target, { offset: -96 });
+  };
 
   return (
     <div
@@ -58,7 +95,7 @@ const Navbar = () => {
           <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
             {navItems.map((item, i) => (
               <motion.li
-                key={item}
+                key={item.targetId}
                 className="relative cursor-pointer py-1"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -67,22 +104,23 @@ const Navbar = () => {
                   delay: 0.2 + i * 0.08,
                   ease: "easeOut",
                 }}
-                onHoverStart={() => setHoveredItem(item)}
+                onHoverStart={() => setHoveredItem(item.label)}
                 onHoverEnd={() => setHoveredItem(null)}
+                onClick={() => scrollToSection(item.targetId)}
               >
                 <motion.span
                   animate={{
-                    color: hoveredItem === item ? "#111827" : "#4B5563",
+                    color: hoveredItem === item.label ? "#111827" : "#4B5563",
                   }}
                   transition={{ duration: 0.15 }}
                 >
-                  {item}
+                  {item.label}
                 </motion.span>
                 <motion.span
                   className="absolute bottom-0 left-0 h-[1.5px] rounded-full"
                   style={{ background: "#B5B5FF" }}
                   initial={{ width: "0%" }}
-                  animate={{ width: hoveredItem === item ? "100%" : "0%" }}
+                  animate={{ width: hoveredItem === item.label ? "100%" : "0%" }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
                 />
               </motion.li>
@@ -149,7 +187,7 @@ const Navbar = () => {
               <ul className="flex flex-col gap-0.5 p-2">
                 {navItems.map((item, i) => (
                   <motion.li
-                    key={item}
+                    key={item.targetId}
                     className="cursor-pointer rounded-xl px-4 py-2.5 text-sm font-medium text-[#4a4a8a] hover:bg-[#B5B5FF22] transition-colors"
                     initial={{ opacity: 0, x: 8 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -158,8 +196,9 @@ const Navbar = () => {
                       delay: i * 0.05,
                       ease: "easeOut",
                     }}
+                    onClick={() => scrollToSection(item.targetId)}
                   >
-                    {item}
+                    {item.label}
                   </motion.li>
                 ))}
               </ul>
@@ -175,4 +214,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { FiArrowRight } from "react-icons/fi";
 
-export default function Button() {
+function Button() {
   return (
     <div className="relative isolate inline-block rounded-2xl p-1">
       <div className="absolute inset-0 z-0 rounded-2xl bg-gradient-to-b from-[#F8D38A]/55 to-[#F3CB7A]/40 blur-md" />
@@ -47,3 +48,5 @@ export default function Button() {
     </div>
   );
 }
+
+export default memo(Button);

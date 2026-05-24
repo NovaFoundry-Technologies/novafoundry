@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import type { PointerEvent } from "react";
 import FeedbackVideo from "../../assets/f_d_b_amp_.mp4";
 import ExpandingCard from "../../components/ui/SliderBar";
 import VideoPlayPauseButton from "../../components/ui/VideoPlayPauseButton";
 
 const Feedback = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [controlsVisible, setControlsVisible] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -27,6 +30,31 @@ const Feedback = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
+    };
+  }, []);
+
+  const showTransientControls = useCallback(() => {
+    setControlsVisible(true);
+
+    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
+
+    controlsTimerRef.current = setTimeout(() => {
+      setControlsVisible(false);
+    }, 2200);
+  }, []);
+
+  const handleVideoCardPointerDown = useCallback(
+    (event: PointerEvent<HTMLDivElement>) => {
+      if (event.pointerType === "touch" || event.pointerType === "pen") {
+        showTransientControls();
+      }
+    },
+    [showTransientControls],
+  );
 
   const toggleVideo = () => {
     const video = videoRef.current;
@@ -57,7 +85,10 @@ const Feedback = () => {
         </div>
       </div>
       <div className="my-6">
-        <div className="group relative mb-2 h-[18rem] w-full overflow-hidden rounded-2xl sm:h-[50vh]">
+        <div
+          className="group relative mb-2 h-[18rem] w-full overflow-hidden rounded-2xl sm:h-[50vh]"
+          onPointerDown={handleVideoCardPointerDown}
+        >
           <video
             ref={videoRef}
             src={FeedbackVideo}
@@ -70,7 +101,11 @@ const Feedback = () => {
             onPause={() => setIsPlaying(false)}
           />
 
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100">
+          <div
+            className={`absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100 ${
+              controlsVisible ? "opacity-100" : ""
+            }`}
+          >
             <VideoPlayPauseButton
               isPlaying={isPlaying}
               onClick={toggleVideo}
@@ -88,4 +123,4 @@ const Feedback = () => {
   );
 };
 
-export default Feedback;
+export default memo(Feedback);

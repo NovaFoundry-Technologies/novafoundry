@@ -1,11 +1,12 @@
 import { Pause, Play } from "lucide-react";
+import { memo } from "react";
 import type { ButtonHTMLAttributes } from "react";
 
 type VideoPlayPauseButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isPlaying: boolean;
 };
 
-export default function VideoPlayPauseButton({
+function VideoPlayPauseButton({
   isPlaying,
   className = "",
   "aria-label": ariaLabel,
@@ -59,3 +60,5 @@ export default function VideoPlayPauseButton({
     </button>
   );
 }
+
+export default memo(VideoPlayPauseButton);

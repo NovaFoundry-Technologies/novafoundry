@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import BadgeDivider from "../../assets/Horizontal Divider.svg";
 
 interface SectionBadgeProps {
@@ -44,4 +44,4 @@ const SectionBadge: React.FC<SectionBadgeProps> = ({
   );
 };
 
-export default SectionBadge;
+export default memo(SectionBadge);

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import SectionBadge from "../../components/ui/SectionBadge";
@@ -22,12 +23,12 @@ interface FeatureCardProps {
   align?: "left" | "right";
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({
+const FeatureCard = memo(({
   icon,
   title,
   description,
   index,
-}) => (
+}: FeatureCardProps) => (
   <motion.div
     variants={fadeUp}
     custom={index}
@@ -56,7 +57,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       </p>
     </div>
   </motion.div>
-);
+));
 
 const Insight = () => {
   return (
@@ -211,4 +212,4 @@ const Insight = () => {
   );
 };
 
-export default Insight;
+export default memo(Insight);

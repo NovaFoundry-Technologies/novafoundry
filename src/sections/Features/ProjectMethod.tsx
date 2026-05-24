@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import SectionBadge from "../../components/ui/SectionBadge";
 
 interface Stat {
@@ -34,11 +34,11 @@ const useCountUp = (target: number, duration = 1800, started: boolean) => {
   return count;
 };
 
-const StatItem: React.FC<{ stat: Stat; started: boolean; index: number }> = ({
+const StatItem = memo(({
   stat,
   started,
   index,
-}) => {
+}: { stat: Stat; started: boolean; index: number }) => {
   const count = useCountUp(stat.number, 1800 + index * 200, started);
   const display =
     stat.suffix === "%"
@@ -60,9 +60,9 @@ const StatItem: React.FC<{ stat: Stat; started: boolean; index: number }> = ({
       </span>
     </div>
   );
-};
+});
 
-const StatDivider = () => <div className="h-7 w-px shrink-0 sm:h-8" />;
+const StatDivider = memo(() => <div className="h-7 w-px shrink-0 sm:h-8" />);
 
 const ProjectMethod = () => {
   const [started, setStarted] = useState(false);
@@ -80,7 +80,10 @@ const ProjectMethod = () => {
   }, []);
 
   return (
-    <section className="relative mx-auto my-8 w-full max-w-6xl px-4 max-sm:overflow-x-clip sm:my-4 sm:px-2">
+    <section
+      id="who-we-are"
+      className="relative mx-auto my-8 w-full max-w-6xl scroll-mt-24 px-4 max-sm:overflow-x-clip sm:my-4 sm:px-2"
+    >
       {/* Grid */}
       <div className="mb-6 grid grid-cols-1 items-center gap-4 text-center sm:mb-10 sm:grid-cols-2 sm:gap-6 sm:text-left lg:grid-cols-3">
         <div className="flex flex-col items-center space-y-3 sm:items-start sm:space-y-4">
@@ -148,4 +151,4 @@ const ProjectMethod = () => {
   );
 };
 
-export default ProjectMethod;
+export default memo(ProjectMethod);

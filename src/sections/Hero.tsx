@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Wave from "../components/shapes/Wave";
 import User from "../assets/user.png";
 import HeroBanner from "../assets/HeroBanner.png";
@@ -90,4 +91,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default memo(Hero);

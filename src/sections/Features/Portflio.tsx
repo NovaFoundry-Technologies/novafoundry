@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import SectionBadge from "../../components/ui/SectionBadge";
 import { portfolioItems } from "../../data/portfolio";
 import PortfolioCard from "../../components/ui/Portfoliocard";
@@ -33,7 +33,10 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <div className="mx-auto mt-14 mb-6 w-full max-w-6xl px-4 sm:mt-10 sm:px-0">
+    <div
+      id="case-studies"
+      className="mx-auto mt-14 mb-6 w-full max-w-6xl scroll-mt-24 px-4 sm:mt-10 sm:px-0"
+    >
       <SectionBadge label="Case studies" />
       <h1 className="my-2 text-center font-[Syne] text-2xl sm:text-left">
         <span className="bg-gradient-to-r from-[#252633] via-[#2d2f3d] to-[#343646] bg-clip-text text-transparent">
@@ -120,4 +123,4 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+export default memo(Portfolio);

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Logo from "../../assets/novahero.png";
 import Address from "../../assets/Info Icon.svg";
@@ -264,4 +265,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);
