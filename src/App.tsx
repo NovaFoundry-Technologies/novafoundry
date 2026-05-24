@@ -6,6 +6,7 @@ import {
   ExpertServices,
   Feedback,
   Insight,
+  OurVision,
   Portflio,
   ProjectMethod,
   ProjectStrategy,
@@ -37,6 +38,7 @@ function App() {
         <ProjectStrategy />
 
         <ClientReviews />
+        <OurVision />
         <Insight />
         <ContactUs />
       </div>

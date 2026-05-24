@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { motion, type Variants } from "framer-motion";
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
 import SectionBadge from "../../components/ui/SectionBadge";
 import { testimonialItems } from "../../components/ui/Card";
 
@@ -8,11 +8,7 @@ const fadeUp: Variants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      delay: i * 0.1,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
+    transition: { duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
   }),
 };
 
@@ -23,7 +19,7 @@ const StarIcon = () => (
 );
 
 const TestimonialCard = ({ item }: { item: (typeof testimonialItems)[0] }) => (
-  <div className="flex flex-col gap-4 p-6 mx-1 my-2 rounded-2xl bg-white shrink-0 w-[340px] shadow-md font-[inter]">
+  <div className="flex flex-col gap-4 p-6 mx-1 my-2 rounded-2xl bg-[#F6F6F9] shrink-0 w-[340px] shadow-md font-[inter]">
     <div className="flex items-center gap-0.5">
       {Array.from({ length: item.rating }).map((_, i) => (
         <StarIcon key={i} />
@@ -67,7 +63,7 @@ const ClientReviews = () => {
           variants={fadeUp}
           custom={1}
         >
-          What Our Clients Say About
+          Feedback from
         </motion.h1>
         <motion.span
           className="text-2xl"
@@ -80,7 +76,7 @@ const ClientReviews = () => {
             backgroundClip: "text",
           }}
         >
-          Working With Us
+          Our clients
         </motion.span>
       </motion.div>
 
