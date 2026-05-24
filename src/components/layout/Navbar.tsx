@@ -22,9 +22,11 @@ const Navbar = () => {
   return (
     <div
       className={`
-        fixed top-0 left-0 right-0
-        w-full max-w-5xl mx-auto
-        z-50 px-3
+        fixed left-1/2 top-0
+        z-50
+        w-[calc(100vw-1rem)] max-w-5xl
+        -translate-x-1/2
+        sm:w-[calc(100vw-2rem)]
         ${isScrolled ? "mt-0" : "mt-4"}
       `}
     >
@@ -45,10 +47,10 @@ const Navbar = () => {
             "0px 2px 4px rgba(16,24,40,0.05),0px 10px 18px rgba(16,24,40,0.08)",
         }}
       >
-        <div className="flex justify-between items-center py-2 px-4">
+        <div className="flex min-w-0 items-center justify-between px-3 py-2 sm:px-4">
           <motion.img
             src={Logo}
-            className="h-10"
+            className="h-8 shrink-0 sm:h-10"
             alt="nova logo"
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
@@ -100,7 +102,7 @@ const Navbar = () => {
 
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="md:hidden flex flex-col gap-[5px] p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="flex shrink-0 flex-col gap-[5px] rounded-lg p-2 transition-colors hover:bg-gray-100 md:hidden"
             aria-label="Toggle menu"
           >
             <motion.span
@@ -127,7 +129,7 @@ const Navbar = () => {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="md:hidden mt-2"
+            className="mt-2 w-full md:hidden"
             initial={{ opacity: 0, scale: 0.95, y: -8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -8 }}
@@ -135,7 +137,7 @@ const Navbar = () => {
             style={{ transformOrigin: "top right" }}
           >
             <div
-              className="rounded-2xl overflow-hidden border border-[#B5B5FF40] ml-auto"
+              className="ml-auto max-w-full overflow-hidden rounded-2xl border border-[#B5B5FF40]"
               style={{
                 width: "min(100%, 240px)",
                 marginLeft: "auto",
