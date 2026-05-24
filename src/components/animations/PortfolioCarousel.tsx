@@ -13,7 +13,7 @@ type PortfolioCarouselProps<T> = {
 
 export default function PortfolioCarousel<T>({
   className = "",
-  intervalMs = 3200,
+  intervalMs = 2800,
   items,
   itemKey,
   renderItem,
@@ -50,10 +50,10 @@ export default function PortfolioCarousel<T>({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -48 }}
             transition={{
-              opacity: { duration: 0.35, ease: "easeOut" },
-              x: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+              opacity: { duration: 0.22, ease: "easeOut" },
+              x: { duration: 0.36, ease: [0.22, 1, 0.36, 1] },
               layout: {
-                duration: 0.65,
+                duration: 0.38,
                 ease: [0.22, 1, 0.36, 1],
               },
             }}

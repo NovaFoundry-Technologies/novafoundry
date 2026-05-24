@@ -35,7 +35,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     whileInView="visible"
     viewport={{ once: true, amount: 0.3 }}
     whileHover={{ y: -4, transition: { duration: 0.2 } }}
-    className="flex flex-col gap-3 p-5 rounded-2xl bg-white w-full max-w-[320px] shadow-md"
+    className="flex w-full max-w-[320px] flex-col gap-3 rounded-2xl bg-white p-5 shadow-md"
     style={{
       border: "1px solid rgba(0,0,0,0.05)",
     }}
@@ -51,16 +51,18 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     </span>
     <div className="flex flex-col gap-1">
       <p className="text-sm font-semibold text-gray-900">{title}</p>
-      <p className="text-xs text-gray-400 leading-relaxed font-[inter]">{description}</p>
+      <p className="font-[inter] text-xs leading-relaxed text-gray-400">
+        {description}
+      </p>
     </div>
   </motion.div>
 );
 
 const Insight = () => {
   return (
-    <div className="w-full my-10 min-h-[50vh] max-w-3xl mx-auto flex flex-col justify-center items-center mt-37">
+    <div className="mx-auto my-14 flex min-h-[50vh] w-full max-w-3xl flex-col items-center justify-center px-4 sm:my-10 sm:mt-37 sm:px-0">
       <motion.div
-        className="flex flex-col justify-center items-center my-6"
+        className="my-6 flex flex-col items-center justify-center"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
@@ -70,7 +72,7 @@ const Insight = () => {
         </motion.div>
 
         <motion.h1
-          className="text-2xl text-center mt-2 font-[Syne]"
+          className="mt-2 text-center font-[Syne] text-xl sm:text-2xl"
           variants={fadeUp}
           custom={1}
         >
@@ -78,7 +80,7 @@ const Insight = () => {
         </motion.h1>
 
         <motion.span
-          className="text-2xl font-[Syne]"
+          className="font-[Syne] text-xl sm:text-2xl"
           variants={fadeUp}
           custom={2}
           style={{
@@ -91,17 +93,17 @@ const Insight = () => {
           Preview
         </motion.span>
 
-        <p className="text-gray-700 my-6 text-center font-[Helvetica]">
+        <p className="my-5 max-w-sm text-center font-[Helvetica] text-xs leading-relaxed text-gray-700 sm:my-6 sm:text-base">
           Within 72 hrs of working on your product, have an insight into your
           project without writing any line of code
         </p>
 
-        <div className="my-6 mt-37">
+        <div className="my-6 mt-10 sm:mt-37">
           <Button />
         </div>
       </motion.div>
 
-      <div className="hidden lg:flex items-center justify-between gap-6 w-full max-w-5xl">
+      <div className="hidden w-full max-w-5xl items-center justify-between gap-6 lg:flex">
         <div className="relative flex flex-col gap-6">
           {leftCards.map((card, i) => (
             <FeatureCard
@@ -178,7 +180,7 @@ const Insight = () => {
         </div>
       </div>
 
-      <div className="flex lg:hidden flex-col items-center gap-8 w-full">
+      <div className="flex w-full flex-col items-center gap-8 lg:hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.72 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -188,12 +190,12 @@ const Insight = () => {
           <motion.img
             src={PhoneMockup}
             alt="App preview"
-            className="w-full max-w-[250px] drop-shadow-2xl"
+            className="w-full max-w-[220px] drop-shadow-2xl sm:max-w-[250px]"
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />
         </motion.div>
-        <div className="grid grid-cols-1 gap-4 w-full mx-auto place-items-center">
+        <div className="mx-auto grid w-full grid-cols-1 place-items-center gap-4">
           {[...leftCards, ...rightCards].map((card, i) => (
             <FeatureCard
               key={card.id}

@@ -21,7 +21,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
         <img
           src={item.image}
           alt={item.title}
-          className={`w-full ${heightClassName} object-cover transition-[height,transform] duration-500 ease-out group-hover:scale-105`}
+          className={`w-full ${heightClassName} object-cover transition-[height,transform] duration-300 ease-out group-hover:scale-105`}
         />
       </div>
       <div className="flex flex-col gap-1">

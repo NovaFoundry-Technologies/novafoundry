@@ -3,17 +3,17 @@ import ExpandingCard from "../../components/ui/SliderBar";
 
 const ExpertServices = () => {
   return (
-    <div className="max-w-3xl mx-auto my-6 min-h-[50vh] ">
+    <div className="mx-auto my-14 min-h-0 max-w-3xl px-4 sm:my-6 sm:min-h-[50vh]">
       <div className="flex justify-center items-center">
         <SectionBadge label="What we do" />
       </div>
-      <div className="mt-2 text-center text-2xl leading-tight font-[Syne]">
+      <div className="mt-2 text-center font-[Syne] text-xl leading-tight sm:text-2xl">
         <p>Expert Services Designed to</p>
         <p className="bg-gradient-to-r from-[#6b5bd6] via-[#8c5cf6] to-[#a56dff] bg-clip-text text-transparent">
           Empower You
         </p>
       </div>
-      <div className="relative z-30 h-32 lg:h-full">
+      <div className="pointer-events-none relative z-0 hidden h-32 sm:block lg:h-full">
         <div
           className="absolute pointer-events-none z-30"
           style={{
@@ -51,7 +51,7 @@ const ExpertServices = () => {
           }}
         />
       </div>
-      <div className="flex w-full flex-col gap-3 my-6 relative">
+      <div className="relative my-6 flex w-full flex-col gap-3">
         <ExpandingCard
           startWidth="60%"
           title="Product Design"

@@ -36,9 +36,9 @@ const logos = [
 const MarqueeTrack = ({ reverse = false }: { reverse?: boolean }) => (
   <div className="flex overflow-hidden">
     <div
-      className="flex gap-12 items-center"
+      className="flex items-center gap-8 sm:gap-12"
       style={{
-        animation: `marquee${reverse ? "-reverse" : ""} 30s linear infinite`,
+        animation: `marquee${reverse ? "-reverse" : ""} 18s linear infinite`,
         whiteSpace: "nowrap",
       }}
     >
@@ -49,10 +49,10 @@ const MarqueeTrack = ({ reverse = false }: { reverse?: boolean }) => (
           style={{ opacity: 0.5 }}
         >
           <span
-            className="w-5 h-5"
+            className="h-4 w-4 sm:h-5 sm:w-5"
             dangerouslySetInnerHTML={{ __html: logo.svg }}
           />
-          <span className="text-sm font-medium tracking-tight">
+          <span className="text-xs font-medium tracking-tight sm:text-sm">
             {logo.name}
           </span>
         </div>
@@ -63,7 +63,7 @@ const MarqueeTrack = ({ reverse = false }: { reverse?: boolean }) => (
 
 const LogoMarquee = () => {
   return (
-    <section className="w-full py-12 overflow-hidden">
+    <section className="w-full overflow-hidden py-7 sm:py-12">
       <style>{`
         @keyframes marquee {
           from { transform: translateX(0); }

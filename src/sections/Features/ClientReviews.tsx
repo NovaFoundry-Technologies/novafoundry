@@ -8,7 +8,11 @@ const fadeUp: Variants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
+    transition: {
+      duration: 0.5,
+      delay: i * 0.1,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
   }),
 };
 
@@ -19,7 +23,7 @@ const StarIcon = () => (
 );
 
 const TestimonialCard = ({ item }: { item: (typeof testimonialItems)[0] }) => (
-  <div className="flex flex-col gap-4 p-6 mx-1 my-2 rounded-2xl bg-[#F6F6F9] shrink-0 w-[340px] shadow-md font-[inter]">
+  <div className="mx-1 my-2 flex w-[min(82vw,340px)] shrink-0 flex-col gap-4 rounded-2xl bg-[#F6F6F9] p-5 font-[inter] shadow-md sm:p-6">
     <div className="flex items-center gap-0.5">
       {Array.from({ length: item.rating }).map((_, i) => (
         <StarIcon key={i} />
@@ -48,9 +52,9 @@ const ClientReviews = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full max-w-6xl mx-auto my-10 overflow-hidden mt-47">
+    <div className="mx-auto my-14 w-full max-w-6xl overflow-hidden px-4 sm:my-10 sm:mt-47 sm:px-0">
       <motion.div
-        className="flex flex-col justify-center items-center font-[Syne] my-6 "
+        className="my-6 flex flex-col items-center justify-center font-[Syne]"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
@@ -59,14 +63,14 @@ const ClientReviews = () => {
           <SectionBadge label="Feedback" />
         </motion.div>
         <motion.h1
-          className="text-2xl text-center mt-2 font-[Syne]"
+          className="mt-2 text-center font-[Syne] text-xl sm:text-2xl"
           variants={fadeUp}
           custom={1}
         >
           Feedback from
         </motion.h1>
         <motion.span
-          className="text-2xl font-[Syne]"
+          className="font-[Syne] text-xl sm:text-2xl"
           variants={fadeUp}
           custom={2}
           style={{
@@ -81,31 +85,31 @@ const ClientReviews = () => {
       </motion.div>
 
       <div ref={containerRef} className="relative w-full overflow-hidden">
-        <div className="ml-12 flex items-center gap-3">
+        <div className="ml-2 flex items-center gap-3 sm:ml-12">
           <span
             className="w-3 h-3 rounded-full "
             style={{
               background: "linear-gradient(to right, #5A4B99, #FDCD86)",
             }}
           ></span>
-          <p>Client feedback</p>
+          <p className="text-sm">Client feedback</p>
         </div>
         <div
-          className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-10 sm:w-24"
           style={{
             background: "linear-gradient(to right, white, transparent)",
           }}
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-10 sm:w-24"
           style={{ background: "linear-gradient(to left, white, transparent)" }}
         />
 
         <motion.div
-          className="flex gap-6 w-max"
+          className="flex w-max gap-3 sm:gap-6"
           animate={{ x: ["0%", "-50%"] }}
           transition={{
-            duration: 28,
+            duration: 18,
             ease: "linear",
             repeat: Infinity,
           }}

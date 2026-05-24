@@ -18,9 +18,9 @@ const fadeUp: Variants = {
 
 const ContactSection = () => {
   return (
-    <div className="w-full max-w-5xl mx-auto my-16 px-4">
+    <div className="mx-auto my-14 w-full max-w-5xl px-4 sm:my-16">
       <motion.div
-        className="w-full rounded-3xl overflow-hidden relative"
+        className="relative w-full overflow-hidden rounded-3xl"
         style={{
           background:
             "linear-gradient(135deg, #fff8f0 0%, #f0f4ff 50%, #e8f4ff 100%)",
@@ -59,7 +59,7 @@ const ContactSection = () => {
         />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0">
-          <div className="p-10">
+          <div className="p-5 sm:p-10">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -71,7 +71,7 @@ const ContactSection = () => {
               </motion.div>
 
               <motion.h1
-                className="text-3xl font-semibold text-gray-900 leading-snug font-[Syne]"
+                className="font-[Syne] text-2xl font-semibold leading-snug text-gray-900 sm:text-3xl"
                 variants={fadeUp}
                 custom={1}
               >
@@ -91,7 +91,7 @@ const ContactSection = () => {
                   <input
                     type="text"
                     placeholder="Enter your full name"
-                    className="w-full bg-transparent border-b border-gray-200 py-2 text-sm text-gray-600 placeholder:font-[inter] placeholder:text-gray-300 outline-none focus:border-gray-400 transition-colors"
+                    className="w-full border-b border-gray-200 bg-transparent py-2 text-sm text-gray-600 outline-none transition-colors placeholder:font-[inter] placeholder:text-gray-300 focus:border-gray-400"
                   />
                 </div>
 
@@ -102,7 +102,7 @@ const ContactSection = () => {
                   <input
                     type="email"
                     placeholder="Enter the e-mail"
-                    className="w-full bg-transparent border-b border-gray-200 py-2 px-2 text-sm text-gray-600 placeholder:text-gray-300 outline-none focus:border-gray-400 transition-colors"
+                    className="w-full border-b border-gray-200 bg-transparent px-2 py-2 text-sm text-gray-600 outline-none transition-colors placeholder:text-gray-300 focus:border-gray-400"
                   />
                 </div>
 
@@ -111,8 +111,11 @@ const ContactSection = () => {
                     What's the type of your company?
                   </label>
                   <div className="relative">
-                    <select className="w-full bg-transparent border-b border-gray-200 py-2 px-2 text-sm text-gray-500 outline-none appearance-none focus:border-gray-400 transition-colors">
-                      <option value="" disabled selected>
+                    <select
+                      defaultValue=""
+                      className="w-full appearance-none border-b border-gray-200 bg-transparent px-2 py-2 pr-8 text-sm text-gray-500 outline-none transition-colors focus:border-gray-400"
+                    >
+                      <option value="" disabled>
                         Select the type of your company
                       </option>
                       <option value="startup">Startup</option>
@@ -120,8 +123,8 @@ const ContactSection = () => {
                       <option value="enterprise">Enterprise</option>
                       <option value="freelance">Freelance</option>
                     </select>
-                    <span className="absolute right-0 bottom-2.5 text-gray-400 text-sm pointer-events-none">
-                      ▾
+                    <span className="pointer-events-none absolute bottom-2.5 right-0 text-sm text-gray-400">
+                      v
                     </span>
                   </div>
                 </div>
@@ -131,8 +134,11 @@ const ContactSection = () => {
                     What you need from us?
                   </label>
                   <div className="relative">
-                    <select className="w-full bg-transparent border-b border-gray-200 py-2 px-2 text-sm text-gray-500 outline-none appearance-none focus:border-gray-400 transition-colors">
-                      <option value="" disabled selected>
+                    <select
+                      defaultValue=""
+                      className="w-full appearance-none border-b border-gray-200 bg-transparent px-2 py-2 pr-8 text-sm text-gray-500 outline-none transition-colors focus:border-gray-400"
+                    >
+                      <option value="" disabled>
                         Select the Services Needed
                       </option>
                       <option value="branding">Branding</option>
@@ -140,8 +146,8 @@ const ContactSection = () => {
                       <option value="product">Product Design</option>
                       <option value="ui">UI/UX Design</option>
                     </select>
-                    <span className="absolute right-0 bottom-2.5 text-gray-400 text-sm pointer-events-none">
-                      ▾
+                    <span className="pointer-events-none absolute bottom-2.5 right-0 text-sm text-gray-400">
+                      v
                     </span>
                   </div>
                 </div>
@@ -165,7 +171,7 @@ const ContactSection = () => {
                     value: "4140 Parker Rd. Allentown",
                   },
                 ].map(({ icon, label, value }) => (
-                  <div key={label} className="flex items-center gap-3">
+                  <div key={label} className="flex min-w-0 items-center gap-3">
                     <span
                       className="flex items-center border border-gray-100 shadow-md justify-center w-8 h-8 rounded-lg text-xs text-gray-500 shrink-0"
                       style={{
@@ -175,9 +181,11 @@ const ContactSection = () => {
                     >
                       <img src={icon} alt="" />
                     </span>
-                    <div className="flex flex-col">
+                    <div className="flex min-w-0 flex-col">
                       <span className="text-[10px] text-gray-400">{label}</span>
-                      <span className="text-xs text-gray-700">{value}</span>
+                      <span className="break-words text-xs text-gray-700">
+                        {value}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -188,7 +196,7 @@ const ContactSection = () => {
                 custom={4}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                className="w-fit px-6 py-2.5 rounded-full text-sm font-medium text-white transition-all"
+                className="w-fit rounded-full px-6 py-2.5 text-sm font-medium text-white transition-all"
                 style={{
                   background: "linear-gradient(to right, #5A4B99, #AD72FF)",
                 }}

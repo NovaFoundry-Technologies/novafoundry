@@ -86,7 +86,7 @@ const OurVision = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto my-10 mt-37">
+    <div className="mx-auto my-14 w-full max-w-5xl px-4 sm:my-10 sm:mt-37 sm:px-0">
       <div className="space-y-3">
         <motion.div
           className="flex items-center gap-3"
@@ -104,10 +104,10 @@ const OurVision = () => {
           <p>Our Vision</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4">
           {/* left grid  */}
           <motion.div
-            className="group relative h-100 w-full"
+            className="group relative h-[24rem] w-full sm:h-100"
             variants={fadeLeft}
             initial="hidden"
             whileInView="visible"
@@ -163,7 +163,7 @@ const OurVision = () => {
             </button>
 
             <div
-              className="absolute pointer-events-none z-0"
+              className="absolute pointer-events-none z-0 hidden sm:block"
               style={{
                 width: "300px",
                 height: "500px",
@@ -179,7 +179,7 @@ const OurVision = () => {
           {/* right grid  */}
 
           <motion.div
-            className="mt-20 pl-6 space-y-4 relative"
+            className="relative space-y-4 sm:mt-20 sm:pl-6"
             variants={fadeRight}
             initial="hidden"
             whileInView="visible"
@@ -190,7 +190,7 @@ const OurVision = () => {
             </motion.div>
 
             <motion.p
-              className="text-xs max-w-xs text-gray-700 leading-loose"
+              className="max-w-xs text-xs leading-loose text-gray-700"
               variants={fadeUp}
               custom={1}
             >
@@ -199,7 +199,7 @@ const OurVision = () => {
               ideas,.''
             </motion.p>
 
-            <motion.div className="my-10" variants={fadeUp} custom={2}>
+            <motion.div className="my-7 sm:my-10" variants={fadeUp} custom={2}>
               <ExpandingCard
                 title="C.E.O Aderinto Samson"
                 startWidth="80%"
@@ -209,7 +209,7 @@ const OurVision = () => {
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-3"
+              className="flex flex-wrap items-center gap-3"
               variants={fadeUp}
               custom={3}
             >
@@ -220,7 +220,7 @@ const OurVision = () => {
               ].map(({ icon, label }, i) => (
                 <motion.div
                   key={i}
-                  className="flex items-center text-[10px] gap-1"
+                  className="flex items-center gap-1 text-[10px]"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.15 }}
                 >
@@ -233,7 +233,7 @@ const OurVision = () => {
             </motion.div>
 
             <div
-              className="absolute pointer-events-none z-0"
+              className="absolute pointer-events-none z-0 hidden sm:block"
               style={{
                 width: "300px",
                 height: "500px",

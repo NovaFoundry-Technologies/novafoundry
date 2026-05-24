@@ -17,21 +17,25 @@ const Portfolio = () => {
     );
   };
   const showNextFeaturedItem = () => {
-    setFeaturedIndex((currentIndex) => (currentIndex + 1) % portfolioItems.length);
+    setFeaturedIndex(
+      (currentIndex) => (currentIndex + 1) % portfolioItems.length,
+    );
   };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setFeaturedIndex((currentIndex) => (currentIndex + 1) % portfolioItems.length);
+      setFeaturedIndex(
+        (currentIndex) => (currentIndex + 1) % portfolioItems.length,
+      );
     }, 3600);
 
     return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-10 mb-6">
+    <div className="mx-auto mt-14 mb-6 w-full max-w-6xl px-4 sm:mt-10 sm:px-0">
       <SectionBadge label="Case studies" />
-      <h1 className="my-2 font-[Syne] text-2xl">
+      <h1 className="my-2 text-center font-[Syne] text-2xl sm:text-left">
         <span className="bg-gradient-to-r from-[#252633] via-[#2d2f3d] to-[#343646] bg-clip-text text-transparent">
           The work speaks
         </span>{" "}
@@ -42,13 +46,17 @@ const Portfolio = () => {
 
       <div className="mt-6 overflow-hidden">
         <PortfolioCarousel
-          className="grid grid-cols-4 items-start gap-6"
+          className="grid grid-flow-col auto-cols-[46%] items-start gap-4 sm:grid-flow-row sm:grid-cols-4 sm:auto-cols-auto sm:gap-6"
           items={portfolioItems}
           itemKey={(item) => item.id}
           renderItem={(item, _index, isShortPosition) => (
             <PortfolioCard
               item={item}
-              heightClassName={isShortPosition ? "h-[16rem]" : "h-[20rem]"}
+              heightClassName={
+                isShortPosition
+                  ? "h-[12rem] sm:h-[16rem]"
+                  : "h-[15rem] sm:h-[20rem]"
+              }
               onClick={(item) => console.log(item.title)}
             />
           )}
@@ -56,7 +64,7 @@ const Portfolio = () => {
       </div>
 
       <div className="flex w-full flex-col">
-        <div className="relative mt-10 h-[60vh] w-full overflow-hidden rounded-xl border border-gray-200">
+        <div className="relative mt-8 h-[20rem] w-full overflow-hidden rounded-xl border border-gray-200 sm:mt-10 sm:h-[60vh]">
           <AnimatePresence mode="wait">
             <motion.img
               key={featuredItem.id}
@@ -78,7 +86,9 @@ const Portfolio = () => {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
           >
-            <p className="my-2 font-medium text-black font-[Helvetica]">{featuredItem.title}</p>
+            <p className="my-2 font-[Helvetica] font-medium text-black">
+              {featuredItem.title}
+            </p>
             <p className="text-sm text-gray-500 font-[inter]">
               {featuredItem.year} {featuredItem.category}
             </p>
@@ -103,7 +113,7 @@ const Portfolio = () => {
           </button>
         </div>
       </div>
-        <div className="mt-15 flex items-center justify-center">
+        <div className="mt-12 flex items-center justify-center sm:mt-15">
             <Button />
         </div>
     </div>

@@ -8,9 +8,17 @@ import X from "../../assets/x.svg";
 import LN from "../../assets/linkedin.svg";
 import IG from "../../assets/ig.svg";
 
+const footerHeadlineGradient = {
+  background:
+    "linear-gradient(90deg, #9f9fee 0%, #b7b9f4 45%, #d9d0f1 78%, #fff1c7 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  backgroundClip: "text",
+};
+
 const Footer = () => {
   return (
-    <div className="w-full max-w-5xl mx-auto my-10 px-4">
+    <div className="mx-auto my-10 w-full max-w-5xl px-4">
       <style>{`
         @keyframes borderPulse {
           0%, 100% {
@@ -33,7 +41,7 @@ const Footer = () => {
       `}</style>
 
       <motion.div
-        className="w-full rounded-3xl overflow-hidden relative px-10 py-10"
+        className="relative w-full overflow-hidden rounded-3xl px-5 py-8 sm:px-10 sm:py-10"
         style={{
           background:
             "linear-gradient(135deg, #fff8f0 0%, #f0f0ff 50%, #e8f4ff 100%)",
@@ -71,28 +79,18 @@ const Footer = () => {
           }}
         />
 
-        <div className="relative z-10 flex flex-col sm:flex-row items-start justify-between gap-4">
+        <div className="relative z-10 flex flex-col items-start justify-between gap-6 sm:flex-row sm:gap-4">
           <div className="flex flex-col leading-none">
             <span
-              className="text-5xl sm:text-7xl font-bold tracking-tight"
-              style={{
-                background: "linear-gradient(to bottom, #9090d0, #c4c4ee)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
+              className="text-4xl font-bold tracking-tight min-[360px]:text-5xl sm:text-7xl"
+              style={footerHeadlineGradient}
             >
               START
             </span>
             <div className="flex items-center gap-3">
               <span
-                className="text-5xl sm:text-7xl font-bold tracking-tight"
-                style={{
-                  background: "linear-gradient(to bottom, #9090d0, #c4c4ee)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
+                className="text-4xl font-bold tracking-tight min-[360px]:text-5xl sm:text-7xl"
+                style={footerHeadlineGradient}
               >
                 PR
               </span>
@@ -100,7 +98,7 @@ const Footer = () => {
               <motion.button
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center w-20 h-10 sm:w-25 sm:h-15 justify-center rounded-full shrink-0 border-2 border-[#B5B5FF]"
+                className="flex h-9 w-16 shrink-0 items-center justify-center rounded-full border-2 border-[#B5B5FF] min-[360px]:h-10 min-[360px]:w-20 sm:h-15 sm:w-25"
                 style={{
                   background: "rgba(255,255,255,0.7)",
                   boxShadow:
@@ -120,20 +118,15 @@ const Footer = () => {
               </motion.button>
 
               <span
-                className="text-5xl sm:text-7xl font-bold tracking-tight"
-                style={{
-                  background: "linear-gradient(to bottom, #9090d0, #c4c4ee)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
+                className="text-4xl font-bold tracking-tight min-[360px]:text-5xl sm:text-7xl"
+                style={footerHeadlineGradient}
               >
                 JECT
               </span>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 mt-2">
+          <div className="mt-2 flex w-full flex-col gap-4 sm:w-auto">
             {[
               {
                 icon: Email,
@@ -143,7 +136,7 @@ const Footer = () => {
               { icon: Phone, label: "Phone", value: "+2 (88) 000-0000" },
               { icon: Address, label: "Address", value: "No 7, Omole estate." },
             ].map(({ icon, label, value }) => (
-              <div key={label} className="flex items-center gap-3">
+              <div key={label} className="flex min-w-0 items-center gap-3">
                 <span
                   className="flex items-center border border-gray-100 shadow-md justify-center w-8 h-8 rounded-lg text-xs text-gray-500 shrink-0"
                   style={{
@@ -153,9 +146,11 @@ const Footer = () => {
                 >
                   <img src={icon} alt={label} />
                 </span>
-                <div className="flex flex-col">
+                <div className="flex min-w-0 flex-col">
                   <span className="text-[10px] text-gray-400">{label}</span>
-                  <span className="text-xs text-gray-700">{value}</span>
+                  <span className="break-words text-xs text-gray-700">
+                    {value}
+                  </span>
                 </div>
               </div>
             ))}
@@ -163,7 +158,7 @@ const Footer = () => {
         </div>
 
         <div className="relative z-10 mt-8 flex flex-col gap-4">
-          <div className="flex items-center gap-4 mx-auto sm:ml-15">
+          <div className="mx-auto flex items-center gap-3 sm:ml-15 sm:gap-4">
             {[
               { label: "Facebook", icon: FB },
               { label: "Instagram", icon: IG },
@@ -174,7 +169,7 @@ const Footer = () => {
                 key={label}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center z-1 justify-center w-10 h-10 rounded-full text-[10px] font-semibold text-gray-500 bg-white shadow-md border-2 border-[#EFF7FE]"
+                className="z-1 flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#EFF7FE] bg-white text-[10px] font-semibold text-gray-500 shadow-md sm:h-10 sm:w-10"
               >
                 <img src={icon} className="w-3" alt="" />
               </motion.button>
@@ -183,9 +178,9 @@ const Footer = () => {
           <div className="absolute top-1/2 z-0 w-full h-px bg-[#B5B5FF]" />
         </div>
 
-        <div className="relative z-10 mt-6 grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div className="relative z-10 mt-6 grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-8">
           {/* Pages */}
-          <div className="flex flex-col gap-2 max-w-35">
+          <div className="flex w-full flex-col gap-2 sm:max-w-35">
             <p className="text-sm font-semibold text-gray-900 mb-1">Pages</p>
             <div className="grid grid-cols-2 gap-x-1 gap-y-1.5">
               {["Home", "About", "Services", "Teams", "Blogs", "Contact"].map(
@@ -202,7 +197,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 max-w-35">
+          <div className="flex w-full flex-col gap-2 sm:max-w-35">
             <p className="text-sm font-semibold text-gray-900 mb-1">
               Utility Page
             </p>
@@ -233,11 +228,11 @@ const Footer = () => {
             <p className="text-xs text-gray-500 leading-relaxed">
               Subscribe for fresh content and stories straight to your email.
             </p>
-            <div className="flex items-center justify-between mt-2 p-3 bg-[#B5B5FF33] rounded-full border border-[#B5B5FF]">
+            <div className="mt-2 flex items-center justify-between gap-2 rounded-full border border-[#B5B5FF] bg-[#B5B5FF33] p-3">
               <input
                 type="email"
                 placeholder="Aderinto Samson@gmail.com"
-                className="bg-transparent text-xs text-gray-700 placeholder:text-gray-600 outline-none flex-1"
+                className="min-w-0 flex-1 bg-transparent text-xs text-gray-700 outline-none placeholder:text-gray-600"
               />
               <motion.button
                 whileHover={{ scale: 1.1 }}

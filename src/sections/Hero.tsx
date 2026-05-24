@@ -15,20 +15,20 @@ const Hero = () => {
           z-10
           mx-auto
           w-full max-w-6xl
-          px-6 pt-32 pb-12 md:px-10
+          px-4 pt-24 pb-10 sm:px-6 sm:pt-32 sm:pb-12 md:px-10
 
           flex justify-center
         "
       >
         <div
           className="
-            w-fit
+            w-full
             flex flex-col items-center gap-10
 
-            px-4 py-2
+            px-2 py-2 sm:w-fit sm:px-4
           "
         >
-          <div className="flex items-center gap-4 mt-8">
+          <div className="mt-4 flex items-center gap-3 sm:mt-8 sm:gap-4">
             <div className="flex items-center">
               {[1, 2, 3].map((i) => (
                 <img
@@ -36,7 +36,7 @@ const Hero = () => {
                   src={User}
                   alt="user"
                   className="
-                  h-10 w-10 rounded-full
+                  h-8 w-8 rounded-full sm:h-10 sm:w-10
                   border-2 border-white
                   object-cover
 
@@ -46,12 +46,12 @@ const Hero = () => {
               ))}
             </div>
 
-            <p className="text-md font-medium text-gray-700">
+            <p className="text-xs font-medium text-gray-700 sm:text-base">
               1000+ satisfied clients
             </p>
           </div>
           <div className="w-full">
-            <div className="font-['Syne'] text-center text-5xl font-semibold leading-[1.2]">
+            <div className="font-['Syne'] text-center text-[1.7rem] font-semibold leading-[1.12] sm:text-5xl sm:leading-[1.2]">
               <h1 className="bg-gradient-to-r from-[#171717] via-[#3f4b86] to-[#7c8dff] bg-clip-text text-transparent">
                 Premium digital products.
               </h1>
@@ -65,13 +65,13 @@ const Hero = () => {
               </h1>
             </div>
 
-            <p className="mt-8 font-[Helvetica] text-center text-sm text-gray-500">
+            <p className="mx-auto mt-4 max-w-xs font-[Helvetica] text-center text-xs leading-relaxed text-gray-500 sm:mt-8 sm:max-w-none sm:text-sm">
               Web design and Mobile app design agency, we deliver digital
               product with speed and accuracy.
             </p>
 
-            <div className="relative mx-auto mt-4 w-full max-w-2xl">
-              <div className="absolute -top-2 right-0 z-10">
+            <div className="relative mx-auto mt-5 w-full max-w-[22rem] sm:mt-4 sm:max-w-2xl">
+              <div className="absolute right-2 top-1 z-10 origin-top-right scale-75 sm:-top-2 sm:right-0 sm:scale-100">
                 <Button />
               </div>
 

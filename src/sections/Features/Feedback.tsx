@@ -41,8 +41,8 @@ const Feedback = () => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto min-h-[50vh] flex flex-col mt-16 px-4">
-      <div className="flex justify-between items-center ">
+    <div className="mx-auto mt-14 flex min-h-[50vh] w-full max-w-6xl flex-col px-4 sm:mt-16">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <span
             className="w-3 h-3 rounded-full "
@@ -52,12 +52,12 @@ const Feedback = () => {
           ></span>
           <p className="font-[Creato Display]">Client feedback</p>
         </div>
-        <div className="w-xl">
+        <div className="w-full sm:w-xl">
           <ExpandingCard title="C.O.O Tiwa Ayodeji" />
         </div>
       </div>
       <div className="my-6">
-        <div className="group relative mb-2 h-[50vh] w-full overflow-hidden rounded-2xl ">
+        <div className="group relative mb-2 h-[18rem] w-full overflow-hidden rounded-2xl sm:h-[50vh]">
           <video
             ref={videoRef}
             src={FeedbackVideo}
@@ -78,7 +78,7 @@ const Feedback = () => {
           </div>
         </div>
 
-        <p className="max-w-2xl leading-loose text-sm font-[Helvetica]">
+        <p className="max-w-2xl font-[Helvetica] text-xs leading-loose text-gray-700 sm:text-sm">
           We’re a creative agency driven by design, strategy, and storytelling.
           Our mission is to help brands stand out through bold ideas, thoughtful
           design, and impactful digital experiences.

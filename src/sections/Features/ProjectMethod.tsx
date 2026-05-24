@@ -50,19 +50,19 @@ const StatItem: React.FC<{ stat: Stat; started: boolean; index: number }> = ({
   return (
     <div className="flex flex-col items-center gap-1 flex-1 min-w-0">
       <span
-        className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 font-[inter]"
+        className="font-[inter] text-xl font-bold tracking-tight text-gray-900 sm:text-4xl"
         style={{ fontVariantNumeric: "tabular-nums" }}
       >
         {started ? display : stat.value}
       </span>
-      <span className="text-xs text-gray-500 text-center whitespace-nowrap font-[inter]">
+      <span className="text-center font-[inter] text-[10px] leading-tight text-gray-500 sm:whitespace-nowrap sm:text-xs">
         {stat.label}
       </span>
     </div>
   );
 };
 
-const StatDivider = () => <div className="w-px h-8 shrink-0" />;
+const StatDivider = () => <div className="h-7 w-px shrink-0 sm:h-8" />;
 
 const ProjectMethod = () => {
   const [started, setStarted] = useState(false);
@@ -80,25 +80,25 @@ const ProjectMethod = () => {
   }, []);
 
   return (
-    <section className="relative w-full max-w-6xl mx-auto my-4 px-2">
+    <section className="relative mx-auto my-8 w-full max-w-6xl px-4 sm:my-4 sm:px-2">
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6 mb-10">
-        <div className="flex flex-col space-y-4">
+      <div className="mb-6 grid grid-cols-1 items-center gap-4 text-center sm:mb-10 sm:grid-cols-2 sm:gap-6 sm:text-left lg:grid-cols-3">
+        <div className="flex flex-col items-center space-y-3 sm:items-start sm:space-y-4">
           <SectionBadge label="Who we are" />
-          <h1 className="bg-gradient-to-r from-[#1b1d2a] via-[#2f3554] to-[#7c4dff] bg-clip-text text-2xl font-semibold font-[Syne] text-transparent">
+          <h1 className="bg-gradient-to-r from-[#1b1d2a] via-[#2f3554] to-[#7c4dff] bg-clip-text font-[Syne] text-xl font-semibold text-transparent sm:text-2xl">
             Novafoundry's Method
           </h1>
         </div>
 
         <div>
-          <p className="leading-loose text-sm font-[Syne]">
+          <p className="mx-auto max-w-md font-[Syne] text-xs leading-loose text-gray-700 sm:mx-0 sm:text-sm">
             We're a Digital agency driven by design, strategy, and storytelling.
             Our mission is to help brands stand out through bold ideas,
             thoughtful design, and impactful digital experiences.
           </p>
         </div>
 
-        <div className="relative z-30 h-32 lg:h-full">
+        <div className="pointer-events-none relative z-0 hidden h-32 sm:block lg:h-full">
 
             <div
             className="absolute pointer-events-none z-30"
@@ -129,13 +129,13 @@ const ProjectMethod = () => {
 
       <div
         ref={statsRef}
-        className="relative z-10 w-full rounded-2xl px-6 py-6 overflow-visible"
+        className="relative z-10 w-full overflow-visible rounded-2xl px-2 py-4 sm:px-6 sm:py-6"
       >
         <div className="absolute inset-0 rounded-2xl" />
 
         <div className="absolute top-0 left-6 right-6 h-px" />
 
-        <div className="relative z-20 flex items-center justify-between gap-4">
+        <div className="relative z-20 flex items-center justify-between gap-2 sm:gap-4">
           {stats.map((stat, i) => (
             <React.Fragment key={stat.label}>
               <StatItem stat={stat} started={started} index={i} />
