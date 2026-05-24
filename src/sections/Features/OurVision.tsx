@@ -1,11 +1,15 @@
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import VisionVideo from "../../assets/About Image (1).png";
+import { Volume2, VolumeX } from "lucide-react";
+import VisionVideo from "../../assets/mp_.mp4";
 import SectionBadge from "../../components/ui/SectionBadge";
 import ExpandingCard from "../../components/ui/SliderBar";
 import Positive from "../../assets/positive.svg";
 import Worked from "../../assets/worked.svg";
 import Partner from "../../assets/partner.svg";
+import { OrganicVideoMask } from "../../components/shapes/OrganicMask";
+import VideoPlayPauseButton from "../../components/ui/VideoPlayPauseButton";
 
 const fadeLeft: Variants = {
   hidden: { opacity: 0, x: -40 },
@@ -35,8 +39,54 @@ const fadeUp: Variants = {
 };
 
 const OurVision = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => setIsPlaying(false));
+          return;
+        }
+
+        video.pause();
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(video);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      void video.play();
+      return;
+    }
+
+    video.pause();
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextMutedState = !video.muted;
+    video.muted = nextMutedState;
+    setIsMuted(nextMutedState);
+  };
+
   return (
-    <div className="w-full max-w-5xl mx-auto my-10">
+    <div className="w-full max-w-5xl mx-auto my-10 mt-37">
       <div className="space-y-3">
         <motion.div
           className="flex items-center gap-3"
@@ -57,17 +107,61 @@ const OurVision = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* left grid  */}
           <motion.div
-            className="w-full h-100 relative"
+            className="group relative h-100 w-full"
             variants={fadeLeft}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <img
-              src={VisionVideo}
-              alt=""
-              className="w-full h-full object-cover"
-            />
+            <OrganicVideoMask className="h-full w-full">
+              <video
+                ref={videoRef}
+                src={VisionVideo}
+                className="h-full w-full object-cover"
+                muted={isMuted}
+                loop
+                playsInline
+                preload="metadata"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onVolumeChange={(event) =>
+                  setIsMuted(event.currentTarget.muted)
+                }
+              />
+            </OrganicVideoMask>
+
+            <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100">
+              <VideoPlayPauseButton
+                isPlaying={isPlaying}
+                onClick={toggleVideo}
+              />
+            </div>
+
+            <button
+              type="button"
+              aria-label={isMuted ? "Unmute video" : "Mute video"}
+              onClick={toggleMute}
+              className="absolute bottom-5 right-5 z-20 inline-flex size-9 items-center justify-center rounded-full border border-white/30 bg-[transparent] p-1 opacity-0 shadow-[0_8px_18px_rgba(0,0,0,0.18)] transition duration-200 group-hover:opacity-100 hover:scale-105 focus:opacity-100 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f4c36c]"
+            >
+              <span className="inline-flex size-full items-center justify-center rounded-full border border-white/80 bg-gradient-to-b from-[#ffd98d] to-[#f2b958] shadow-[inset_0_2px_5px_rgba(255,255,255,0.65),inset_0_-3px_8px_rgba(150,87,12,0.18)]">
+                {isMuted ? (
+                  <VolumeX
+                    aria-hidden="true"
+                    className="text-[#111111]"
+                    size={14}
+                    strokeWidth={2.7}
+                  />
+                ) : (
+                  <Volume2
+                    aria-hidden="true"
+                    className="text-[#111111]"
+                    size={14}
+                    strokeWidth={2.7}
+                  />
+                )}
+              </span>
+            </button>
+
             <div
               className="absolute pointer-events-none z-0"
               style={{

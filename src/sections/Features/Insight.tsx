@@ -51,14 +51,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     </span>
     <div className="flex flex-col gap-1">
       <p className="text-sm font-semibold text-gray-900">{title}</p>
-      <p className="text-xs text-gray-400 leading-relaxed">{description}</p>
+      <p className="text-xs text-gray-400 leading-relaxed font-[inter]">{description}</p>
     </div>
   </motion.div>
 );
 
 const Insight = () => {
   return (
-    <div className="w-full my-10 min-h-[50vh] max-w-3xl mx-auto flex flex-col justify-center items-center">
+    <div className="w-full my-10 min-h-[50vh] max-w-3xl mx-auto flex flex-col justify-center items-center mt-37">
       <motion.div
         className="flex flex-col justify-center items-center my-6"
         initial="hidden"
@@ -70,7 +70,7 @@ const Insight = () => {
         </motion.div>
 
         <motion.h1
-          className="text-2xl text-center mt-2"
+          className="text-2xl text-center mt-2 font-[Syne]"
           variants={fadeUp}
           custom={1}
         >
@@ -78,7 +78,7 @@ const Insight = () => {
         </motion.h1>
 
         <motion.span
-          className="text-2xl"
+          className="text-2xl font-[Syne]"
           variants={fadeUp}
           custom={2}
           style={{
@@ -91,12 +91,12 @@ const Insight = () => {
           Preview
         </motion.span>
 
-        <p className="text-gray-700 my-6 text-center">
+        <p className="text-gray-700 my-6 text-center font-[Helvetica]">
           Within 72 hrs of working on your product, have an insight into your
           project without writing any line of code
         </p>
 
-        <div className="my-6">
+        <div className="my-6 mt-37">
           <Button />
         </div>
       </motion.div>
@@ -128,10 +128,10 @@ const Insight = () => {
 
         <motion.div
           className="flex-shrink-0 relative z-10"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.72 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}
@@ -180,10 +180,10 @@ const Insight = () => {
 
       <div className="flex lg:hidden flex-col items-center gap-8 w-full">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.72 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
           <motion.img
             src={PhoneMockup}

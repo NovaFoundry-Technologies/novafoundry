@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, type Variants } from "framer-motion";
 import SectionBadge from "../../components/ui/SectionBadge";
 import { testimonialItems } from "../../components/ui/Card";
 
@@ -59,14 +59,14 @@ const ClientReviews = () => {
           <SectionBadge label="Feedback" />
         </motion.div>
         <motion.h1
-          className="text-2xl text-center mt-2 "
+          className="text-2xl text-center mt-2 font-[Syne]"
           variants={fadeUp}
           custom={1}
         >
           Feedback from
         </motion.h1>
         <motion.span
-          className="text-2xl"
+          className="text-2xl font-[Syne]"
           variants={fadeUp}
           custom={2}
           style={{

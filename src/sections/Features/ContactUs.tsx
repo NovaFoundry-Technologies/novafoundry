@@ -72,7 +72,7 @@ const ContactSection = () => {
               </motion.div>
 
               <motion.h1
-                className="text-3xl font-semibold text-gray-900 leading-snug"
+                className="text-3xl font-semibold text-gray-900 leading-snug font-[Syne]"
                 variants={fadeUp}
                 custom={1}
               >
@@ -92,7 +92,7 @@ const ContactSection = () => {
                   <input
                     type="text"
                     placeholder="Enter your full name"
-                    className="w-full bg-transparent border-b border-gray-200 py-2 text-sm text-gray-600 placeholder:text-gray-300 outline-none focus:border-gray-400 transition-colors"
+                    className="w-full bg-transparent border-b border-gray-200 py-2 text-sm text-gray-600 placeholder:font-[inter] placeholder:text-gray-300 outline-none focus:border-gray-400 transition-colors"
                   />
                 </div>
 

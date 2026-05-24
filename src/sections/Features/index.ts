@@ -6,4 +6,4 @@ export { default as Insight } from "./Insight";
 export { default as Portflio } from "./Portflio";
 export { default as ProjectMethod } from "./ProjectMethod";
 export { default as ProjectStrategy } from "./ProjectStrategy";
-export { default as Speech } from "./Speech";
+export {default as OurVision} from "./OurVision"
