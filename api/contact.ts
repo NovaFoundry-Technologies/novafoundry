@@ -63,7 +63,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
   try {
     const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
-    const toEmail = process.env.CONTACT_TO_EMAIL ?? "contact.Novafoundry@gmail.com";
+    const toEmail = process.env.CONTACT_TO_EMAIL ?? "contact.novafoundry@gmail.com";
 
     await resend.emails.send({
       from: `NovaFoundry Website <${fromEmail}>`,
