@@ -1,5 +1,6 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { motion } from "framer-motion";
+import type { ChangeEvent, FormEvent } from "react";
 import type { Variants } from "framer-motion";
 import SectionBadge from "../../components/ui/SectionBadge";
 import Man from "../../assets/man.png";
@@ -18,6 +19,65 @@ const fadeUp: Variants = {
 };
 
 const ContactSection = () => {
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    companyType: "",
+    service: "",
+    message: "",
+  });
+
+  const handleChange = (
+    event:
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLSelectElement>
+      | ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = (await response.json()) as {
+        success?: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message ?? "Failed to send message");
+      }
+
+      alert("Message sent");
+
+      setFormData({
+        name: "",
+        email: "",
+        companyType: "",
+        service: "",
+        message: "",
+      });
+    } catch {
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       id="contact"
@@ -64,7 +124,8 @@ const ContactSection = () => {
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0">
           <div className="p-5 sm:p-10">
-            <motion.div
+            <motion.form
+              onSubmit={handleSubmit}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
@@ -94,6 +155,10 @@ const ContactSection = () => {
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                     placeholder="Enter your full name"
                     className="w-full border-b border-gray-200 bg-transparent py-2 text-sm text-gray-600 outline-none transition-colors placeholder:font-[inter] placeholder:text-gray-300 focus:border-gray-400"
                   />
@@ -105,6 +170,10 @@ const ContactSection = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                     placeholder="Enter the e-mail"
                     className="w-full border-b border-gray-200 bg-transparent px-2 py-2 text-sm text-gray-600 outline-none transition-colors placeholder:text-gray-300 focus:border-gray-400"
                   />
@@ -116,7 +185,9 @@ const ContactSection = () => {
                   </label>
                   <div className="relative">
                     <select
-                      defaultValue=""
+                      name="companyType"
+                      value={formData.companyType}
+                      onChange={handleChange}
                       className="w-full appearance-none border-b border-gray-200 bg-transparent px-2 py-2 pr-8 text-sm text-gray-500 outline-none transition-colors focus:border-gray-400"
                     >
                       <option value="" disabled>
@@ -139,7 +210,9 @@ const ContactSection = () => {
                   </label>
                   <div className="relative">
                     <select
-                      defaultValue=""
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
                       className="w-full appearance-none border-b border-gray-200 bg-transparent px-2 py-2 pr-8 text-sm text-gray-500 outline-none transition-colors focus:border-gray-400"
                     >
                       <option value="" disabled>
@@ -154,6 +227,21 @@ const ContactSection = () => {
                       v
                     </span>
                   </div>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-gray-700">
+                    Your Message
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={3}
+                    placeholder="Tell us about your project"
+                    className="w-full resize-none border-b border-gray-200 bg-transparent px-2 py-2 text-sm text-gray-600 outline-none transition-colors placeholder:text-gray-300 focus:border-gray-400"
+                  />
                 </div>
               </motion.div>
 
@@ -196,18 +284,20 @@ const ContactSection = () => {
               </motion.div>
 
               <motion.button
+                type="submit"
+                disabled={loading}
                 variants={fadeUp}
                 custom={4}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                className="w-fit rounded-full px-6 py-2.5 text-sm font-medium text-white transition-all"
+                className="w-fit rounded-full px-6 py-2.5 text-sm font-medium text-white transition-all disabled:cursor-not-allowed disabled:opacity-70"
                 style={{
                   background: "linear-gradient(to right, #5A4B99, #AD72FF)",
                 }}
               >
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </motion.button>
-            </motion.div>
+            </motion.form>
           </div>
 
           <div className="hidden lg:flex flex-col gap-3 p-6 justify-center">
