@@ -54,7 +54,7 @@ const ClientReviews = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="mx-auto my-14 w-full max-w-6xl overflow-hidden px-4 sm:my-10 sm:mt-47 sm:px-0">
+    <div className="mx-auto my-14 w-full max-w-6xl overflow-hidden px-4 sm:my-10 sm:mt-37 sm:px-0">
       <motion.div
         className="my-6 flex flex-col items-center justify-center font-[Syne]"
         initial="hidden"
