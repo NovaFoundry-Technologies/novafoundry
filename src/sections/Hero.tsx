@@ -66,7 +66,7 @@ const Hero = () => {
               </h1>
             </div>
 
-            <p className="mx-auto mt-4 max-w-xs font-[Helvetica] text-center text-xs leading-relaxed text-gray-500 sm:mt-8 sm:max-w-none sm:text-sm">
+            <p className="mx-auto mt-4 max-w-xs font-[Helvetica] text-center text-xs leading-relaxed text-gray-500 sm:mt-8 sm:mb-14 sm:max-w-none sm:text-sm">
               Web design and Mobile app design agency, we deliver digital
               product with speed and accuracy.
             </p>

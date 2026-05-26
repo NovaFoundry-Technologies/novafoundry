@@ -82,7 +82,7 @@ const ProjectMethod = () => {
   return (
     <section
       id="who-we-are"
-      className="relative mx-auto my-8 w-full max-w-6xl scroll-mt-24 px-4 max-sm:overflow-x-clip sm:my-4 sm:px-2"
+      className="relative mx-auto my-8 w-full max-w-6xl scroll-mt-24 px-4 max-sm:overflow-x-clip sm:my-37 sm:px-2"
     >
       {/* Grid */}
       <div className="mb-6 grid grid-cols-1 items-center gap-4 text-center sm:mb-10 sm:grid-cols-2 sm:gap-6 sm:text-left lg:grid-cols-3">

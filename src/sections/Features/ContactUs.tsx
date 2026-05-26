@@ -81,7 +81,7 @@ const ContactSection = () => {
   return (
     <div
       id="contact"
-      className="mx-auto my-14 w-full max-w-5xl scroll-mt-24 px-4 sm:my-16"
+      className="mx-auto my-14 w-full max-w-5xl scroll-mt-37 px-4 sm:my-26"
     >
       <motion.div
         className="relative w-full overflow-hidden rounded-3xl"

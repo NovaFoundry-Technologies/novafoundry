@@ -6,7 +6,7 @@ const ExpertServices = () => {
   return (
     <div
       id="what-we-do"
-      className="mx-auto my-14 min-h-0 w-full max-w-3xl scroll-mt-24 px-4 max-sm:overflow-x-clip sm:my-6 sm:min-h-[50vh]"
+      className="mx-auto my-14 min-h-0 w-full max-w-3xl scroll-mt-34 px-4 max-sm:overflow-x-clip sm:my-37 sm:min-h-[50vh]"
     >
       <div className="flex justify-center items-center">
         <SectionBadge label="What we do" />
