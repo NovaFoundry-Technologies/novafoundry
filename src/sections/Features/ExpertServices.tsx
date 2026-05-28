@@ -59,6 +59,7 @@ const ExpertServices = () => {
         <ExpandingCard
           startWidth="60%"
           title="Product Design"
+          products={["UX Research", "UI/UX Design"]}
           colorFrom="#FFDFAF"
           colorTo="#B5B5FF1A"
           delay={0}
@@ -68,6 +69,7 @@ const ExpertServices = () => {
           <ExpandingCard
             startWidth="80%"
             title="Web Design"
+            products={["Responsive Layouts", "Conversion Focused", "Modern Aesthetics"]}
             colorFrom="#FFF0D9"
             colorTo="#B5B5FF"
             delay={300}
@@ -77,6 +79,7 @@ const ExpertServices = () => {
         <ExpandingCard
           startWidth="70%"
           title="UI/UX Design"
+          products={["Wireframing", "Prototyping"]}
           colorFrom="#B5B5FF1A"
           colorTo="#FFE4BB"
           delay={600}
@@ -85,6 +88,7 @@ const ExpertServices = () => {
         <ExpandingCard
           startWidth="60%"
           title="Brand Identity"
+          products={["Logo Design", "Brand Creation"]}
           colorFrom="#B5B5FF1A"
           colorTo="#B5B5FF"
           delay={900}

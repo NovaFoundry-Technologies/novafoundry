@@ -2,6 +2,8 @@ import React, { memo, useEffect, useRef, useState } from "react";
 
 interface ExpandingCardProps {
   title: string;
+  product?: string | string[];
+  products?: string[];
   onClick?: () => void;
   startWidth?: string;
   delay?: number;
@@ -11,6 +13,8 @@ interface ExpandingCardProps {
 
 const ExpandingCard: React.FC<ExpandingCardProps> = ({
   title,
+  product,
+  products,
   onClick,
   startWidth = "40%",
   delay = 0,
@@ -41,37 +45,69 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
   }, [visible, delay]);
 
   const isWide = expanded || hovered;
+  const currentWidth = isWide ? "100%" : startWidth;
+  const productItems =
+    products ?? (Array.isArray(product) ? product : product ? [product] : []);
+  const widthTransition = `width ${isWide ? 1400 : 1200}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+  const buttonMaskOffset = "70px";
+  const productRevealStyle = {
+    opacity: visible ? 1 : 0,
+    clipPath: `inset(0 calc(100% - ${currentWidth} + ${buttonMaskOffset}) 0 0)`,
+    transition: `clip-path ${isWide ? 1400 : 1200}ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 500ms ${delay + 400}ms ease-out`,
+  };
 
   return (
-    <div ref={ref} className="w-full flex justify-start">
+    <div ref={ref} className="w-full">
       <div
-        className="overflow-hidden rounded-full"
+        className="relative min-h-[72px] rounded-full"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        style={{
-          width: isWide ? "100%" : startWidth,
-          background: `linear-gradient(105deg, ${colorFrom} 0%, ${colorTo} 100%)`,
-          boxShadow: isWide
-            ? `0 0 40px ${colorFrom}60, 0 0 80px ${colorTo}`
-            : "none",
-          opacity: visible ? 1 : 0.6,
-          // expand: 1400ms   collapse: 1200ms — both very slow and cinematic
-          transition: `width ${isWide ? 1400 : 1200}ms cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 800ms ease-out, opacity 600ms ${delay}ms ease-out`,
-        }}
       >
-        <div className="flex w-full items-center justify-between gap-4 px-5 py-4">
-          <span
-            className="whitespace-nowrap text-sm font-medium text-gray-700"
-            style={{
-              opacity: visible ? 1 : 0,
-              transition: `opacity 500ms ${delay + 400}ms ease-out`,
-            }}
-          >
-            {title}
-          </span>
+        <div
+          className="absolute inset-y-0 left-0 z-10 overflow-hidden rounded-full"
+          style={{
+            width: currentWidth,
+            background: `linear-gradient(105deg, ${colorFrom} 0%, ${colorTo} 100%)`,
+            boxShadow: isWide
+              ? `0 0 40px ${colorFrom}60, 0 0 80px ${colorTo}`
+              : "none",
+            opacity: visible ? 1 : 0.6,
+            transition: `${widthTransition}, box-shadow 800ms ease-out, opacity 600ms ${delay}ms ease-out`,
+          }}
+        >
+          <div className="flex h-full w-full items-center px-5 py-4">
+            <span className="whitespace-nowrap text-sm font-medium text-gray-700">
+              {title}
+            </span>
+          </div>
+        </div>
 
+        <div
+          className="pointer-events-none absolute inset-0 z-20 grid w-full grid-cols-[minmax(7.5rem,9.5rem)_minmax(0,1fr)_50px] items-center gap-3 overflow-hidden px-5 py-4 sm:grid-cols-[minmax(9.5rem,11.5rem)_minmax(0,1fr)_50px] sm:gap-4"
+          style={productRevealStyle}
+        >
+          <div className="col-start-2 flex min-w-0 items-center gap-x-4 overflow-hidden">
+            {productItems.map((item) => (
+              <span
+                key={item}
+                className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap text-sm font-normal font-[inter] font text-gray-500"
+              >
+                <span className="size-1.5 shrink-0 rounded-full bg-gray-500" />
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-30 flex items-center justify-end overflow-hidden rounded-full px-5 py-4"
+          style={{
+            width: currentWidth,
+            transition: widthTransition,
+          }}
+        >
           <button
-            className="flex items-center justify-center rounded-full active:scale-95 hover:brightness-105 transition-transform duration-150"
+            className="pointer-events-auto flex items-center justify-center rounded-full transition-transform duration-150 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 active:scale-95"
             onClick={onClick}
             style={{
               width: "50px",
