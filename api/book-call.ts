@@ -19,10 +19,68 @@ type BookingBody = {
   startTime?: unknown;
 };
 
+type ExternalApiError = Error & {
+  code?: number;
+  status?: number;
+  response?: {
+    status?: number;
+    data?: unknown;
+  };
+};
+
 const getString = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";
 
+const logBookingStep = (step: string, details?: Record<string, unknown>) => {
+  console.log("[book-call]", step, details ?? {});
+};
+
+const getExternalStatus = (error: unknown) => {
+  const apiError = error as Partial<ExternalApiError>;
+
+  return apiError.response?.status ?? apiError.status ?? apiError.code;
+};
+
+const getClientErrorMessage = (error: unknown) => {
+  const status = getExternalStatus(error);
+
+  if (status === 404) {
+    return "Google Calendar was not found or is not shared with the service account";
+  }
+
+  if (status === 401 || status === 403) {
+    return "Google Calendar authentication failed. Check service account permissions";
+  }
+
+  return error instanceof Error ? error.message : "Failed to book call";
+};
+
+const requiredEnv = [
+  "GOOGLE_CLIENT_EMAIL",
+  "GOOGLE_PRIVATE_KEY",
+  "GOOGLE_CALENDAR_ID",
+  "GMAIL_USER",
+  "GMAIL_APP_PASSWORD",
+] as const;
+
+const getMissingEnv = () => requiredEnv.filter((key) => !process.env[key]);
+
 function getCalendar() {
+  const missingEnv = getMissingEnv().filter((key) =>
+    key.startsWith("GOOGLE_"),
+  );
+
+  logBookingStep("creating Google Calendar client", {
+    hasClientEmail: Boolean(process.env.GOOGLE_CLIENT_EMAIL),
+    hasPrivateKey: Boolean(process.env.GOOGLE_PRIVATE_KEY),
+    hasCalendarId: Boolean(process.env.GOOGLE_CALENDAR_ID),
+    missingEnv,
+  });
+
+  if (missingEnv.length > 0) {
+    throw new Error(`Missing Google Calendar env vars: ${missingEnv.join(", ")}`);
+  }
+
   const auth = new google.auth.JWT({
     email: process.env.GOOGLE_CLIENT_EMAIL!,
     key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
@@ -41,17 +99,53 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
+  logBookingStep("request received", {
+    method: req.method,
+  });
+
   if (req.method !== "POST") {
+    logBookingStep("request rejected: invalid method", {
+      method: req.method,
+    });
+
     return res.status(405).json({ error: "POST only" });
   }
 
   try {
+    const missingEnv = getMissingEnv();
+
+    if (missingEnv.length > 0) {
+      logBookingStep("request rejected: missing environment variables", {
+        missingEnv,
+      });
+
+      return res.status(500).json({
+        error: `Missing server configuration: ${missingEnv.join(", ")}`,
+      });
+    }
+
+    logBookingStep("parsing request body");
+
     const body = (req.body ?? {}) as BookingBody;
     const name = getString(body.name);
     const email = getString(body.email);
     const startTime = getString(body.startTime);
 
+    logBookingStep("request body parsed", {
+      hasName: Boolean(name),
+      hasEmail: Boolean(email),
+      hasStartTime: Boolean(startTime),
+      emailDomain: email.includes("@") ? email.split("@").pop() : undefined,
+      startTime,
+    });
+
     if (!name || !email || !startTime) {
+      logBookingStep("request rejected: missing required fields", {
+        hasName: Boolean(name),
+        hasEmail: Boolean(email),
+        hasStartTime: Boolean(startTime),
+      });
+
       return res.status(400).json({
         error: "Name, email, and start time are required",
       });
@@ -60,6 +154,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     const start = new Date(startTime);
 
     if (Number.isNaN(start.getTime())) {
+      logBookingStep("request rejected: invalid start time", {
+        startTime,
+      });
+
       return res.status(400).json({
         error: "Start time must be a valid date",
       });
@@ -68,17 +166,40 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     const calendar = getCalendar();
     const end = new Date(start.getTime() + 30 * 60000);
 
+    logBookingStep("checking calendar conflicts", {
+      calendarIdPresent: Boolean(process.env.GOOGLE_CALENDAR_ID),
+      timeMin: start.toISOString(),
+      timeMax: end.toISOString(),
+    });
+
     const existing = await calendar.events.list({
       calendarId: process.env.GOOGLE_CALENDAR_ID!,
       timeMin: start.toISOString(),
       timeMax: end.toISOString(),
     });
 
-    if ((existing.data.items?.length ?? 0) > 0) {
+    const conflictCount = existing.data.items?.length ?? 0;
+
+    logBookingStep("calendar conflict check complete", {
+      conflictCount,
+    });
+
+    if (conflictCount > 0) {
+      logBookingStep("request rejected: slot already booked", {
+        timeMin: start.toISOString(),
+        timeMax: end.toISOString(),
+      });
+
       return res.status(409).json({
         error: "This slot is already booked",
       });
     }
+
+    logBookingStep("creating calendar event", {
+      attendeeDomain: email.includes("@") ? email.split("@").pop() : undefined,
+      timeMin: start.toISOString(),
+      timeMax: end.toISOString(),
+    });
 
     const event = await calendar.events.insert({
       calendarId: process.env.GOOGLE_CALENDAR_ID!,
@@ -101,6 +222,17 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
     const meetLink = event.data.hangoutLink;
 
+    logBookingStep("calendar event created", {
+      eventId: event.data.id,
+      hasMeetLink: Boolean(meetLink),
+    });
+
+    logBookingStep("sending confirmation email", {
+      hasGmailUser: Boolean(process.env.GMAIL_USER),
+      hasGmailAppPassword: Boolean(process.env.GMAIL_APP_PASSWORD),
+      recipientDomain: email.includes("@") ? email.split("@").pop() : undefined,
+    });
+
     await transporter.sendMail({
       from: process.env.GMAIL_USER,
       to: email,
@@ -112,13 +244,27 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       `,
     });
 
+    logBookingStep("confirmation email sent");
+
+    logBookingStep("booking completed", {
+      eventId: event.data.id,
+      hasMeetLink: Boolean(meetLink),
+    });
+
     return res.json({
       success: true,
       meetLink,
     });
   } catch (err) {
+    console.error("[book-call] booking failed", {
+      message: err instanceof Error ? err.message : "Unknown error",
+      status: getExternalStatus(err),
+      responseData: (err as Partial<ExternalApiError>).response?.data,
+      stack: err instanceof Error ? err.stack : undefined,
+    });
+
     return res.status(500).json({
-      error: err instanceof Error ? err.message : "Failed to book call",
+      error: getClientErrorMessage(err),
     });
   }
 }
