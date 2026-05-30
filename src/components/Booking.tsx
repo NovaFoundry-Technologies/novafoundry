@@ -91,6 +91,27 @@ function getErrorMessage(error: unknown, fallback: string) {
   return error instanceof Error ? error.message : fallback;
 }
 
+async function readApiResponse<T extends { error?: string }>(
+  response: Response,
+  fallback: string,
+) {
+  const text = await response.text();
+
+  if (!text) {
+    return {
+      error: `${fallback}: empty response (${response.status})`,
+    } as T;
+  }
+
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    return {
+      error: `${fallback}: non-JSON response (${response.status})`,
+    } as T;
+  }
+}
+
 export default function Booking() {
   const [date, setDate] = useState(getTodayValue);
   const [busySlots, setBusySlots] = useState<BusySlot[]>([]);
@@ -132,7 +153,10 @@ export default function Booking() {
           `/api/availability?date=${encodeURIComponent(date)}`,
           { signal: controller.signal },
         );
-        const data = (await response.json()) as AvailabilityResponse;
+        const data = await readApiResponse<AvailabilityResponse>(
+          response,
+          "Failed to load availability",
+        );
 
         if (!response.ok) {
           throw new Error(data.error ?? "Failed to load availability");
@@ -207,7 +231,10 @@ export default function Booking() {
           startTime: selectedSlot.toISOString(),
         }),
       });
-      const data = (await response.json()) as BookingResponse;
+      const data = await readApiResponse<BookingResponse>(
+        response,
+        "Failed to book call",
+      );
 
       if (!response.ok || !data.success) {
         throw new Error(data.error ?? "Failed to book call");
@@ -221,8 +248,10 @@ export default function Booking() {
       const availability = await fetch(
         `/api/availability?date=${encodeURIComponent(date)}`,
       );
-      const availabilityData =
-        (await availability.json()) as AvailabilityResponse;
+      const availabilityData = await readApiResponse<AvailabilityResponse>(
+        availability,
+        "Failed to refresh availability",
+      );
 
       if (availability.ok) {
         setBusySlots(availabilityData.busySlots ?? []);

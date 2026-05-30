@@ -21,6 +21,24 @@ const initialForm: BookingForm = {
   startTime: "",
 };
 
+async function readBookingResponse(response: Response) {
+  const text = await response.text();
+
+  if (!text) {
+    return {
+      error: `Booking API returned an empty response (${response.status})`,
+    } satisfies BookingResponse;
+  }
+
+  try {
+    return JSON.parse(text) as BookingResponse;
+  } catch {
+    return {
+      error: `Booking API returned a non-JSON response (${response.status})`,
+    } satisfies BookingResponse;
+  }
+}
+
 function Button() {
   const titleId = useId();
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +91,7 @@ function Button() {
         body: JSON.stringify(formData),
       });
 
-      const data = (await response.json()) as BookingResponse;
+      const data = await readBookingResponse(response);
 
       if (!response.ok || !data.success) {
         throw new Error(data.error ?? "Failed to book call");
