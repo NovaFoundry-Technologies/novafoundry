@@ -228,18 +228,18 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       conferenceDataVersion: 1,
       requestBody: {
         summary: `Call with ${name}`,
+        description: `Booked by ${name} (${email})`,
         start: { dateTime: start.toISOString() },
         end: { dateTime: end.toISOString() },
-        attendees: [{ email }],
         conferenceData: {
-          createRequest: {
+            createRequest: {
             requestId: Date.now().toString(),
             conferenceSolutionKey: {
-              type: "hangoutsMeet",
+                type: "hangoutsMeet",
             },
-          },
+            },
         },
-      },
+        },
     });
 
     const meetLink = event.data.hangoutLink;
