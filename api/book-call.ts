@@ -198,8 +198,8 @@ const buildConfirmationEmail = ({
           <tr>
             <td style="background-color:#FFF8EF;background:linear-gradient(135deg,#FFF8EF 0%,#F6F7FF 54%,#EAF6FF 100%);padding:30px 28px 26px 28px;text-align:center;">
               <img src="cid:novafoundry-logo" width="138" alt="Nova Foundry" style="display:inline-block;border:0;outline:none;text-decoration:none;margin-bottom:22px;" />
-              <h1 style="color:#171717;font-size:26px;line-height:34px;margin:0 0 8px 0;font-weight:700;">Your booking is confirmed</h1>
-              <p style="color:#5F6677;font-size:15px;line-height:24px;margin:0;">Hi ${safeName}, you're all set for your free strategy call.</p>
+              <h1 style="color:#171717;font-family:Syne,Inter,Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:26px;line-height:34px;margin:0 0 8px 0;font-weight:700;">Your booking is confirmed</h1>
+              <p style="color:#5F6677;font-family:Inter,Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;line-height:24px;margin:0;">Hi ${safeName}, you're all set for your free strategy call.</p>
             </td>
           </tr>
 
@@ -228,9 +228,9 @@ const buildConfirmationEmail = ({
               <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#F8F9FC;border-radius:14px;border:1px solid #EEF0F6;margin-bottom:26px;">
                 <tr>
                   <td style="padding:20px;">
-                    <p style="margin:0 0 12px 0;color:#374151;font-size:15px;line-height:22px;"><strong>Service:</strong> Free strategy call</p>
-                    <p style="margin:0 0 12px 0;color:#374151;font-size:15px;line-height:22px;"><strong>Provider:</strong> Nova Foundry</p>
-                    <p style="margin:0;color:#374151;font-size:15px;line-height:22px;"><strong>Location:</strong> ${locationMarkup}</p>
+                    <!-- <p style="margin:0 0 12px 0;color:#374151;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;"><strong>Service:</strong> Free strategy call</p> -->
+                    <p style="margin:0 0 12px 0;color:#374151;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;marginBottom:12px;"><strong>Provider:</strong> Nova Foundry</p>
+                    <p style="margin:0;color:#374151;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;"><strong>Location:</strong> ${locationMarkup}</p>
                   </td>
                 </tr>
               </table>
@@ -238,7 +238,7 @@ const buildConfirmationEmail = ({
               <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:22px;">
                 <tr>
                   <td align="center" style="background-color:#F3CB7A;border-radius:12px;box-shadow:0 10px 24px rgba(239,198,119,0.28);">
-                    <a href="${escapeHtml(calendarLink)}" target="_blank" style="display:block;padding:15px 24px;color:#171717;text-decoration:none;font-weight:800;font-size:15px;">Add to Google Calendar</a>
+                    <a href="${escapeHtml(calendarLink)}" target="_blank" style="display:block;padding:15px 24px;font-family:inter,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:15px;color:#171717;text-decoration:none;">Add to Google Calendar</a>
                   </td>
                 </tr>
               </table>
