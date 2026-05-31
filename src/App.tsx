@@ -5,6 +5,7 @@ import { ProjectMethod } from "./sections/Features";
 import Navbar from "./components/layout/Navbar";
 import TrustedPartners from "./sections/Features/TrustedPartners";
 import Footer from "./components/layout/Footer";
+import ScrollToTop from "./components/ui/ScrollToTop";
 
 const SITE_URL = "https://novafoundry.org";
 
@@ -22,15 +23,14 @@ const ContactUs = lazy(() => import("./sections/Features/ContactUs"));
 function App() {
   return (
     <>
+      <Seo
+        title="Build Products Faster"
+        description="NovaFoundry builds modern web experiences with performance, SEO, and scalability from day one."
+        url={SITE_URL}
+      />
       <div className="w-full max-sm:overflow-x-clip">
         <Navbar />
-        <Hero />
-
-        <Seo
-          title="Build Products Faster"
-          description="NovaFoundry builds modern web experiences with performance, SEO, and scalability from day one."
-          url={SITE_URL}
-        />
+        <Hero id="hero" />
 
         <TrustedPartners />
 
@@ -47,6 +47,7 @@ function App() {
           <ContactUs />
         </Suspense>
 
+        <ScrollToTop />
         <Footer />
       </div>
     </>
