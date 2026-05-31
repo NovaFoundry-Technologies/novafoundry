@@ -22,6 +22,7 @@ type BookingBody = {
 type ExternalApiError = Error & {
   code?: number;
   status?: number;
+  responseCode?: number;
   response?: {
     status?: number;
     data?: unknown;
@@ -38,18 +39,31 @@ const logBookingStep = (step: string, details?: Record<string, unknown>) => {
 const getExternalStatus = (error: unknown) => {
   const apiError = error as Partial<ExternalApiError>;
 
-  return apiError.response?.status ?? apiError.status ?? apiError.code;
+  return (
+    apiError.response?.status ??
+    apiError.status ??
+    apiError.responseCode ??
+    apiError.code
+  );
 };
 
-const getClientErrorMessage = (error: unknown) => {
+const getClientErrorMessage = (error: unknown, stage: string) => {
   const status = getExternalStatus(error);
 
   if (status === 404) {
     return "Google Calendar was not found or is not shared with the service account";
   }
 
+  if (stage === "create_calendar_event" && (status === 401 || status === 403)) {
+    return "Google Calendar can be read, but event creation is blocked. Give the service account 'Make changes to events' permission on the calendar";
+  }
+
+  if (stage === "send_confirmation_email") {
+    return "Booking was created, but the confirmation email failed. Check GMAIL_USER and GMAIL_APP_PASSWORD";
+  }
+
   if (status === 401 || status === 403) {
-    return "Google Calendar authentication failed. Check service account permissions";
+    return "Google Calendar authentication failed during booking. Check service account permissions";
   }
 
   return error instanceof Error ? error.message : "Failed to book call";
@@ -99,6 +113,8 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
+  let stage = "start";
+
   logBookingStep("request received", {
     method: req.method,
   });
@@ -112,6 +128,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   try {
+    stage = "validate_environment";
     const missingEnv = getMissingEnv();
 
     if (missingEnv.length > 0) {
@@ -124,6 +141,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       });
     }
 
+    stage = "parse_request_body";
     logBookingStep("parsing request body");
 
     const body = (req.body ?? {}) as BookingBody;
@@ -151,6 +169,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       });
     }
 
+    stage = "validate_start_time";
     const start = new Date(startTime);
 
     if (Number.isNaN(start.getTime())) {
@@ -163,9 +182,11 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       });
     }
 
+    stage = "create_calendar_client";
     const calendar = getCalendar();
     const end = new Date(start.getTime() + 30 * 60000);
 
+    stage = "check_calendar_conflicts";
     logBookingStep("checking calendar conflicts", {
       calendarIdPresent: Boolean(process.env.GOOGLE_CALENDAR_ID),
       timeMin: start.toISOString(),
@@ -195,6 +216,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       });
     }
 
+    stage = "create_calendar_event";
     logBookingStep("creating calendar event", {
       attendeeDomain: email.includes("@") ? email.split("@").pop() : undefined,
       timeMin: start.toISOString(),
@@ -227,6 +249,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       hasMeetLink: Boolean(meetLink),
     });
 
+    stage = "send_confirmation_email";
     logBookingStep("sending confirmation email", {
       hasGmailUser: Boolean(process.env.GMAIL_USER),
       hasGmailAppPassword: Boolean(process.env.GMAIL_APP_PASSWORD),
@@ -246,6 +269,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
     logBookingStep("confirmation email sent");
 
+    stage = "complete";
     logBookingStep("booking completed", {
       eventId: event.data.id,
       hasMeetLink: Boolean(meetLink),
@@ -257,14 +281,18 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     });
   } catch (err) {
     console.error("[book-call] booking failed", {
+      stage,
       message: err instanceof Error ? err.message : "Unknown error",
       status: getExternalStatus(err),
+      code: (err as Partial<ExternalApiError>).code,
+      responseCode: (err as Partial<ExternalApiError>).responseCode,
       responseData: (err as Partial<ExternalApiError>).response?.data,
       stack: err instanceof Error ? err.stack : undefined,
     });
 
     return res.status(500).json({
-      error: getClientErrorMessage(err),
+      error: getClientErrorMessage(err, stage),
+      stage,
     });
   }
 }
