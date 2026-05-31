@@ -91,6 +91,7 @@ const requiredEnv = [
 ] as const;
 
 const getMissingEnv = () => requiredEnv.filter((key) => !process.env[key]);
+const maxBookingsPerDay = 5;
 
 const escapeHtml = (value: string) =>
   value
@@ -356,9 +357,23 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       });
     }
 
+    if (start.getTime() <= Date.now()) {
+      logBookingStep("request rejected: past start time", {
+        startTime: start.toISOString(),
+      });
+
+      return res.status(400).json({
+        error: "Past dates and times cannot be booked",
+      });
+    }
+
     stage = "create_calendar_client";
     const calendar = getCalendar();
     const end = new Date(start.getTime() + 30 * 60000);
+    const startOfDay = new Date(start);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(start);
+    endOfDay.setHours(23, 59, 59, 999);
 
     stage = "check_calendar_conflicts";
     logBookingStep("checking calendar conflicts", {
@@ -366,6 +381,31 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       timeMin: start.toISOString(),
       timeMax: end.toISOString(),
     });
+
+    const dayEvents = await calendar.events.list({
+      calendarId: process.env.GOOGLE_CALENDAR_ID!,
+      timeMin: startOfDay.toISOString(),
+      timeMax: endOfDay.toISOString(),
+      singleEvents: true,
+    });
+
+    const dayBookingCount = dayEvents.data.items?.length ?? 0;
+
+    logBookingStep("daily booking limit check complete", {
+      dayBookingCount,
+      maxBookingsPerDay,
+    });
+
+    if (dayBookingCount >= maxBookingsPerDay) {
+      logBookingStep("request rejected: date fully booked", {
+        date: startOfDay.toISOString(),
+        dayBookingCount,
+      });
+
+      return res.status(409).json({
+        error: "This date is fully booked",
+      });
+    }
 
     const existing = await calendar.events.list({
       calendarId: process.env.GOOGLE_CALENDAR_ID!,

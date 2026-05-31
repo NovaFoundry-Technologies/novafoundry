@@ -33,13 +33,26 @@ type BookingForm = {
 
 type SlotState = {
   time: Date;
+  isBooked: boolean;
+  isPast: boolean;
   isFree: boolean;
+};
+
+type DateOption = {
+  value: string;
+  label: string;
+  day: string;
+  bookedCount: number;
+  isFull: boolean;
 };
 
 const initialForm: BookingForm = {
   name: "",
   email: "",
 };
+
+const maxBookingsPerDay = 5;
+const dateWindowDays = 14;
 
 const slotFormatter = new Intl.DateTimeFormat([], {
   hour: "numeric",
@@ -52,11 +65,32 @@ const longDateFormatter = new Intl.DateTimeFormat([], {
   day: "numeric",
 });
 
+const shortWeekdayFormatter = new Intl.DateTimeFormat([], {
+  weekday: "short",
+});
+
+const dayFormatter = new Intl.DateTimeFormat([], {
+  day: "numeric",
+});
+
 function getTodayValue() {
   const today = new Date();
   const offset = today.getTimezoneOffset() * 60000;
 
   return new Date(today.getTime() - offset).toISOString().slice(0, 10);
+}
+
+function getDateValue(date: Date) {
+  const offset = date.getTimezoneOffset() * 60000;
+
+  return new Date(date.getTime() - offset).toISOString().slice(0, 10);
+}
+
+function addDays(date: Date, days: number) {
+  const nextDate = new Date(date);
+  nextDate.setDate(nextDate.getDate() + days);
+
+  return nextDate;
 }
 
 function generateSlots(date: string) {
@@ -72,15 +106,19 @@ function generateSlots(date: string) {
   return slots;
 }
 
-function isSlotFree(slot: Date, busySlots: BusySlot[]) {
+function isSlotBooked(slot: Date, busySlots: BusySlot[]) {
   const slotEnd = new Date(slot.getTime() + 30 * 60000);
 
-  return !busySlots.some((busySlot) => {
+  return busySlots.some((busySlot) => {
     const busyStart = new Date(busySlot.start);
     const busyEnd = new Date(busySlot.end);
 
     return slot < busyEnd && slotEnd > busyStart;
   });
+}
+
+function isSlotFree(slot: Date, busySlots: BusySlot[]) {
+  return !isSlotBooked(slot, busySlots);
 }
 
 function isSlotBookable(slot: Date, busySlots: BusySlot[]) {
@@ -120,17 +158,55 @@ export default function Booking() {
   const [availabilityError, setAvailabilityError] = useState("");
   const [bookingMessage, setBookingMessage] = useState("");
   const [meetLink, setMeetLink] = useState("");
+  const [dateAvailability, setDateAvailability] = useState<
+    Record<string, BusySlot[]>
+  >({});
+  const [nowMs, setNowMs] = useState(() => Date.now());
   const [isLoadingAvailability, setIsLoadingAvailability] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
   const [reloadToken, setReloadToken] = useState(0);
 
+  const dateRangeValues = useMemo(() => {
+    const today = new Date(`${getTodayValue()}T00:00:00`);
+
+    return Array.from({ length: dateWindowDays }, (_, index) =>
+      getDateValue(addDays(today, index)),
+    );
+  }, []);
+
+  const dateOptions = useMemo<DateOption[]>(() => {
+    return dateRangeValues.map((value) => {
+      const optionDate = new Date(`${value}T00:00:00`);
+      const bookedCount = dateAvailability[value]?.length ?? 0;
+
+      return {
+        value,
+        label: shortWeekdayFormatter.format(optionDate),
+        day: dayFormatter.format(optionDate),
+        bookedCount,
+        isFull: bookedCount >= maxBookingsPerDay,
+      };
+    });
+  }, [dateAvailability, dateRangeValues]);
+
+  const lastDateValue = dateRangeValues[dateRangeValues.length - 1];
+  const selectedDateBookedCount = dateAvailability[date]?.length ?? 0;
+  const isSelectedDateFull = selectedDateBookedCount >= maxBookingsPerDay;
+
   const slots = useMemo<SlotState[]>(
     () =>
-      generateSlots(date).map((slot) => ({
-        time: slot,
-        isFree: isSlotBookable(slot, busySlots),
-      })),
-    [busySlots, date],
+      generateSlots(date).map((slot) => {
+        const isBooked = isSlotBooked(slot, busySlots);
+        const isPast = slot.getTime() <= nowMs;
+
+        return {
+          time: slot,
+          isBooked,
+          isPast,
+          isFree: !isSelectedDateFull && !isPast && !isBooked,
+        };
+      }),
+    [busySlots, date, isSelectedDateFull, nowMs],
   );
 
   const selectedLabel = selectedSlot
@@ -149,24 +225,37 @@ export default function Booking() {
       setMeetLink("");
 
       try {
-        const response = await fetch(
-          `/api/availability?date=${encodeURIComponent(date)}`,
-          { signal: controller.signal },
-        );
-        const data = await readApiResponse<AvailabilityResponse>(
-          response,
-          "Failed to load availability",
-        );
+        const nextAvailability = await Promise.all(
+          dateRangeValues.map(async (dateValue) => {
+            const response = await fetch(
+              `/api/availability?date=${encodeURIComponent(dateValue)}`,
+              { signal: controller.signal },
+            );
+            const data = await readApiResponse<AvailabilityResponse>(
+              response,
+              "Failed to load availability",
+            );
 
-        if (!response.ok) {
-          throw new Error(data.error ?? "Failed to load availability");
-        }
+            if (!response.ok) {
+              throw new Error(data.error ?? "Failed to load availability");
+            }
 
-        setBusySlots(data.busySlots ?? []);
+            return [dateValue, data.busySlots ?? []] as const;
+          }),
+        );
+        const availabilityMap = Object.fromEntries(nextAvailability);
+        const selectedBusySlots = availabilityMap[date] ?? [];
+
+        setDateAvailability(availabilityMap);
+        setBusySlots(selectedBusySlots);
         setSelectedSlot((current) => {
           if (!current) return null;
 
-          const nextIsFree = isSlotBookable(current, data.busySlots ?? []);
+          const currentDate = getDateValue(current);
+          const currentDayBusySlots = availabilityMap[currentDate] ?? [];
+          const nextIsFull = currentDayBusySlots.length >= maxBookingsPerDay;
+          const nextIsFree =
+            !nextIsFull && isSlotBookable(current, currentDayBusySlots);
 
           return nextIsFree ? current : null;
         });
@@ -190,7 +279,15 @@ export default function Booking() {
     loadAvailability();
 
     return () => controller.abort();
-  }, [date, reloadToken]);
+  }, [date, dateRangeValues, reloadToken]);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setNowMs(Date.now());
+    }, 60000);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData((current) => ({
@@ -201,8 +298,28 @@ export default function Booking() {
   };
 
   const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDate(event.target.value);
+    const nextDate = event.target.value;
+    const today = getTodayValue();
+
+    if (nextDate < today) {
+      setDate(today);
+    } else if (lastDateValue && nextDate > lastDateValue) {
+      setDate(lastDateValue);
+    } else {
+      setDate(nextDate);
+    }
+
     setSelectedSlot(null);
+  };
+
+  const handleDateSelect = (nextDate: string, isFull: boolean) => {
+    if (isFull) return;
+
+    setDate(nextDate);
+    setBusySlots(dateAvailability[nextDate] ?? []);
+    setSelectedSlot(null);
+    setBookingMessage("");
+    setMeetLink("");
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -212,6 +329,16 @@ export default function Booking() {
 
     if (!selectedSlot) {
       setBookingMessage("Choose an available time slot first.");
+      return;
+    }
+
+    if (getDateValue(selectedSlot) < getTodayValue()) {
+      setBookingMessage("Past dates cannot be booked.");
+      return;
+    }
+
+    if (isSelectedDateFull) {
+      setBookingMessage("This date is fully booked.");
       return;
     }
 
@@ -254,7 +381,13 @@ export default function Booking() {
       );
 
       if (availability.ok) {
-        setBusySlots(availabilityData.busySlots ?? []);
+        const refreshedSlots = availabilityData.busySlots ?? [];
+
+        setBusySlots(refreshedSlots);
+        setDateAvailability((current) => ({
+          ...current,
+          [date]: refreshedSlots,
+        }));
       }
     } catch (error) {
       setBookingMessage(getErrorMessage(error, "Failed to book call"));
@@ -284,16 +417,16 @@ export default function Booking() {
 
             <div className="mt-8 grid gap-3 text-sm text-gray-700">
               <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#E8B85F] shadow-sm">
+                <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#E8B85F] shadow-sm">
                   <FiClock />
                 </span>
                 30 minutes
               </div>
               <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#8B7CFF] shadow-sm">
+                <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#8B7CFF] shadow-sm">
                   <FiCheckCircle />
                 </span>
-                Booked slots are blocked automatically
+                Maximum 5 bookings per date
               </div>
             </div>
           </div>
@@ -339,10 +472,44 @@ export default function Booking() {
                 type="date"
                 value={date}
                 min={getTodayValue()}
+                max={lastDateValue}
                 onChange={handleDateChange}
                 className="w-full rounded-2xl border border-gray-200 bg-white px-3 py-3 text-sm font-normal text-gray-900 outline-none transition focus:border-[#EFC677] focus:ring-4 focus:ring-[#F8D38A]/20"
               />
             </label>
+
+            <div className="mt-4 grid grid-cols-4 gap-2 sm:grid-cols-7">
+              {dateOptions.map((option) => {
+                const isSelected = option.value === date;
+
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    disabled={option.isFull || isLoadingAvailability}
+                    onClick={() => handleDateSelect(option.value, option.isFull)}
+                    className={`relative min-h-20 rounded-2xl border px-2 py-3 text-center transition ${
+                      isSelected
+                        ? "border-[#EFC677] bg-[#FFF4DC] ring-4 ring-[#F8D38A]/20"
+                        : "border-gray-200 bg-white hover:border-[#EFC677] hover:bg-[#FFF9EC]"
+                    } disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-300`}
+                  >
+                    {option.bookedCount > 0 && (
+                      <span className="absolute right-2 top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold leading-none text-white">
+                        {option.bookedCount}
+                      </span>
+                    )}
+                    <FiCalendar className="mx-auto mb-1 text-[#E8B85F]" />
+                    <span className="block text-[11px] font-medium text-gray-500">
+                      {option.label}
+                    </span>
+                    <span className="block text-lg font-semibold text-gray-950">
+                      {option.day}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
 
             <div className="mt-6 flex items-center justify-between gap-3">
               <div>
@@ -387,12 +554,13 @@ export default function Booking() {
                         setBookingMessage("");
                         setMeetLink("");
                       }}
-                      className={`min-h-12 rounded-2xl border px-3 py-2 text-sm font-medium transition ${
+                      className={`flex min-h-12 items-center justify-center gap-2 rounded-2xl border px-3 py-2 text-sm font-medium transition ${
                         isSelected
                           ? "border-[#EFC677] bg-[#FFF4DC] text-gray-950 ring-4 ring-[#F8D38A]/20"
                           : "border-gray-200 bg-white text-gray-800 hover:border-[#EFC677] hover:bg-[#FFF9EC]"
                       } disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-300`}
                     >
+                      <FiClock className="shrink-0" />
                       {slotFormatter.format(slot.time)}
                     </button>
                   );
