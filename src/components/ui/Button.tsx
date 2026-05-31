@@ -215,7 +215,7 @@ function Button() {
               rounded-xl
               bg-gradient-to-b from-[#F8D38A] to-[#F3CB7A]
               px-3 py-1.5 shadow-[inset_0_4px_10px_rgba(255,255,255,0.35)]
-              sm:px-4
+              sm:px-4 cursor-pointer
             "
           >
             <span className="whitespace-nowrap font-['inter'] text-sm font-extralight text-black">
