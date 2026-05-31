@@ -1,5 +1,7 @@
 import { google } from "googleapis";
 import nodemailer from "nodemailer";
+import fs from "node:fs";
+import path from "node:path";
 
 type ApiRequest = {
   method?: string;
@@ -31,6 +33,8 @@ type ExternalApiError = Error & {
 
 const getString = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";
+
+const logoPath = path.join(process.cwd(), "src", "assets", "novahero.png");
 
 const logBookingStep = (step: string, details?: Record<string, unknown>) => {
   console.log("[book-call]", step, details ?? {});
@@ -87,6 +91,167 @@ const requiredEnv = [
 ] as const;
 
 const getMissingEnv = () => requiredEnv.filter((key) => !process.env[key]);
+
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+const formatDateParts = (start: Date, end: Date) => {
+  const month = new Intl.DateTimeFormat("en", {
+    month: "short",
+    timeZone: "UTC",
+  }).format(start);
+  const day = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+    timeZone: "UTC",
+  }).format(start);
+  const fullDate = new Intl.DateTimeFormat("en", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(start);
+  const timeFormatter = new Intl.DateTimeFormat("en", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  });
+
+  return {
+    month,
+    day,
+    fullDate,
+    timeRange: `${timeFormatter.format(start)} - ${timeFormatter.format(end)}`,
+  };
+};
+
+const getCalendarTemplateLink = ({
+  name,
+  start,
+  end,
+  meetLink,
+}: {
+  name: string;
+  start: Date;
+  end: Date;
+  meetLink: string | undefined;
+}) => {
+  const formatGoogleDate = (value: Date) =>
+    value.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: "Nova Foundry Strategy Call",
+    dates: `${formatGoogleDate(start)}/${formatGoogleDate(end)}`,
+    details: meetLink
+      ? `Strategy call with Nova Foundry. Join here: ${meetLink}`
+      : `Strategy call with Nova Foundry for ${name}. Meeting link will be sent separately.`,
+    location: meetLink ?? "Online",
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+};
+
+const buildConfirmationEmail = ({
+  name,
+  start,
+  end,
+  meetLink,
+}: {
+  name: string;
+  start: Date;
+  end: Date;
+  meetLink: string | undefined;
+}) => {
+  const safeName = escapeHtml(name);
+  const safeMeetLink = meetLink ? escapeHtml(meetLink) : "";
+  const { month, day, fullDate, timeRange } = formatDateParts(start, end);
+  const calendarLink = getCalendarTemplateLink({ name, start, end, meetLink });
+  const locationMarkup = meetLink
+    ? `Google Meet <a href="${safeMeetLink}" style="color:#7C6DFF;text-decoration:none;font-weight:700;">(Join meeting)</a>`
+    : "Online meeting link will be sent separately";
+
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Booking is Confirmed</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td, h1, p, a { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+</head>
+<body style="margin:0;padding:0;background-color:#F7F8FC;font-family:Inter,Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#F7F8FC;padding:40px 18px;">
+    <tr>
+      <td align="center">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:620px;background-color:#FFFFFF;border-radius:18px;overflow:hidden;border:1px solid #ECEEF5;box-shadow:0 18px 50px rgba(16,24,40,0.08);">
+          <tr>
+            <td style="background-color:#FFF8EF;background:linear-gradient(135deg,#FFF8EF 0%,#F6F7FF 54%,#EAF6FF 100%);padding:30px 28px 26px 28px;text-align:center;">
+              <img src="cid:novafoundry-logo" width="138" alt="Nova Foundry" style="display:inline-block;border:0;outline:none;text-decoration:none;margin-bottom:22px;" />
+              <h1 style="color:#171717;font-size:26px;line-height:34px;margin:0 0 8px 0;font-weight:700;">Your booking is confirmed</h1>
+              <p style="color:#5F6677;font-size:15px;line-height:24px;margin:0;">Hi ${safeName}, you're all set for your free strategy call.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:28px;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #ECEEF5;border-radius:14px;margin-bottom:22px;">
+                <tr>
+                  <td style="padding:22px;" valign="middle">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td width="68" align="center" valign="middle" style="border:1px solid #EFE3C8;border-radius:12px;overflow:hidden;background-color:#FFFBF1;">
+                          <div style="background-color:#F3CB7A;color:#171717;font-size:12px;font-weight:700;padding:7px 0;text-transform:uppercase;">${escapeHtml(month)}</div>
+                          <div style="color:#171717;font-size:30px;font-weight:800;line-height:42px;padding:5px 0;">${escapeHtml(day)}</div>
+                        </td>
+                        <td style="padding-left:20px;" valign="middle">
+                          <p style="margin:0 0 5px 0;color:#171717;font-weight:700;font-size:16px;line-height:22px;">${escapeHtml(fullDate)}</p>
+                          <p style="margin:0 0 9px 0;color:#667085;font-size:14px;line-height:20px;">${escapeHtml(timeRange)}</p>
+                          <p style="margin:0;color:#12B76A;font-size:14px;font-weight:700;">&#9679; Confirmed</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#F8F9FC;border-radius:14px;border:1px solid #EEF0F6;margin-bottom:26px;">
+                <tr>
+                  <td style="padding:20px;">
+                    <p style="margin:0 0 12px 0;color:#374151;font-size:15px;line-height:22px;"><strong>Service:</strong> Free strategy call</p>
+                    <p style="margin:0 0 12px 0;color:#374151;font-size:15px;line-height:22px;"><strong>Provider:</strong> Nova Foundry</p>
+                    <p style="margin:0;color:#374151;font-size:15px;line-height:22px;"><strong>Location:</strong> ${locationMarkup}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:22px;">
+                <tr>
+                  <td align="center" style="background-color:#F3CB7A;border-radius:12px;box-shadow:0 10px 24px rgba(239,198,119,0.28);">
+                    <a href="${escapeHtml(calendarLink)}" target="_blank" style="display:block;padding:15px 24px;color:#171717;text-decoration:none;font-weight:800;font-size:15px;">Add to Google Calendar</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:0;text-align:center;color:#667085;font-size:13px;line-height:21px;">Need to reschedule or cancel? Reply to this email and we'll help you adjust it.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+};
 
 function getCalendar() {
   const missingEnv = getMissingEnv().filter((key) =>
@@ -276,7 +441,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       });
     }
 
-    const meetLink = event.data.hangoutLink;
+    const meetLink = event.data.hangoutLink ?? undefined;
 
     logBookingStep("calendar event created", {
       eventId: event.data.id,
@@ -284,9 +449,12 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     });
 
     stage = "send_confirmation_email";
+    const hasLogoAttachment = fs.existsSync(logoPath);
+
     logBookingStep("sending confirmation email", {
       hasGmailUser: Boolean(process.env.GMAIL_USER),
       hasGmailAppPassword: Boolean(process.env.GMAIL_APP_PASSWORD),
+      hasLogoAttachment,
       recipientDomain: email.includes("@") ? email.split("@").pop() : undefined,
     });
 
@@ -294,15 +462,21 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       from: process.env.GMAIL_USER,
       to: email,
       subject: "Your call is confirmed",
-      html: `
-        <h2>Booking confirmed</h2>
-        <p><b>Time:</b> ${start.toUTCString()}</p>
-        ${
-          meetLink
-            ? `<p><b>Meet link:</b> ${meetLink}</p>`
-            : "<p>We will send the meeting link separately.</p>"
-        }
-      `,
+      html: buildConfirmationEmail({
+        name,
+        start,
+        end,
+        meetLink,
+      }),
+      attachments: hasLogoAttachment
+        ? [
+            {
+              filename: "novahero.png",
+              path: logoPath,
+              cid: "novafoundry-logo",
+            },
+          ]
+        : undefined,
     });
 
     logBookingStep("confirmation email sent");
