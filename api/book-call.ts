@@ -47,6 +47,15 @@ const getExternalStatus = (error: unknown) => {
   );
 };
 
+const isInvalidConferenceTypeError = (error: unknown) => {
+  const message = error instanceof Error ? error.message : "";
+  const responseData = (error as Partial<ExternalApiError>).response?.data;
+
+  return `${message} ${JSON.stringify(responseData)}`
+    .toLowerCase()
+    .includes("invalid conference type");
+};
+
 const getClientErrorMessage = (error: unknown, stage: string) => {
   const status = getExternalStatus(error);
 
@@ -223,24 +232,49 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       timeMax: end.toISOString(),
     });
 
-    const event = await calendar.events.insert({
-      calendarId: process.env.GOOGLE_CALENDAR_ID!,
-      conferenceDataVersion: 1,
-      requestBody: {
-        summary: `Call with ${name}`,
-        description: `Booked by ${name} (${email})`,
-        start: { dateTime: start.toISOString() },
-        end: { dateTime: end.toISOString() },
-        conferenceData: {
+    const baseEvent = {
+      summary: `Call with ${name}`,
+      description: `Booked by ${name} (${email})`,
+      start: { dateTime: start.toISOString() },
+      end: { dateTime: end.toISOString() },
+    };
+
+    let meetWarning = "";
+    let event;
+
+    try {
+      event = await calendar.events.insert({
+        calendarId: process.env.GOOGLE_CALENDAR_ID!,
+        conferenceDataVersion: 1,
+        requestBody: {
+          ...baseEvent,
+          conferenceData: {
             createRequest: {
-            requestId: Date.now().toString(),
-            conferenceSolutionKey: {
+              requestId: Date.now().toString(),
+              conferenceSolutionKey: {
                 type: "hangoutsMeet",
+              },
             },
-            },
+          },
         },
-        },
-    });
+      });
+    } catch (err) {
+      if (!isInvalidConferenceTypeError(err)) {
+        throw err;
+      }
+
+      meetWarning =
+        "Google Meet could not be created because this calendar does not support the requested conference type.";
+
+      logBookingStep("Google Meet creation failed; retrying without Meet", {
+        reason: err instanceof Error ? err.message : "Unknown error",
+      });
+
+      event = await calendar.events.insert({
+        calendarId: process.env.GOOGLE_CALENDAR_ID!,
+        requestBody: baseEvent,
+      });
+    }
 
     const meetLink = event.data.hangoutLink;
 
@@ -263,7 +297,11 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       html: `
         <h2>Booking confirmed</h2>
         <p><b>Time:</b> ${start.toUTCString()}</p>
-        <p><b>Meet link:</b> ${meetLink}</p>
+        ${
+          meetLink
+            ? `<p><b>Meet link:</b> ${meetLink}</p>`
+            : "<p>We will send the meeting link separately.</p>"
+        }
       `,
     });
 
@@ -278,6 +316,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     return res.json({
       success: true,
       meetLink,
+      warning: meetWarning || undefined,
     });
   } catch (err) {
     console.error("[book-call] booking failed", {
