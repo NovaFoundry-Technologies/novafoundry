@@ -30,7 +30,7 @@ function App() {
       />
       <div className="w-full max-sm:overflow-x-clip">
         <Navbar />
-        <Hero id="hero" />
+        <Hero />
 
         <TrustedPartners />
 
