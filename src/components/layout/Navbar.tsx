@@ -85,7 +85,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-2 px-4">
           <motion.img
             src={Logo}
-            className="h-10"
+            className="h-9 sm:h-10"
             alt="nova logo"
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
@@ -138,7 +138,7 @@ const Navbar = () => {
 
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="md:hidden flex flex-col gap-[5px] p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="md:hidden flex flex-col gap-[5px] p-2.5 rounded-lg hover:bg-gray-100 transition-colors min-h-[44px] min-w-[44px] items-center justify-center"
             aria-label="Toggle menu"
           >
             <motion.span

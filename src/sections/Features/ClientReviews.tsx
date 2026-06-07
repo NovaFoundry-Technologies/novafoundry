@@ -17,7 +17,7 @@ const fadeUp: Variants = {
 };
 
 const StarIcon = memo(() => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="#F59E0B" className="sm:w-5 sm:h-5">
     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 ));
@@ -30,16 +30,16 @@ const TestimonialCard = memo(
         <StarIcon key={i} />
       ))}
     </div>
-    <p className="text-sm text-gray-600 leading-relaxed ">{item.review}</p>
-    <div className="flex items-center gap-3 mt-auto pt-2 border-t border-gray-50">
+    <p className="text-sm text-gray-700 leading-relaxed sm:text-base">{item.review}</p>
+      <div className="flex items-center gap-3 mt-auto pt-3 border-t border-gray-100">
       <img
         src={item.avatar}
         alt={item.name}
-        className="w-10 h-10 rounded-full object-cover"
+        className="w-11 h-11 rounded-full object-cover sm:w-12 sm:h-12"
       />
       <div className="flex flex-col">
-        <span className="text-sm font-medium text-gray-900">{item.name}</span>
-        <span className="text-xs text-gray-400">
+        <span className="text-sm font-semibold text-gray-900 sm:text-base">{item.name}</span>
+        <span className="text-xs text-gray-500 sm:text-sm">
           {item.role} at {item.company}
         </span>
       </div>

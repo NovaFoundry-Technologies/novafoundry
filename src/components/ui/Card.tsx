@@ -42,15 +42,15 @@ export const serviceItems: ServiceItem[] = [
     step: "01",
     title: "Discovery & Strategy",
     description:
-      "We start by understanding your vision, goals, and target audience to craft a focused strategy.",
+      "We audit your market, define your goals, and map user journeys to build a strategy that aligns with your business outcomes.",
     icon: <ServiceIcon />,
   },
   {
     id: 2,
     step: "02",
-    title: "Quote Acquisition",
+    title: "Quote & Scope",
     description:
-      "We start by understanding your vision, goals, and target audience to craft a focused strategy.",
+      "We provide transparent pricing, clear timelines, and a detailed scope so you know exactly what to expect before we begin.",
     icon: <ServiceIcon />,
   },
   {
@@ -58,15 +58,15 @@ export const serviceItems: ServiceItem[] = [
     step: "03",
     title: "Design & Launch",
     description:
-      "We start by understanding your vision, goals, and target audience to craft a focused strategy.",
+      "We design, iterate, and ship production-ready interfaces — merging your brand vision with UX best practices.",
     icon: <ServiceIcon />,
   },
   {
     id: 4,
     step: "04",
-    title: "Product Maintenance",
+    title: "Growth & Maintenance",
     description:
-      "We start by understanding your vision, goals, and target audience to craft a focused strategy.",
+      "Post-launch, we monitor performance, iterate on feedback, and scale your product as your user base grows.",
     icon: <ServiceIcon />,
   },
 ];

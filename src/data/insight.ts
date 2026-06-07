@@ -6,14 +6,14 @@ export const leftCards = [
     icon: Eye,
     title: "Quick delivery",
     description:
-      "Get personalized recommendations based on your skills and experience.",
+      "Get a working interactive preview of your product within 72 hours — no code required.",
   },
   {
     id: 2,
     icon: Eye,
     title: "Product preview",
     description:
-      "Get personalized recommendations based on your skills and experience.",
+      "See your design come to life before development begins, so you can iterate fast and ship with confidence.",
   },
 ];
 
@@ -21,15 +21,15 @@ export const rightCards = [
   {
     id: 3,
     icon: Flash,
-    title: "Fast applications",
+    title: "Fast turnaround",
     description:
-      "Submit your applications instantly with a quick and simple process.",
+      "From brief to prototype in days, not weeks. We keep the feedback loop tight and the momentum high.",
   },
   {
     id: 4,
     icon: Flash,
-    title: "Enable assessment",
+    title: "Risk-free validation",
     description:
-      "Submit your applications instantly with a quick and simple process.",
+      "Validate your concept with real users before investing in full development. Save time, money, and guesswork.",
   },
 ];

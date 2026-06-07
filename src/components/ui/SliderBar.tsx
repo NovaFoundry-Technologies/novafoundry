@@ -116,10 +116,14 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
   return (
     <div ref={ref} className="w-full">
       <div
-        className="relative min-h-16 rounded-full sm:min-h-[72px]"
+        className="relative min-h-[52px] cursor-pointer rounded-full transition-shadow duration-300 hover:shadow-md sm:min-h-[72px] active:scale-[0.99]"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onPointerDown={handlePointerDown}
+        role="tab"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setHovered(true); } }}
+        aria-expanded={isWide}
       >
         <div
           className="absolute inset-y-0 left-0 z-10 overflow-hidden rounded-full"
@@ -134,7 +138,7 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
           }}
         >
           <div className="flex h-full w-full items-center px-5 py-4">
-            <span className="whitespace-nowrap text-sm font-medium text-gray-700">
+            <span className="whitespace-nowrap text-sm font-semibold text-gray-800 sm:text-base">
               {title}
             </span>
           </div>
@@ -192,7 +196,7 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
           }}
         >
           <button
-            className="pointer-events-auto flex h-10 w-11 items-center justify-center rounded-full transition-transform duration-150 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 active:scale-95 sm:w-[50px]"
+            className="pointer-events-auto flex h-10 w-11 items-center justify-center rounded-full transition-transform duration-150 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 active:scale-95 sm:w-[50px]"
             onClick={onClick}
             style={{
               flexShrink: 0,
@@ -201,8 +205,9 @@ const ExpandingCard: React.FC<ExpandingCardProps> = ({
                 "0 2px 0 rgba(255,255,255,0.9) inset, 0 -1px 0 rgba(0,0,0,0.08) inset, 0 3px 8px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)",
               border: "0.5px solid rgba(0,0,0,0.06)",
             }}
+            aria-label={`Learn more about ${title}`}
           >
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
                 d="M3 8h10M9 4l4 4-4 4"
                 stroke="#555"

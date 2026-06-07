@@ -160,7 +160,7 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="Enter your full name"
-                    className="w-full border-b border-gray-200 bg-transparent py-2 text-sm text-gray-600 outline-none transition-colors placeholder:font-[inter] placeholder:text-gray-300 focus:border-gray-400"
+                    className="w-full border-b-2 border-gray-200 bg-transparent py-3 text-sm text-gray-700 outline-none transition-colors placeholder:font-[inter] placeholder:text-gray-400 focus:border-[#AD72FF]"
                   />
                 </div>
 
@@ -175,7 +175,7 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="Enter the e-mail"
-                    className="w-full border-b border-gray-200 bg-transparent px-2 py-2 text-sm text-gray-600 outline-none transition-colors placeholder:text-gray-300 focus:border-gray-400"
+                    className="w-full border-b-2 border-gray-200 bg-transparent px-2 py-3 text-sm text-gray-700 outline-none transition-colors placeholder:text-gray-400 focus:border-[#AD72FF]"
                   />
                 </div>
 
@@ -188,7 +188,7 @@ const ContactSection = () => {
                       name="companyType"
                       value={formData.companyType}
                       onChange={handleChange}
-                      className="w-full appearance-none border-b border-gray-200 bg-transparent px-2 py-2 pr-8 text-sm text-gray-500 outline-none transition-colors focus:border-gray-400"
+                      className="w-full appearance-none border-b-2 border-gray-200 bg-transparent px-2 py-3 pr-8 text-sm text-gray-600 outline-none transition-colors focus:border-[#AD72FF]"
                     >
                       <option value="" disabled>
                         Select the type of your company
@@ -198,7 +198,7 @@ const ContactSection = () => {
                       <option value="enterprise">Enterprise</option>
                       <option value="freelance">Freelance</option>
                     </select>
-                    <span className="pointer-events-none absolute bottom-2.5 right-0 text-sm text-gray-400">
+                    <span className="pointer-events-none absolute bottom-3 right-0 text-sm text-gray-400">
                       v
                     </span>
                   </div>
@@ -213,7 +213,7 @@ const ContactSection = () => {
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="w-full appearance-none border-b border-gray-200 bg-transparent px-2 py-2 pr-8 text-sm text-gray-500 outline-none transition-colors focus:border-gray-400"
+                      className="w-full appearance-none border-b-2 border-gray-200 bg-transparent px-2 py-3 pr-8 text-sm text-gray-600 outline-none transition-colors focus:border-[#AD72FF]"
                     >
                       <option value="" disabled>
                         Select the Services Needed
@@ -223,7 +223,7 @@ const ContactSection = () => {
                       <option value="product">Product Design</option>
                       <option value="ui">UI/UX Design</option>
                     </select>
-                    <span className="pointer-events-none absolute bottom-2.5 right-0 text-sm text-gray-400">
+                    <span className="pointer-events-none absolute bottom-3 right-0 text-sm text-gray-400">
                       v
                     </span>
                   </div>
@@ -240,7 +240,7 @@ const ContactSection = () => {
                     required
                     rows={3}
                     placeholder="Tell us about your project"
-                    className="w-full resize-none border-b border-gray-200 bg-transparent px-2 py-2 text-sm text-gray-600 outline-none transition-colors placeholder:text-gray-300 focus:border-gray-400"
+                    className="w-full resize-none border-b-2 border-gray-200 bg-transparent px-2 py-3 text-sm text-gray-700 outline-none transition-colors placeholder:text-gray-400 focus:border-[#AD72FF]"
                   />
                 </div>
               </motion.div>
@@ -256,11 +256,11 @@ const ContactSection = () => {
                     label: "Email",
                     value: "contact.Novafoundry@gmail.com",
                   },
-                  { icon: Phone, label: "Phone", value: "+2 (88) 000-0000" },
+                  { icon: Phone, label: "Phone", value: "+234 800 000 0000" },
                   {
                     icon: Address,
                     label: "Address",
-                    value: "4140 Parker Rd. Allentown",
+                    value: "No 7, Omole Estate, Lagos, Nigeria",
                   },
                 ].map(({ icon, label, value }) => (
                   <div key={label} className="flex min-w-0 items-center gap-3">
@@ -274,8 +274,8 @@ const ContactSection = () => {
                       <img src={icon} alt="" />
                     </span>
                     <div className="flex min-w-0 flex-col">
-                      <span className="text-[10px] text-gray-400">{label}</span>
-                      <span className="break-words text-xs text-gray-700">
+                <span className="text-xs text-gray-400 sm:text-[10px]">{label}</span>
+                  <span className="break-words text-sm text-gray-700 sm:text-xs">
                         {value}
                       </span>
                     </div>
@@ -288,9 +288,9 @@ const ContactSection = () => {
                 disabled={loading}
                 variants={fadeUp}
                 custom={4}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.03, boxShadow: "0 8px 24px rgba(90,75,153,0.3)" }}
                 whileTap={{ scale: 0.97 }}
-                className="w-fit rounded-full px-6 py-2.5 text-sm font-medium text-white transition-all disabled:cursor-not-allowed disabled:opacity-70"
+                className="w-fit rounded-full px-8 py-3 text-sm font-semibold text-white shadow-lg transition-all disabled:cursor-not-allowed disabled:opacity-70"
                 style={{
                   background: "linear-gradient(to right, #5A4B99, #AD72FF)",
                 }}

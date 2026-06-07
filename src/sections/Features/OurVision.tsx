@@ -231,9 +231,8 @@ const OurVision = () => {
               variants={fadeUp}
               custom={1}
             >
-              "We're a Digital agency driven by design, strategy, and
-              storytelling. Our mission is to help brands stand out through bold
-              ideas,.''
+              "We believe great products come from deep empathy, sharp strategy,
+              and fearless iteration. Every pixel we ship is intentional."
             </motion.p>
 
             <motion.div className="my-7 sm:my-10" variants={fadeUp} custom={2}>
@@ -251,9 +250,9 @@ const OurVision = () => {
               custom={3}
             >
               {[
-                { icon: Partner, label: "Worked with 100+ client" },
-                { icon: Worked, label: "Worked with 100+ client" },
-                { icon: Positive, label: "90% Positive responses" },
+                { icon: Partner, label: "100+ clients served" },
+                { icon: Worked, label: "5+ years in business" },
+                { icon: Positive, label: "90% positive satisfaction" },
               ].map(({ icon, label }, i) => (
                 <motion.div
                   key={i}
