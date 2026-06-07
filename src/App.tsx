@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import Seo from "./Seo";
 import Hero from "./sections/Hero";
-import { ProjectMethod } from "./sections/Features";
+import ProjectMethod from "./sections/Features/ProjectMethod";
 import Navbar from "./components/layout/Navbar";
 import TrustedPartners from "./sections/Features/TrustedPartners";
 import Footer from "./components/layout/Footer";
