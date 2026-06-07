@@ -24,7 +24,7 @@ const Hero = () => {
         <div
           className="
             w-full
-            flex flex-col items-center gap-10
+            flex flex-col items-center gap-6 sm:gap-10
 
             px-2 py-2 sm:w-fit sm:px-4
           "
@@ -47,12 +47,12 @@ const Hero = () => {
               ))}
             </div>
 
-            <p className="text-xs font-medium text-gray-700 sm:text-base">
+            <p className="text-xs font-medium text-gray-700 sm:text-lg">
               1000+ satisfied clients
             </p>
           </div>
           <div className="w-full">
-            <div className="font-['Syne'] text-center text-[1.7rem] font-semibold leading-[1.12] sm:text-5xl sm:leading-[1.2]">
+            <div className="font-['Syne'] text-center text-[1.6rem] font-semibold leading-[1.12] sm:text-6xl sm:leading-[1.15]">
               <h1 className="bg-gradient-to-r from-[#171717] via-[#3f4b86] to-[#7c8dff] bg-clip-text text-transparent">
                 Premium digital products.
               </h1>
@@ -66,13 +66,13 @@ const Hero = () => {
               </h1>
             </div>
 
-            <p className="mx-auto mt-4 max-w-xs font-[Helvetica] text-center text-xs leading-relaxed text-gray-500 sm:mt-8 sm:mb-14 sm:max-w-none sm:text-sm">
-              Web design and Mobile app design agency, we deliver digital
-              product with speed and accuracy.
+            <p className="mx-auto mt-4 max-w-xs font-[Helvetica] text-center text-sm leading-relaxed text-gray-600 sm:mt-8 sm:mb-14 sm:max-w-none sm:text-base sm:text-gray-600">
+              NovaFoundry crafts premium web & mobile products for startups and
+              scale-ups — shipped with speed, precision, and purpose.
             </p>
 
-            <div className="relative mx-auto mt-5 w-full max-w-[22rem] sm:mt-4 sm:max-w-2xl">
-              <div className="absolute -top-2 right-0 z-10 origin-top-right scale-75 sm:scale-100">
+            <div className="relative mx-auto mt-5 w-full max-w-[22rem] sm:mt-4 sm:max-w-3xl">
+              <div className="absolute -top-3 right-0 z-10 origin-top-right scale-90 sm:scale-110 drop-shadow-lg">
                 <Button />
               </div>
 

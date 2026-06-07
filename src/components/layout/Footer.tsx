@@ -134,8 +134,8 @@ const Footer = () => {
                 label: "Email",
                 value: "contact.Novafoundry@gmail.com",
               },
-              { icon: Phone, label: "Phone", value: "+2 (88) 000-0000" },
-              { icon: Address, label: "Address", value: "No 7, Omole estate." },
+              { icon: Phone, label: "Phone", value: "+234 800 000 0000" },
+              { icon: Address, label: "Address", value: "No 7, Omole Estate, Lagos, Nigeria" },
             ].map(({ icon, label, value }) => (
               <div key={label} className="flex min-w-0 items-center gap-3">
                 <span
@@ -172,82 +172,64 @@ const Footer = () => {
                 whileTap={{ scale: 0.95 }}
                 className="z-1 flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#EFF7FE] bg-white text-[10px] font-semibold text-gray-500 shadow-md sm:h-10 sm:w-10"
               >
-                <img src={icon} className="w-3" alt="" />
+                <img src={icon} className="w-3" alt={label} />
               </motion.button>
             ))}
           </div>
           <div className="absolute top-1/2 z-0 w-full h-px bg-[#B5B5FF]" />
         </div>
 
-        <div className="relative z-10 mt-6 grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-8">
+        <div className="relative z-10 mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10">
           {/* Pages */}
-          <div className="flex w-full flex-col gap-2 sm:max-w-35">
-            <p className="text-sm font-semibold text-gray-900 mb-1">Pages</p>
-            <div className="grid grid-cols-2 gap-x-1 gap-y-1.5">
-              {["Home", "About", "Services", "Teams", "Blogs", "Contact"].map(
-                (link) => (
-                  <a
-                    key={link}
-                    href="#"
-                    className="text-xs text-gray-500 hover:text-gray-800 transition-colors"
-                  >
-                    {link}
-                  </a>
-                ),
-              )}
-            </div>
+          <div className="flex w-full flex-col gap-3 sm:max-w-35">
+            <details className="sm:open" open>
+              <summary className="text-sm font-semibold text-gray-900 mb-1 cursor-pointer list-none sm:list-none select-none sm:pointer-events-none">
+                Pages
+                <span className="ml-2 text-gray-400 sm:hidden">▼</span>
+              </summary>
+              <div className="mt-2 grid grid-cols-2 gap-x-2 gap-y-2 sm:mt-1">
+                {["Home", "About", "Services", "Team", "Blog", "Contact"].map(
+                  (link) => (
+                    <a
+                      key={link}
+                      href="#"
+                      className="text-sm text-gray-500 hover:text-gray-800 transition-colors sm:text-xs"
+                    >
+                      {link}
+                    </a>
+                  ),
+                )}
+              </div>
+            </details>
           </div>
 
-          <div className="flex w-full flex-col gap-2 sm:max-w-35">
-            <p className="text-sm font-semibold text-gray-900 mb-1">
-              Utility Page
-            </p>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-              {[
-                "Change Log",
-                "License",
-                "Style Guide",
-                "Instruction",
-                "404 Page",
-                "Password",
-              ].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-xs text-gray-500 hover:text-gray-800 transition-colors"
-                >
-                  {link}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">
               Subscribe Newsletter
             </p>
-            <p className="text-xs text-gray-500 leading-relaxed">
+            <p className="text-sm text-gray-500 leading-relaxed sm:text-xs">
               Subscribe for fresh content and stories straight to your email.
             </p>
-            <div className="mt-2 flex items-center justify-between gap-2 rounded-full border border-[#B5B5FF] bg-[#B5B5FF33] p-3">
+            <div className="mt-2 flex items-center justify-between gap-2 rounded-full border-2 border-[#B5B5FF] bg-white p-1 shadow-md transition-shadow focus-within:shadow-lg focus-within:border-[#AD72FF]">
               <input
                 type="email"
-                placeholder="Aderinto Samson@gmail.com"
-                className="min-w-0 flex-1 bg-transparent text-xs text-gray-700 outline-none placeholder:text-gray-600"
+                placeholder="Your email address"
+                className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-gray-700 outline-none placeholder:text-gray-400 sm:text-xs"
               />
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center w-6 h-6 rounded-lg"
+                className="flex items-center justify-center w-9 h-9 rounded-full shadow-sm"
                 style={{
                   background: "linear-gradient(to right, #5A4B99, #AD72FF)",
                 }}
+                aria-label="Subscribe"
               >
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                   <path
                     d="M3 8h10M9 4l4 4-4 4"
                     stroke="white"
-                    strokeWidth="1.6"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />

@@ -38,7 +38,7 @@ const Portfolio = () => {
       className="mx-auto mt-14 mb-6 w-full max-w-6xl scroll-mt-24 px-4 sm:mt-10 sm:px-0"
     >
       <SectionBadge label="Case studies" />
-      <h1 className="my-2 text-center font-[Syne] text-2xl sm:text-left">
+      <h1 className="my-2 text-center font-[Syne] text-2xl sm:text-left sm:text-3xl">
         <span className="bg-gradient-to-r from-[#252633] via-[#2d2f3d] to-[#343646] bg-clip-text text-transparent">
           The work speaks
         </span>{" "}
@@ -49,7 +49,7 @@ const Portfolio = () => {
 
       <div className="mt-6 overflow-hidden">
         <PortfolioCarousel
-          className="grid grid-flow-col auto-cols-[46%] items-start gap-4 sm:grid-flow-row sm:grid-cols-4 sm:auto-cols-auto sm:gap-6"
+          className="grid grid-flow-col auto-cols-[55%] items-start gap-4 sm:grid-flow-row sm:grid-cols-4 sm:auto-cols-auto sm:gap-6"
           items={portfolioItems}
           itemKey={(item) => item.id}
           renderItem={(item, _index, isShortPosition) => (
@@ -57,8 +57,8 @@ const Portfolio = () => {
               item={item}
               heightClassName={
                 isShortPosition
-                  ? "h-[12rem] sm:h-[16rem]"
-                  : "h-[15rem] sm:h-[20rem]"
+                  ? "h-[14rem] sm:h-[16rem]"
+                  : "h-[17rem] sm:h-[22rem]"
               }
               onClick={(item) => console.log(item.title)}
             />
@@ -67,7 +67,7 @@ const Portfolio = () => {
       </div>
 
       <div className="flex w-full flex-col">
-        <div className="relative mt-8 h-[20rem] w-full overflow-hidden rounded-xl border border-gray-200 sm:mt-10 sm:h-[60vh]">
+        <div className="relative mt-8 h-[20rem] w-full overflow-hidden rounded-xl border border-gray-200 sm:mt-10 sm:h-[50vh]">
           <AnimatePresence mode="wait">
             <motion.img
               key={featuredItem.id}
@@ -89,10 +89,10 @@ const Portfolio = () => {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
           >
-            <p className="my-2 font-[Helvetica] font-medium text-black">
+            <p className="my-2 font-[Helvetica] font-semibold text-black text-base sm:text-lg">
               {featuredItem.title}
             </p>
-            <p className="text-sm text-gray-500 font-[inter]">
+            <p className="text-sm text-gray-600 font-[inter] sm:text-base">
               {featuredItem.year} {featuredItem.category}
             </p>
           </motion.div>
@@ -102,17 +102,17 @@ const Portfolio = () => {
             type="button"
             aria-label="Previous portfolio item"
             onClick={showPreviousFeaturedItem}
-            className="inline-flex size-10 items-center justify-center rounded-full border border-[#f4b83f] bg-[transparent] transition duration-200 hover:-translate-y-0.5 hover:bg-[#424242] hover:text-[#ffd16a] active:scale-95"
+            className="inline-flex size-11 items-center justify-center rounded-full border-2 border-[#f4b83f] bg-white shadow-md transition duration-200 hover:-translate-y-0.5 hover:bg-[#424242] hover:text-[#ffd16a] hover:border-[#424242] active:scale-95"
           >
-            <FiArrowLeft aria-hidden="true" size={18} />
+            <FiArrowLeft aria-hidden="true" size={20} />
           </button>
           <button
             type="button"
             aria-label="Next portfolio item"
             onClick={showNextFeaturedItem}
-            className="inline-flex size-10 items-center justify-center rounded-full border border-[#f4b83f] bg-[transparent]  transition duration-200 hover:-translate-y-0.5 hover:bg-[#424242] hover:text-[#ffd16a] active:scale-95"
+            className="inline-flex size-11 items-center justify-center rounded-full border-2 border-[#f4b83f] bg-white shadow-md transition duration-200 hover:-translate-y-0.5 hover:bg-[#424242] hover:text-[#ffd16a] hover:border-[#424242] active:scale-95"
           >
-            <FiArrowRight aria-hidden="true" size={18} />
+            <FiArrowRight aria-hidden="true" size={20} />
           </button>
         </div>
       </div>

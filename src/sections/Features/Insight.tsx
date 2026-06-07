@@ -94,7 +94,7 @@ const Insight = () => {
           Preview
         </motion.span>
 
-        <p className="my-5 max-w-sm text-center font-[Helvetica] text-xs leading-relaxed text-gray-700 sm:my-6 sm:text-base">
+        <p className="my-5 max-w-md text-center font-[Helvetica] text-sm leading-relaxed text-gray-700 sm:my-6 sm:text-base sm:max-w-lg">
           Within 72 hrs of working on your product, have an insight into your
           project without writing any line of code
         </p>
@@ -191,7 +191,7 @@ const Insight = () => {
           <motion.img
             src={PhoneMockup}
             alt="App preview"
-            className="w-full max-w-[220px] drop-shadow-2xl sm:max-w-[250px]"
+            className="w-full max-w-[180px] drop-shadow-2xl sm:max-w-[250px]"
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />

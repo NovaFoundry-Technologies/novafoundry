@@ -45,14 +45,14 @@ const MarqueeTrack = ({ reverse = false }: { reverse?: boolean }) => (
       {[...logos, ...logos].map((logo, i) => (
         <div
           key={i}
-          className="flex items-center gap-2 text-gray-900 hover:text-gray-700 transition-colors duration-200 shrink-0"
-          style={{ opacity: 0.5 }}
+          className="flex items-center gap-2 text-gray-800 hover:text-gray-900 transition-colors duration-200 shrink-0"
+          style={{ opacity: 0.6 }}
         >
           <span
-            className="h-4 w-4 sm:h-5 sm:w-5"
+            className="h-6 w-6 sm:h-7 sm:w-7"
             dangerouslySetInnerHTML={{ __html: logo.svg }}
           />
-          <span className="text-xs font-medium tracking-tight sm:text-sm">
+          <span className="text-sm font-semibold tracking-tight sm:text-base">
             {logo.name}
           </span>
         </div>

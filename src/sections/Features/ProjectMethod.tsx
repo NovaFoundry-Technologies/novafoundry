@@ -55,14 +55,19 @@ const StatItem = memo(({
       >
         {started ? display : stat.value}
       </span>
-      <span className="text-center font-[inter] text-[10px] leading-tight text-gray-500 sm:whitespace-nowrap sm:text-xs">
+      <span className="text-center font-[inter] text-xs leading-tight text-gray-600 sm:whitespace-nowrap sm:text-sm sm:font-medium">
         {stat.label}
       </span>
     </div>
   );
 });
 
-const StatDivider = memo(() => <div className="h-7 w-px shrink-0 sm:h-8" />);
+const StatDivider = memo(() => (
+  <div
+    className="h-8 w-px shrink-0 sm:h-10"
+    style={{ background: "linear-gradient(to bottom, transparent, #B5B5FF, transparent)" }}
+  />
+));
 
 const ProjectMethod = () => {
   const [started, setStarted] = useState(false);
@@ -95,9 +100,9 @@ const ProjectMethod = () => {
 
         <div>
           <p className="mx-auto max-w-md font-[Syne] text-xs leading-loose text-gray-700 sm:mx-0 sm:text-sm">
-            We're a Digital agency driven by design, strategy, and storytelling.
-            Our mission is to help brands stand out through bold ideas,
-            thoughtful design, and impactful digital experiences.
+            NovaFoundry partners with startups and scale-ups to ship
+            conversion-driven digital products — blending strategic thinking,
+            polished design, and rapid execution.
           </p>
         </div>
 
@@ -138,7 +143,7 @@ const ProjectMethod = () => {
 
         <div className="absolute top-0 left-6 right-6 h-px" />
 
-        <div className="relative z-20 flex items-center justify-between gap-2 sm:gap-4">
+        <div className="relative z-20 flex items-center justify-between gap-3 sm:gap-6">
           {stats.map((stat, i) => (
             <React.Fragment key={stat.label}>
               <StatItem stat={stat} started={started} index={i} />

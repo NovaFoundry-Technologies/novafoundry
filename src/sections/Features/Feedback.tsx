@@ -87,7 +87,7 @@ const Feedback = () => {
       </div>
       <div className="my-6">
         <div
-          className="group relative mb-2 h-[18rem] w-full overflow-hidden rounded-2xl sm:h-[50vh]"
+          className="group relative mb-4 h-[18rem] w-full overflow-hidden rounded-2xl shadow-md sm:h-[55vh]"
           onPointerDown={handleVideoCardPointerDown}
         >
           <video
@@ -115,10 +115,10 @@ const Feedback = () => {
           </div>
         </div>
 
-        <p className="max-w-2xl font-[Helvetica] text-xs leading-loose text-gray-700 sm:text-sm">
-          We’re a creative agency driven by design, strategy, and storytelling.
-          Our mission is to help brands stand out through bold ideas, thoughtful
-          design, and impactful digital experiences.
+        <p className="max-w-2xl font-[Helvetica] text-sm leading-relaxed text-gray-700 sm:text-base sm:leading-loose">
+          Tiwa walks us through how NovaFoundry transformed their product
+          vision into a live, high-performing platform — and what it was like
+          working with the team from kickoff to launch.
         </p>
       </div>
     </div>
