@@ -4,7 +4,7 @@ import type { Variants } from "framer-motion";
 import SectionBadge from "../../components/ui/SectionBadge";
 import Button from "../../components/ui/Button";
 import { leftCards, rightCards } from "../../data/insight";
-import PhoneMockup from "../../assets/phonemockup.svg";
+import mockup from "../../assets/mockup.png";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -150,7 +150,7 @@ const Insight = () => {
               }}
             />
             <img
-              src={PhoneMockup}
+              src={mockup}
               alt="App preview"
               className="relative z-10 w-[250px] drop-shadow-2xl"
             />
@@ -189,7 +189,7 @@ const Insight = () => {
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
           <motion.img
-            src={PhoneMockup}
+            src={mockup}
             alt="App preview"
             className="w-full max-w-[180px] drop-shadow-2xl sm:max-w-[250px]"
             animate={{ y: [0, -8, 0] }}
