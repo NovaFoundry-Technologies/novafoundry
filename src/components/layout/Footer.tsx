@@ -161,19 +161,22 @@ const Footer = () => {
         <div className="relative z-10 mt-8 flex flex-col gap-4">
           <div className="mx-auto flex items-center gap-3 sm:ml-15 sm:gap-4">
             {[
-              { label: "Facebook", icon: FB },
-              { label: "Instagram", icon: IG },
-              { label: "Twitter", icon: X },
-              { label: "LinkedIn", icon: LN },
-            ].map(({ label, icon }) => (
-              <motion.button
+              { label: "Facebook", icon: FB, href: "#" },
+              { label: "Instagram", icon: IG, href: "https://www.instagram.com/nova_foundry" },
+              { label: "Twitter", icon: X, href: "#" },
+              { label: "LinkedIn", icon: LN, href: "#" },
+            ].map(({ label, icon, href }) => (
+              <motion.a
                 key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 className="z-1 flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#EFF7FE] bg-white text-[10px] font-semibold text-gray-500 shadow-md sm:h-10 sm:w-10"
               >
                 <img src={icon} className="w-3" alt={label} />
-              </motion.button>
+              </motion.a>
             ))}
           </div>
           <div className="absolute top-1/2 z-0 w-full h-px bg-[#B5B5FF]" />
