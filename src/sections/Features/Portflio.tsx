@@ -9,6 +9,7 @@ import Button from "../../components/ui/Button";
 
 const Portfolio = () => {
   const [featuredIndex, setFeaturedIndex] = useState(0);
+  if (!portfolioItems.length) return null;
   const featuredItem = portfolioItems[featuredIndex];
   const showPreviousFeaturedItem = () => {
     setFeaturedIndex(
@@ -52,22 +53,26 @@ const Portfolio = () => {
           className="grid grid-flow-col auto-cols-[55%] items-start gap-4 sm:grid-flow-row sm:grid-cols-4 sm:auto-cols-auto sm:gap-6"
           items={portfolioItems}
           itemKey={(item) => item.id}
-          renderItem={(item, _index, isShortPosition) => (
-            <PortfolioCard
-              item={item}
-              heightClassName={
-                isShortPosition
-                  ? "h-[14rem] sm:h-[16rem]"
-                  : "h-[17rem] sm:h-[22rem]"
-              }
-              onClick={(item) => console.log(item.title)}
-            />
-          )}
+            renderItem={(item, _index, isShortPosition) => (
+              <PortfolioCard
+                item={item}
+                heightClassName={
+                  isShortPosition
+                    ? "h-[14rem] sm:h-[16rem]"
+                    : "h-[17rem] sm:h-[22rem]"
+                }
+              />
+            )}
         />
       </div>
 
       <div className="flex w-full flex-col">
-        <div className="relative mt-8 h-[20rem] w-full overflow-hidden rounded-xl border border-gray-200 sm:mt-10 sm:h-[50vh]">
+        <a
+          href={featuredItem.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative mt-8 h-[20rem] w-full overflow-hidden rounded-xl border border-gray-200 sm:mt-10 sm:h-[50vh] block"
+        >
           <AnimatePresence mode="wait">
             <motion.img
               key={featuredItem.id}
@@ -80,7 +85,7 @@ const Portfolio = () => {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             />
           </AnimatePresence>
-        </div>
+        </a>
         <AnimatePresence mode="wait">
           <motion.div
             key={featuredItem.id}

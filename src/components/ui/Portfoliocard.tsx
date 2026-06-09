@@ -1,21 +1,21 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import type { PortfolioItem } from "../../data/portfolio";
 
 interface PortfolioCardProps {
   item: PortfolioItem;
   heightClassName?: string;
-  onClick?: (item: PortfolioItem) => void;
 }
 
 const PortfolioCard: React.FC<PortfolioCardProps> = ({
   item,
   heightClassName = "h-80",
-  onClick,
 }) => {
   return (
-    <div
+    <a
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
       className="w-full flex flex-col gap-4 cursor-pointer group"
-      onClick={() => onClick?.(item)}
     >
       <div className="overflow-hidden rounded-2xl">
         <img
@@ -30,7 +30,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
           [ {item.year} ] &nbsp; {item.category}
         </p>
       </div>
-    </div>
+    </a>
   );
 };
 

@@ -254,13 +254,13 @@ const ContactSection = () => {
                   {
                     icon: Email,
                     label: "Email",
-                    value: "contact.Novafoundry@gmail.com",
+                    value: "contact.novafoundry@gmail.com",
                   },
-                  { icon: Phone, label: "Phone", value: "+234 800 000 0000" },
+                  { icon: Phone, label: "Phone", value: "+447405864013" },
                   {
                     icon: Address,
                     label: "Address",
-                    value: "No 7, Omole Estate, Lagos, Nigeria",
+                    value: "Bedfordshire, UK",
                   },
                 ].map(({ icon, label, value }) => (
                   <div key={label} className="flex min-w-0 items-center gap-3">
