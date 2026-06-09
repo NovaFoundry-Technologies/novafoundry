@@ -1,6 +1,8 @@
 import examprep from "../assets/examprep.jpeg";
 import mediprep from "../assets/mediprep.jpeg";
 import tfalcon from "../assets/tfalcon.jpeg";
+import foodmartex from "../assets/foodmartex.png";
+
 
 export interface PortfolioItem {
   id: number;
@@ -41,6 +43,16 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Logistics Platform",
     image: tfalcon,
     link: "https://tfalcon.online",
+    width: 389,
+    height: 490,
+  },
+  {
+    id: 4,
+    title: "Foodmartex",
+    year: "2025 - 2026",
+    category: "Food Delivery and Logistics Platform",
+    image: foodmartex,
+    link: "https://foodmartex.online",
     width: 389,
     height: 490,
   },
