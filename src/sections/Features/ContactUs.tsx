@@ -254,7 +254,7 @@ const ContactSection = () => {
                   {
                     icon: Email,
                     label: "Email",
-                    value: "contact.novafoundry@gmail.com",
+                    value: "contact@novafoundry.com",
                   },
                   { icon: Phone, label: "Phone", value: "+447405864013" },
                   {
