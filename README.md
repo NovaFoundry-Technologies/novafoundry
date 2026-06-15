@@ -91,7 +91,7 @@ CONTACT_TO_EMAIL=
 
 - `RESEND_API_KEY` is required for `/api/contact`.
 - `RESEND_FROM_EMAIL` defaults to `onboarding@resend.dev` if omitted.
-- `CONTACT_TO_EMAIL` defaults to `contact@novafoundry.com` if omitted.
+- `CONTACT_TO_EMAIL` defaults to `contact@novafoundry.org` if omitted.
 
 ### Booking and Availability
 

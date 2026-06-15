@@ -132,7 +132,7 @@ const Footer = () => {
               {
                 icon: Email,
                 label: "Email",
-                value: "contact@novafoundry.com",
+                value: "contact@novafoundry.org",
               },
               { icon: Phone, label: "Phone", value: "+447405864013" },
               { icon: Address, label: "Address", value: "Bedfordshire, UK" },
