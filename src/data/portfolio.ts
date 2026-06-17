@@ -1,5 +1,5 @@
-import examprep from "../assets/examprep.jpeg";
-import mediprep from "../assets/mediprep.jpeg";
+import examprep from "../assets/examprep.png";
+import mediprep from "../assets/mediprep.png";
 import tfalcon from "../assets/tfalcon.jpeg";
 import foodmartex from "../assets/foodmartex.png";
 
