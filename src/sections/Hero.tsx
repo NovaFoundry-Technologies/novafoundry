@@ -1,5 +1,4 @@
 import { memo } from "react";
-import Wave from "../components/shapes/Wave";
 import User from "../assets/user.png";
 import HeroBanner from "../assets/HeroBanner.png";
 import OrganicImageMask from "../components/shapes/OrganicMask";
@@ -8,7 +7,6 @@ import Button from "../components/ui/Button";
 const Hero = () => {
   return (
     <section id="hero" className="relative overflow-hidden">
-      <Wave />
 
       <div
         className="
