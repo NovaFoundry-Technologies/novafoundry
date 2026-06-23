@@ -15,6 +15,10 @@ type BookingResponse = {
   error?: string;
 };
 
+type ButtonProps = {
+  fontSize?: string;
+};
+
 const initialForm: BookingForm = {
   name: "",
   email: "",
@@ -39,7 +43,7 @@ async function readBookingResponse(response: Response) {
   }
 }
 
-function Button() {
+function Button({ fontSize = "xs" }: ButtonProps) {
   const titleId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -203,37 +207,26 @@ function Button() {
 
   return (
     <>
-      <div className="relative isolate inline-block rounded-2xl p-1">
-        <div className="absolute inset-0 z-0 rounded-2xl bg-gradient-to-b from-[#F8D38A]/55 to-[#F3CB7A]/40 blur-md" />
-        <div className="relative z-10 rounded-[14px] bg-white/90 p-0.5">
+      <div className="relative isolate inline-block rounded-3xl p-1">
+
           <button
             type="button"
             onClick={() => setIsOpen(true)}
             className="
               -mt-1.5
               flex items-center justify-between gap-5
-              rounded-xl
-              bg-gradient-to-b from-[#F8D38A] to-[#F3CB7A]
+              rounded-sm
+              bg-black
               px-3 py-1.5 shadow-[inset_0_4px_10px_rgba(255,255,255,0.35)]
               sm:px-4 cursor-pointer
             "
           >
-            <span className="whitespace-nowrap font-['inter'] text-sm font-extralight text-black">
-              Book a free call
-            </span>
-            <span className="rounded-lg border border-white/40 bg-white">
-              <span
-                className="
-                  flex translate-x-px translate-y-px items-center justify-center
-                  rounded-lg bg-gradient-to-b from-[#F6D28B] to-[#EFC677]
-                  p-1.5 shadow-[2px_3px_2px_rgba(0,0,0,0.16),inset_0_2px_6px_rgba(255,255,255,0.4)]
-                "
-              >
-                <FiArrowRight className="text-sm text-white" />
-              </span>
+            <span
+              className={`whitespace-nowrap font-['inter'] text-${fontSize} font-extralight text-white`}
+            >
+              Internship program
             </span>
           </button>
-        </div>
       </div>
 
       {modal && typeof document !== "undefined"

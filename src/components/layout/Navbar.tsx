@@ -4,27 +4,24 @@ import Lenis from "lenis";
 import Logo from "../../assets/novahero.png";
 import Button from "../ui/Button";
 
-const navItems = [
-  { label: "Who We Are", targetId: "who-we-are" },
-  { label: "What We Do", targetId: "what-we-do" },
-  { label: "Case Studies", targetId: "case-studies" },
+type NavItem = {
+  label: string;
+  targetId?: string;
+  href?: string;
+};
+
+const navItems: NavItem[] = [
+  { label: "Home", targetId: "home" },
+  { label: "About", targetId: "about" },
+  { label: "Service", targetId: "services" },
+  { label: "Internship", href: "/internship" },
   { label: "Contact", targetId: "contact" },
 ];
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
-
-  useEffect(() => {
-    const updateNavbarPosition = () => {
-      setIsScrolled(window.scrollY > 8);
-    };
-    updateNavbarPosition();
-    window.addEventListener("scroll", updateNavbarPosition, { passive: true });
-    return () => window.removeEventListener("scroll", updateNavbarPosition);
-  }, []);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -60,29 +57,19 @@ const Navbar = () => {
     <div
       className={`
         fixed top-0 left-0 right-0
-        w-full max-w-5xl mx-auto
-        z-50 px-3
-        ${isScrolled ? "mt-0" : "mt-4"}
+        w-full z-50
+        border-b border-gray-300
       `}
     >
-      <motion.div
+      <div
         className={`
           w-full
           bg-white
-          border border-gray-100
+          border-b border-gray-100
           shadow-[0px_1px_2px_rgba(16,24,40,0.04),0px_6px_12px_rgba(16,24,40,0.06)]
-          ${isScrolled ? "rounded-b-2xl rounded-t-none" : "rounded-2xl"}
         `}
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{
-          y: -2,
-          boxShadow:
-            "0px 2px 4px rgba(16,24,40,0.05),0px 10px 18px rgba(16,24,40,0.08)",
-        }}
       >
-        <div className="flex justify-between items-center py-2 px-4">
+        <div className="flex justify-between items-center py-2 px-4 max-w-5xl mx-auto">
           <motion.img
             src={Logo}
             className="h-9 sm:h-10"
@@ -92,38 +79,45 @@ const Navbar = () => {
             transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
           />
 
-          <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+          <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-black">
             {navItems.map((item, i) => (
-              <motion.li
-                key={item.targetId}
-                className="relative cursor-pointer py-1"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.2 + i * 0.08,
-                  ease: "easeOut",
-                }}
-                onHoverStart={() => setHoveredItem(item.label)}
-                onHoverEnd={() => setHoveredItem(null)}
-                onClick={() => scrollToSection(item.targetId)}
-              >
-                <motion.span
-                  animate={{
-                    color: hoveredItem === item.label ? "#111827" : "#4B5563",
+              <li key={item.label}>
+                <motion.a
+                  href={item.href}
+                  className="relative cursor-pointer py-1 block"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.2 + i * 0.08,
+                    ease: "easeOut",
                   }}
-                  transition={{ duration: 0.15 }}
+                  onHoverStart={() => setHoveredItem(item.label)}
+                  onHoverEnd={() => setHoveredItem(null)}
+                  onClick={(e) => {
+                    if (item.targetId) {
+                      e.preventDefault();
+                      scrollToSection(item.targetId);
+                    }
+                  }}
                 >
-                  {item.label}
-                </motion.span>
-                <motion.span
-                  className="absolute bottom-0 left-0 h-[1.5px] rounded-full"
-                  style={{ background: "#B5B5FF" }}
-                  initial={{ width: "0%" }}
-                  animate={{ width: hoveredItem === item.label ? "100%" : "0%" }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                />
-              </motion.li>
+                  <motion.span
+                    animate={{
+                      color: hoveredItem === item.label ? "#000000" : "#111827",
+                    }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {item.label}
+                  </motion.span>
+                  <motion.span
+                    className="absolute bottom-0 left-0 h-[1.5px] rounded-full"
+                    style={{ background: "#B5B5FF" }}
+                    initial={{ width: "0%" }}
+                    animate={{ width: hoveredItem === item.label ? "100%" : "0%" }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                  />
+                </motion.a>
+              </li>
             ))}
           </ul>
 
@@ -160,7 +154,7 @@ const Navbar = () => {
             />
           </button>
         </div>
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {menuOpen && (
@@ -186,20 +180,27 @@ const Navbar = () => {
             >
               <ul className="flex flex-col gap-0.5 p-2">
                 {navItems.map((item, i) => (
-                  <motion.li
-                    key={item.targetId}
-                    className="cursor-pointer rounded-xl px-4 py-2.5 text-sm font-medium text-[#4a4a8a] hover:bg-[#B5B5FF22] transition-colors"
-                    initial={{ opacity: 0, x: 8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.2,
-                      delay: i * 0.05,
-                      ease: "easeOut",
-                    }}
-                    onClick={() => scrollToSection(item.targetId)}
-                  >
-                    {item.label}
-                  </motion.li>
+                  <li key={item.label}>
+                    <motion.a
+                      href={item.href}
+                      className="block cursor-pointer rounded-xl px-4 py-2.5 text-sm font-medium text-[#4a4a8a] hover:bg-[#B5B5FF22] transition-colors"
+                      initial={{ opacity: 0, x: 8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.2,
+                        delay: i * 0.05,
+                        ease: "easeOut",
+                      }}
+                      onClick={(e) => {
+                        if (item.targetId) {
+                          e.preventDefault();
+                          scrollToSection(item.targetId);
+                        }
+                      }}
+                    >
+                      {item.label}
+                    </motion.a>
+                  </li>
                 ))}
               </ul>
 
