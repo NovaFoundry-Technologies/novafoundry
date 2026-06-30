@@ -1,7 +1,12 @@
 import { memo, useEffect, useId, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { createPortal } from "react-dom";
-import { FiArrowRight, FiX } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiCalendar,
+  FiCheckCircle,
+  FiX,
+} from "react-icons/fi";
 
 type BookingForm = {
   name: string;
@@ -16,7 +21,7 @@ type BookingResponse = {
 };
 
 type ButtonProps = {
-  fontSize?: string;
+  className?: string;
 };
 
 const initialForm: BookingForm = {
@@ -43,11 +48,13 @@ async function readBookingResponse(response: Response) {
   }
 }
 
-function Button({ fontSize = "xs" }: ButtonProps) {
+function Button({ className = "" }: ButtonProps) {
   const titleId = useId();
+  const messageId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState<BookingForm>(initialForm);
 
   useEffect(() => {
@@ -56,6 +63,8 @@ function Button({ fontSize = "xs" }: ButtonProps) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && !isSubmitting) {
         setIsOpen(false);
+        setMessage("");
+        setIsSuccess(false);
       }
     };
 
@@ -75,18 +84,21 @@ function Button({ fontSize = "xs" }: ButtonProps) {
       [event.target.name]: event.target.value,
     }));
     setMessage("");
+    setIsSuccess(false);
   };
 
   const closeDialog = () => {
     if (isSubmitting) return;
     setIsOpen(false);
     setMessage("");
+    setIsSuccess(false);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
     setMessage("");
+    setIsSuccess(false);
 
     try {
       const response = await fetch("/api/book-call", {
@@ -94,7 +106,6 @@ function Button({ fontSize = "xs" }: ButtonProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await readBookingResponse(response);
 
       if (!response.ok || !data.success) {
@@ -102,7 +113,8 @@ function Button({ fontSize = "xs" }: ButtonProps) {
       }
 
       setFormData(initialForm);
-      setMessage("Booked. Check your email for the invite.");
+      setIsSuccess(true);
+      setMessage("Booked. Check your email for the calendar invite.");
     } catch (error) {
       setMessage(
         error instanceof Error ? error.message : "Something went wrong",
@@ -112,9 +124,12 @@ function Button({ fontSize = "xs" }: ButtonProps) {
     }
   };
 
+  const fieldClassName =
+    "mt-2 w-full rounded-lg border border-black/10 bg-white/65 px-4 py-3.5 text-sm text-[#111] outline-none transition placeholder:text-black/35 focus:border-black/45 focus:bg-white focus:ring-4 focus:ring-black/[0.04]";
+
   const modal = isOpen ? (
     <div
-      className="fixed inset-0 z-[1000] flex min-h-dvh items-center justify-center overflow-y-auto bg-black/35 px-4 py-6 backdrop-blur-sm"
+      className="fixed inset-0 z-[1000] flex min-h-dvh items-center justify-center overflow-y-auto bg-black/80 px-4 py-6 backdrop-blur-md"
       role="presentation"
       onMouseDown={closeDialog}
     >
@@ -122,73 +137,104 @@ function Button({ fontSize = "xs" }: ButtonProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="my-auto w-full max-w-md rounded-2xl border border-white/70 bg-white p-5 shadow-2xl sm:p-6"
+        aria-describedby={message ? messageId : undefined}
+        className="relative my-auto w-full max-w-[510px] overflow-hidden rounded-2xl border border-white/15 bg-[#f6f5f1] text-[#090909] shadow-[0_30px_100px_rgba(0,0,0,0.5)]"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <div className="mb-5 flex items-start justify-between gap-4">
-          <div>
-            <h2
-              id={titleId}
-              className="font-['Syne'] text-xl font-semibold text-gray-950"
+        <div className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-[#efc9ed]/75 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full bg-[#c9c2ff]/55 blur-3xl" />
+
+        <div className="relative border-b border-black/10 px-6 py-6 sm:px-8 sm:py-7">
+          <div className="flex items-start justify-between gap-5">
+            <div>
+              <div className="mb-5 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.12em]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#ff6b16]" />
+                Free discovery call
+              </div>
+              <h2
+                id={titleId}
+                className="max-w-sm text-3xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-[42px]"
+              >
+                Let’s make your idea real.
+              </h2>
+              <p className="mt-4 max-w-sm text-xs leading-5 text-black/55">
+                Choose a 30-minute slot. We’ll talk through your goals, scope,
+                and the fastest path to launch.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={closeDialog}
+              disabled={isSubmitting}
+              aria-label="Close booking form"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-black/15 bg-white/50 text-black transition hover:rotate-90 hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Book a free call
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-500">
-              Pick a 30-minute slot and we will send your Google Meet link.
-            </p>
+              <FiX size={18} />
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={closeDialog}
-            disabled={isSubmitting}
-            aria-label="Close booking form"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <FiX />
-          </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <label className="flex flex-col gap-1.5 text-xs font-medium text-gray-700">
-            Name
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="rounded-xl border border-gray-200 px-3 py-2.5 text-sm font-normal text-gray-800 outline-none transition focus:border-[#EFC677] focus:ring-2 focus:ring-[#F8D38A]/30"
-              placeholder="Your full name"
-            />
-          </label>
+        <form onSubmit={handleSubmit} className="relative px-6 py-6 sm:px-8 sm:py-7">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-black/60">
+              Your name
+              <input
+                autoFocus
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                autoComplete="name"
+                className={fieldClassName}
+                placeholder="Full name"
+              />
+            </label>
 
-          <label className="flex flex-col gap-1.5 text-xs font-medium text-gray-700">
-            Email
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="rounded-xl border border-gray-200 px-3 py-2.5 text-sm font-normal text-gray-800 outline-none transition focus:border-[#EFC677] focus:ring-2 focus:ring-[#F8D38A]/30"
-              placeholder="you@example.com"
-            />
-          </label>
+            <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-black/60">
+              Work email
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                autoComplete="email"
+                className={fieldClassName}
+                placeholder="you@company.com"
+              />
+            </label>
+          </div>
 
-          <label className="flex flex-col gap-1.5 text-xs font-medium text-gray-700">
-            Date and time
-            <input
-              type="datetime-local"
-              name="startTime"
-              value={formData.startTime}
-              onChange={handleChange}
-              required
-              className="rounded-xl border border-gray-200 px-3 py-2.5 text-sm font-normal text-gray-800 outline-none transition focus:border-[#EFC677] focus:ring-2 focus:ring-[#F8D38A]/30"
-            />
+          <label className="mt-5 block text-[10px] font-semibold uppercase tracking-[0.08em] text-black/60">
+            Preferred date and time
+            <span className="relative block">
+              <FiCalendar
+                className="pointer-events-none absolute left-4 top-1/2 z-10 mt-1 -translate-y-1/2 text-black/45"
+                size={16}
+              />
+              <input
+                type="datetime-local"
+                name="startTime"
+                value={formData.startTime}
+                onChange={handleChange}
+                required
+                className={`${fieldClassName} pl-11`}
+              />
+            </span>
           </label>
 
           {message && (
-            <p className="rounded-xl bg-gray-50 px-3 py-2 text-sm text-gray-700">
+            <p
+              id={messageId}
+              role="status"
+              className={`mt-5 flex items-start gap-2 rounded-lg px-4 py-3 text-xs leading-5 ${
+                isSuccess
+                  ? "bg-[#c6f3b7]/70 text-[#173d13]"
+                  : "bg-[#ffd8ce] text-[#7c2414]"
+              }`}
+            >
+              {isSuccess && <FiCheckCircle className="mt-0.5 shrink-0" size={15} />}
               {message}
             </p>
           )}
@@ -196,10 +242,15 @@ function Button({ fontSize = "xs" }: ButtonProps) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-1 rounded-xl bg-gradient-to-b from-[#F8D38A] to-[#EFC677] px-4 py-3 text-sm font-medium text-black shadow-[inset_0_2px_8px_rgba(255,255,255,0.35)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+            className="mt-6 flex w-full items-center justify-between rounded-lg bg-[#080808] px-5 py-4 text-xs font-semibold text-white transition hover:bg-[#242424] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isSubmitting ? "Booking..." : "Confirm booking"}
+            <span>{isSubmitting ? "Booking your call…" : "Confirm free call"}</span>
+            <FiArrowUpRight size={16} />
           </button>
+
+          <p className="mt-4 text-center text-[9px] leading-4 text-black/40">
+            No sales pressure. Just a focused conversation about your product.
+          </p>
         </form>
       </div>
     </div>
@@ -207,27 +258,14 @@ function Button({ fontSize = "xs" }: ButtonProps) {
 
   return (
     <>
-      <div className="relative isolate inline-block rounded-3xl p-1">
-
-          <button
-            type="button"
-            onClick={() => setIsOpen(true)}
-            className="
-              -mt-1.5
-              flex items-center justify-between gap-5
-              rounded-sm
-              bg-black
-              px-3 py-1.5 shadow-[inset_0_4px_10px_rgba(255,255,255,0.35)]
-              sm:px-4 cursor-pointer
-            "
-          >
-            <span
-              className={`whitespace-nowrap font-['inter'] text-${fontSize} font-extralight text-white`}
-            >
-              Internship program
-            </span>
-          </button>
-      </div>
+      <button
+        type="button"
+        onClick={() => setIsOpen(true)}
+        className={`inline-flex items-center justify-center gap-2 rounded-[5px] border border-[#242424] bg-[#0c0c0c] px-[18px] py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 hover:border-[#444] hover:bg-[#171717] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${className}`}
+      >
+        Book a free call
+        <FiArrowUpRight size={14} aria-hidden="true" />
+      </button>
 
       {modal && typeof document !== "undefined"
         ? createPortal(modal, document.body)
