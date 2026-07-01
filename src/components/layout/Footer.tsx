@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { ArrowUpRight } from "lucide-react";
-import logo from "../../assets/novahero.png";
 import starDesign from "../../assets/starDesign.svg";
+import NovaFoundry from "../../assets/NovaFoundry.svg";
 
 const contentWidth =
   "mx-auto w-[min(1120px,calc(100%-48px))] max-[900px]:w-[min(calc(100%-32px),720px)]";
@@ -41,8 +41,8 @@ function Footer() {
       >
         <div className="flex flex-col items-start">
           <img
-            className="mb-[25px] w-[150px] brightness-0"
-            src={logo}
+            className="mb-[25px] h-auto w-[180px] brightness-0 invert"
+            src={NovaFoundry}
             alt="NovaFoundry"
           />
           <small className="mt-[17px] text-[8px] text-[#777] uppercase">

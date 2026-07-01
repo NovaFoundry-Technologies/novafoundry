@@ -21,7 +21,6 @@ import mediprep from "./assets/mediprep.png";
 import tfalcon from "./assets/tfalcon.jpeg";
 import foodmartex from "./assets/foodmartex.png";
 import starDesign from "./assets/starDesign.svg";
-import novaFoundryLogo from "./assets/Group 1000002717.svg"
 import TrustedPartners from "./sections/Features/TrustedPartners";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -91,6 +90,33 @@ const projects = [
   },
 ];
 
+const solutions = [
+  {
+    title: "Web application platforms",
+    image: examprep,
+    imageAlt: "ExamPreps 360 web application platform",
+    tags: ["Web development", "Product design"],
+  },
+  {
+    title: "Mobile application development",
+    image: foodmartex,
+    imageAlt: "FoodMartex mobile application",
+    tags: ["Mobile app development", "Product strategy"],
+  },
+  {
+    title: "Website design development",
+    image: mediprep,
+    imageAlt: "MediPrep website design",
+    tags: ["Website design", "UX/UI design"],
+  },
+  {
+    title: "Digital marketing solutions",
+    image: tfalcon,
+    imageAlt: "TFalcon digital marketing project",
+    tags: ["Brand strategy", "Digital marketing"],
+  },
+];
+
 const faqs = [
   [
     "What services does your agency provide?",
@@ -147,6 +173,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [activeSolution, setActiveSolution] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -361,6 +388,8 @@ function App() {
           </div>
         </section>
 
+       
+
         <section
           className={`${contentWidth} px-0 pt-[60px] pb-[460px] max-[900px]:pb-[250px] max-[600px]:py-[35px] max-[600px]:pb-[180px]`}
         >
@@ -442,6 +471,78 @@ function App() {
                 </span>
               </div>
             </article>
+          </div>
+        </section>
+
+         <section
+          className={`${contentWidth} pb-[190px] max-[900px]:pb-[140px] max-[600px]:pb-[100px]`}
+          id="solutions"
+        >
+          <p className="mb-7 text-[9px] tracking-[0.02em] uppercase">
+            NovaFoundry&apos;s solutions
+          </p>
+          <div className="flex items-start justify-between gap-8 max-[700px]:flex-col">
+            <h2 className="m-0 max-w-[760px] text-[clamp(30px,3.3vw,50px)] leading-[1.08] font-medium tracking-[-.055em]">
+              We help brands express their vision through innovative design,
+              compelling storytelling and strategic solutions that leave a
+              lasting impression
+            </h2>
+            <Button className="mt-1 shrink-0" />
+          </div>
+
+          <div className="mt-[85px] grid grid-cols-[minmax(0,.82fr)_minmax(390px,1.18fr)] items-start gap-[clamp(60px,10vw,150px)] max-[900px]:mt-[60px] max-[900px]:grid-cols-1 max-[900px]:gap-10">
+            <div>
+              <div className="overflow-hidden rounded-[14px] bg-[#d9d9d7]">
+                <img
+                  className="aspect-[.86] w-full object-cover transition-opacity duration-300 max-[900px]:aspect-[1.2]"
+                  src={solutions[activeSolution].image}
+                  alt={solutions[activeSolution].imageAlt}
+                />
+              </div>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {solutions[activeSolution].tags.map((tag) => (
+                  <span
+                    className="rounded-full border border-black/35 px-3 py-1.5 text-[8px] font-medium uppercase"
+                    key={tag}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-black/20">
+              {solutions.map((solution, index) => {
+                const isActive = activeSolution === index;
+
+                return (
+                  <button
+                    type="button"
+                    className={`grid min-h-[86px] w-full grid-cols-[70px_1fr_auto] items-center gap-4 border-0 border-b border-black/20 px-5 text-left transition-all duration-300 max-[600px]:min-h-[72px] max-[600px]:grid-cols-[42px_1fr_auto] max-[600px]:px-3 ${
+                      isActive
+                        ? "my-2 rounded-[13px] border-b-transparent bg-black text-white shadow-[0_22px_30px_rgba(0,0,0,.2)]"
+                        : "bg-transparent text-black hover:bg-black/[.04]"
+                    }`}
+                    aria-pressed={isActive}
+                    onClick={() => setActiveSolution(index)}
+                    onFocus={() => setActiveSolution(index)}
+                    key={solution.title}
+                  >
+                    <span className="text-[10px]">
+                      ({String(index + 1).padStart(2, "0")})
+                    </span>
+                    <span className="text-center text-[11px] max-[600px]:text-left">
+                      {solution.title}
+                    </span>
+                    <ArrowUpRight
+                      className="rotate-45"
+                      size={16}
+                      aria-hidden="true"
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </section>
 
