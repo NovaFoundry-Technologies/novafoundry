@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
-  Menu,
   Pause,
   Play,
   Plus,
-  X,
 } from "lucide-react";
 import Seo from "./Seo";
 import Button from "./components/ui/Button";
 
-import logo from "./assets/novahero.png";
 import heroArt from "./assets/novafoundry_3d_shape_bg_FFFEFD 1.png";
 import feedbackPoster from "./assets/IMG_20260524_191845.png";
 import feedbackVideo from "./assets/f_d_b_amp_.mp4";
@@ -171,7 +168,6 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [activeSolution, setActiveSolution] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
