@@ -9,8 +9,6 @@ import Button from "../../components/ui/Button";
 
 const Portfolio = () => {
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  if (!portfolioItems.length) return null;
-  const featuredItem = portfolioItems[featuredIndex];
   const showPreviousFeaturedItem = () => {
     setFeaturedIndex(
       (currentIndex) =>
@@ -24,6 +22,8 @@ const Portfolio = () => {
   };
 
   useEffect(() => {
+    if (!portfolioItems.length) return;
+
     const intervalId = setInterval(() => {
       setFeaturedIndex(
         (currentIndex) => (currentIndex + 1) % portfolioItems.length,
@@ -32,6 +32,9 @@ const Portfolio = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  if (!portfolioItems.length) return null;
+  const featuredItem = portfolioItems[featuredIndex];
 
   return (
     <div

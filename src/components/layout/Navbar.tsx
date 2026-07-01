@@ -1,217 +1,88 @@
-import { memo, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Lenis from "lenis";
-import Logo from "../../assets/novahero.png";
-import Button from "../ui/Button";
+import { memo, useState } from "react";
+import type { MouseEvent } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import logo from "../../assets/novahero.png";
 
 const navItems = [
-  { label: "Who We Are", targetId: "who-we-are" },
-  { label: "What We Do", targetId: "what-we-do" },
-  { label: "Case Studies", targetId: "case-studies" },
-  { label: "Contact", targetId: "contact" },
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Service", href: "#work" },
+  { label: "Portfolio", href: "#work" },
+  { label: "Internship", href: "/internship" },
+  { label: "Contact", href: "#contact" },
 ];
 
-const Navbar = () => {
+function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const lenisRef = useRef<Lenis | null>(null);
 
-  useEffect(() => {
-    const updateNavbarPosition = () => {
-      setIsScrolled(window.scrollY > 8);
-    };
-    updateNavbarPosition();
-    window.addEventListener("scroll", updateNavbarPosition, { passive: true });
-    return () => window.removeEventListener("scroll", updateNavbarPosition);
-  }, []);
+  const handleNavigation = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (!href.startsWith("#")) {
+      setMenuOpen(false);
+      return;
+    }
 
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-    lenisRef.current = lenis;
+    const target = document.querySelector(href);
+    if (!target) {
+      event.preventDefault();
+      window.location.assign(`/${href}`);
+      return;
+    }
 
-    let animationFrameId = 0;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    };
-
-    animationFrameId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      lenis.destroy();
-      lenisRef.current = null;
-    };
-  }, []);
-
-  const scrollToSection = (targetId: string) => {
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
+    event.preventDefault();
     setMenuOpen(false);
-    lenisRef.current?.scrollTo(target, { offset: -96 });
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <div
-      className={`
-        fixed top-0 left-0 right-0
-        w-full max-w-5xl mx-auto
-        z-50 px-3
-        ${isScrolled ? "mt-0" : "mt-4"}
-      `}
-    >
-      <motion.div
-        className={`
-          w-full
-          bg-white
-          border border-gray-100
-          shadow-[0px_1px_2px_rgba(16,24,40,0.04),0px_6px_12px_rgba(16,24,40,0.06)]
-          ${isScrolled ? "rounded-b-2xl rounded-t-none" : "rounded-2xl"}
-        `}
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{
-          y: -2,
-          boxShadow:
-            "0px 2px 4px rgba(16,24,40,0.05),0px 10px 18px rgba(16,24,40,0.08)",
-        }}
+    <header className="relative z-5 mx-auto flex w-[calc(100%-104px)] items-center justify-between border-b border-black/8 py-6 max-[900px]:w-[calc(100%-36px)]">
+      <a
+        href="/"
+        aria-label="NovaFoundry home"
       >
-        <div className="flex justify-between items-center py-2 px-4">
-          <motion.img
-            src={Logo}
-            className="h-9 sm:h-10"
-            alt="nova logo"
-            initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-          />
+        <img
+          className="block w-[132px] max-[600px]:w-[110px]"
+          src={logo}
+          alt="NovaFoundry"
+        />
+      </a>
 
-          <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-            {navItems.map((item, i) => (
-              <motion.li
-                key={item.targetId}
-                className="relative cursor-pointer py-1"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.2 + i * 0.08,
-                  ease: "easeOut",
-                }}
-                onHoverStart={() => setHoveredItem(item.label)}
-                onHoverEnd={() => setHoveredItem(null)}
-                onClick={() => scrollToSection(item.targetId)}
-              >
-                <motion.span
-                  animate={{
-                    color: hoveredItem === item.label ? "#111827" : "#4B5563",
-                  }}
-                  transition={{ duration: 0.15 }}
-                >
-                  {item.label}
-                </motion.span>
-                <motion.span
-                  className="absolute bottom-0 left-0 h-[1.5px] rounded-full"
-                  style={{ background: "#B5B5FF" }}
-                  initial={{ width: "0%" }}
-                  animate={{ width: hoveredItem === item.label ? "100%" : "0%" }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                />
-              </motion.li>
-            ))}
-          </ul>
-
-          <motion.div
-            className="hidden md:block"
-            initial={{ opacity: 0, x: 16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.45, ease: "easeOut" }}
+      <nav
+        aria-label="Primary navigation"
+        className={`${menuOpen ? "max-[900px]:flex" : "max-[900px]:hidden"} flex gap-[30px] text-[13px] max-[900px]:absolute max-[900px]:top-[68px] max-[900px]:right-0 max-[900px]:left-0 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:rounded-lg max-[900px]:bg-[#f6f6f4] max-[900px]:p-3 max-[900px]:shadow-[0_12px_40px_rgba(0,0,0,.12)]`}
+      >
+        {navItems.map(({ label, href }) => (
+          <a
+            className="transition-opacity hover:opacity-50 max-[900px]:p-[13px]"
+            href={href}
+            key={label}
+            onClick={(event) => handleNavigation(event, href)}
           >
-            <Button />
-          </motion.div>
+            {label}
+          </a>
+        ))}
+      </nav>
 
-          <button
-            onClick={() => setMenuOpen((prev) => !prev)}
-            className="md:hidden flex flex-col gap-[5px] p-2.5 rounded-lg hover:bg-gray-100 transition-colors min-h-[44px] min-w-[44px] items-center justify-center"
-            aria-label="Toggle menu"
-          >
-            <motion.span
-              className="block w-[22px] h-[2px] bg-orange-400 rounded origin-center"
-              animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25 }}
-            />
-            <motion.span
-              className="block w-[22px] h-[2px] bg-orange-400 rounded"
-              animate={
-                menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }
-              }
-              transition={{ duration: 0.2 }}
-            />
-            <motion.span
-              className="block w-[22px] h-[2px] bg-orange-400 rounded origin-center"
-              animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25 }}
-            />
-          </button>
-        </div>
-      </motion.div>
+      <a
+        className="inline-flex items-center justify-center gap-2 rounded-[5px] bg-[#050505] px-3.5 py-2.5 text-xs font-bold text-white max-[900px]:hidden"
+        href="/internship"
+      >
+        Internship Program <ArrowUpRight size={14} />
+      </a>
 
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            className="md:hidden mt-2"
-            initial={{ opacity: 0, scale: 0.95, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -8 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            style={{ transformOrigin: "top right" }}
-          >
-            <div
-              className="rounded-2xl overflow-hidden border border-[#B5B5FF40] ml-auto"
-              style={{
-                width: "min(100%, 240px)",
-                marginLeft: "auto",
-                background: "rgba(181, 181, 255, 0.12)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-                boxShadow:
-                  "0 8px 32px rgba(181,181,255,0.18), 0 2px 8px rgba(0,0,0,0.06)",
-              }}
-            >
-              <ul className="flex flex-col gap-0.5 p-2">
-                {navItems.map((item, i) => (
-                  <motion.li
-                    key={item.targetId}
-                    className="cursor-pointer rounded-xl px-4 py-2.5 text-sm font-medium text-[#4a4a8a] hover:bg-[#B5B5FF22] transition-colors"
-                    initial={{ opacity: 0, x: 8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.2,
-                      delay: i * 0.05,
-                      ease: "easeOut",
-                    }}
-                    onClick={() => scrollToSection(item.targetId)}
-                  >
-                    {item.label}
-                  </motion.li>
-                ))}
-              </ul>
-
-              <div className="px-3 pb-3 pt-1 border-t border-[#B5B5FF30] flex justify-center">
-                <Button />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+      <button
+        type="button"
+        className="hidden place-items-center border-0 bg-transparent max-[900px]:grid"
+        onClick={() => setMenuOpen((open) => !open)}
+        aria-label="Toggle navigation"
+        aria-expanded={menuOpen}
+      >
+        {menuOpen ? <X /> : <Menu />}
+      </button>
+    </header>
   );
-};
+}
 
 export default memo(Navbar);
