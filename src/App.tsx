@@ -5,6 +5,7 @@ import {
   Play,
   Plus,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import Seo from "./Seo";
 import Button from "./components/ui/Button";
 
@@ -13,6 +14,8 @@ import feedbackPoster from "./assets/IMG_20260524_191845.png";
 import feedbackVideo from "./assets/f_d_b_amp_.mp4";
 import internshipImage from "./assets/IMG_20260524_192825.png";
 import avatar from "./assets/user.png";
+import formPic from "./assets/formpic.png";
+import man from "./assets/man.png";
 import examprep from "./assets/examprep.png";
 import mediprep from "./assets/mediprep.png";
 import tfalcon from "./assets/tfalcon.jpeg";
@@ -25,7 +28,7 @@ import Footer from "./components/layout/Footer";
 const SITE_URL = "https://novafoundry.org";
 const contentWidth =
   "mx-auto w-[min(1120px,calc(100%-48px))] max-[900px]:w-[min(calc(100%-32px),720px)]";
-const internshipLayout = `${contentWidth} grid grid-cols-2 items-center gap-[120px] px-[35px] pt-[150px] pb-[260px] max-[900px]:grid-cols-1 max-[900px]:gap-[70px] max-[900px]:px-0 max-[900px]:pb-[180px] max-[600px]:pt-[90px] max-[600px]:pb-[130px]`;
+const internshipLayout = `${contentWidth} grid grid-cols-[.9fr_1.1fr] items-center gap-[clamp(60px,8vw,130px)] rounded-[18px] bg-black px-[clamp(28px,5vw,80px)] py-[clamp(70px,8vw,120px)] text-white max-[900px]:grid-cols-1 max-[900px]:gap-[70px] max-[600px]:rounded-[12px] max-[600px]:px-5 max-[600px]:py-[65px]`;
 
 const stats = [
   {
@@ -114,6 +117,65 @@ const solutions = [
   },
 ];
 
+const clientComments = [
+  {
+    name: "Jackson Mitchell",
+    role: "Founder, BrightPath E-Commerce",
+    image: avatar,
+    comment:
+      "NovaFoundry transformed our ideas into a polished digital experience. The process was clear, thoughtful, and remarkably fast.",
+  },
+  {
+    name: "Daniel Reed",
+    role: "Performance Marketing Director",
+    image: man,
+    comment:
+      "The team understood exactly what our brand needed and turned it into a website that feels distinctive, focused, and easy to use.",
+  },
+  {
+    name: "Oliver Carter",
+    role: "CEO, Nova Digital Commerce",
+    image: formPic,
+    comment:
+      "Their design decisions are grounded in real business goals. We launched with more confidence and saw stronger engagement immediately.",
+  },
+  {
+    name: "Jason Lee",
+    role: "Owner, Urban Artisan Co.",
+    image: internshipImage,
+    comment:
+      "From strategy to final delivery, every detail felt intentional. NovaFoundry made a complicated project feel refreshingly simple.",
+  },
+  {
+    name: "Mark Lucifer",
+    role: "Co-Founder, TrendHive Brands",
+    image: feedbackPoster,
+    comment:
+      "The final product is clean, fast, and genuinely represents our company. The level of care throughout the project was exceptional.",
+  },
+  {
+    name: "Millan Lucifer",
+    role: "Co-Founder, TrendHive Brands",
+    image: formPic,
+    comment:
+      "Communication was excellent and every milestone arrived with clarity. We always knew what was happening and why.",
+  },
+  {
+    name: "Ryan Patel",
+    role: "Solo Entrepreneur, Digital Launch Studio",
+    image: man,
+    comment:
+      "Our new platform is intuitive, responsive, and built to grow. It has become an essential part of how we run the business.",
+  },
+  {
+    name: "Michael Anderson",
+    role: "Founder & CEO, Apex Growth Co.",
+    image: internshipImage,
+    comment:
+      "NovaFoundry brought together strong visual thinking and practical execution. The result exceeded what we imagined at the start.",
+  },
+];
+
 const faqs = [
   [
     "What services does your agency provide?",
@@ -167,6 +229,33 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+function CommentCard({
+  comment,
+}: {
+  comment: (typeof clientComments)[number];
+}) {
+  return (
+    <article className="flex min-h-[180px] w-[360px] shrink-0 flex-col justify-between rounded-[12px] bg-white px-6 py-5 text-[#111] max-[600px]:min-h-[165px] max-[600px]:w-[300px]">
+      <div className="flex items-center gap-3">
+        <img
+          className="h-9 w-9 rounded-full object-cover"
+          src={comment.image}
+          alt=""
+        />
+        <div className="flex min-w-0 flex-col">
+          <strong className="text-[11px] font-medium">{comment.name}</strong>
+          <span className="truncate text-[8px] text-black/55">
+            {comment.role}
+          </span>
+        </div>
+      </div>
+      <p className="mb-0 text-[10px] leading-[1.55] text-black/75">
+        “{comment.comment}”
+      </p>
+    </article>
+  );
+}
+
 function App() {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [activeSolution, setActiveSolution] = useState(0);
@@ -214,10 +303,11 @@ function App() {
         url={SITE_URL}
       />
 
-      <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_15%_23%,rgba(113,91,255,.025),transparent_18%),#e7e6e6] text-[#050505] motion-reduce:[&_*]:transition-none bg-amber-50">
+      <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_15%_23%,rgba(113,91,255,.025),transparent_18%),#e7e6e6] text-[#050505] motion-reduce:[&_*]:transition-none bg-[#fefefe]">
+        <Navbar />
         <section className="px-[34px] pt-[34px] max-[900px]:p-4" id="home">
-          <div className="relative min-h-[650px] overflow-hidden rounded-[20px] bg-[radial-gradient(circle_at_83%_12%,rgba(255,210,246,.78),transparent_35%),radial-gradient(circle_at_55%_3%,rgba(207,208,255,.8),transparent_35%),linear-gradient(145deg,#f7f7f4_35%,#fff_70%)] text-[#080808] max-[900px]:min-h-[720px] max-[600px]:rounded-[13px]">
-            <Navbar />
+          <div className="relative min-h-[650px] overflow-hidden rounded-[20px] bg-[radial-gradient(circle_at_83%_12%,rgba(255,210,246,.78),transparent_35%),radial-gradient(circle_at_55%_3%,rgba(207,208,255,.8),transparent_35%),linear-gradient(145deg,#fefefe_35%,#fff_70%)] text-[#080808] max-[900px]:min-h-[720px] max-[600px]:rounded-[13px]">
+            
 
             <div className="grid min-h-[560px] grid-cols-[1.15fr_.8fr] grid-rows-[1fr_auto] px-[68px] pt-[65px] pb-[55px] max-[900px]:grid-cols-1 max-[900px]:grid-rows-[auto_auto_1fr] max-[900px]:px-[25px] max-[900px]:pt-[60px] max-[900px]:pb-[30px] max-[600px]:min-h-[645px] max-[600px]:pt-[45px]">
               <div className="self-start">
@@ -281,7 +371,7 @@ function App() {
         </div>
 
         <section
-          className={`${contentWidth} grid min-h-[620px] grid-cols-[1.25fr_.75fr] items-center gap-[110px] py-20 max-[900px]:grid-cols-1 max-[900px]:gap-[60px] max-[600px]:pt-[50px]`}
+          className={`${contentWidth} grid min-h-[520px] grid-cols-[1.25fr_.75fr] items-center gap-[110px] py-20 max-[900px]:grid-cols-1 max-[900px]:gap-[60px] max-[600px]:pt-[50px]`}
           id="about"
         >
           <div>
@@ -369,13 +459,16 @@ function App() {
           </aside>
         </section>
 
-        <section className={internshipLayout} id="internship-intro">
+        <section
+          className={`${contentWidth} grid grid-cols-2 items-center gap-[120px] px-[35px] pt-[150px] pb-[260px] max-[900px]:grid-cols-1 max-[900px]:gap-[70px] max-[900px]:px-0 max-[900px]:pb-[180px] max-[600px]:pt-[90px] max-[600px]:pb-[130px]`}
+          id="internship-intro"
+        >
           <div>
             <Eyebrow>Internship program</Eyebrow>
-            <h2 className="mt-[25px] mb-[15px] text-[clamp(34px,4vw,58px)] leading-none tracking-[-.05em]">
+            <h2 className="mt-[25px] mb-[15px] text-[clamp(36px,4vw,58px)] leading-[.95] font-medium tracking-[-.055em]">
               Join our team and <span>build the future.</span>
             </h2>
-            <p className="max-w-[520px] text-xs leading-[1.65] text-[#a0a0a0]">
+            <p className="max-w-[520px] text-[13px] leading-[1.75] text-white/70">
               We’re looking for talented individuals to join our team and help
               us create innovative solutions for our clients. If you’re
               passionate about design, development, and technology, we want to
@@ -577,10 +670,12 @@ function App() {
                   <span className="text-[#666] max-[600px]:row-start-2">
                     {project.type}
                   </span>
-                  <ArrowUpRight
-                    className="max-[600px]:col-start-2 max-[600px]:row-span-2 max-[600px]:row-start-1"
-                    size={16}
-                  />
+                  <div className="bg-black rounded rounded-lg px-4 pr-1 flex justify-end align-end ">
+                    <ArrowUpRight
+                      className="max-[600px]:col-start-2 max-[600px]:row-span-2 max-[600px]:row-start-1 text-white "
+                      size={16}
+                    />
+                  </div>
                 </div>
               </a>
             ))}
@@ -600,43 +695,111 @@ function App() {
               toward the future.
             </p>
             <a
-              className="mt-[25px] inline-flex items-center justify-center gap-2 rounded-[5px] bg-[#f5f5f2] px-4 py-[13px] text-xs font-bold text-white"
-              href="mailto:contact@novafoundry.org?subject=Internship program"
+              className="mt-[30px] inline-flex items-center justify-center rounded-[4px] bg-[#f5f5f2] px-5 py-[15px] text-xs font-semibold text-black transition hover:-translate-y-0.5 hover:bg-white"
+              href="/internship"
             >
-              View internship program <ArrowUpRight size={14} />
+              View Internship Program
             </a>
-            <div className="mt-[65px] grid grid-cols-2 gap-[35px]">
-              <div className="flex flex-col items-start">
-                <Mark className="mb-[15px] origin-top-left scale-[.62]" />
-                <strong className="text-[17px]">4.9 ★</strong>
-                <span className="mt-2 text-[8px] text-[#777] uppercase">
+            <div className="mt-[85px] grid grid-cols-2 items-end gap-[45px] max-[600px]:mt-[65px] max-[600px]:gap-5">
+              <div>
+                <Mark className="mb-10 origin-top-left scale-[.7]" />
+                <div className="flex items-center">
+                  {[avatar, formPic, man].map((image, index) => (
+                    <img
+                      className="-mr-2 h-[48px] w-[48px] rounded-full border-2 border-white object-cover"
+                      src={image}
+                      alt=""
+                      key={image}
+                      style={{ zIndex: 3 - index }}
+                    />
+                  ))}
+                  <span className="grid h-[52px] w-[52px] place-items-center rounded-full border-2 border-white bg-[#c9c2ff] text-2xl">
+                    +
+                  </span>
+                </div>
+                <strong className="mt-6 block text-[13px] font-medium">
+                  4.9 <span className="text-[#ffc85b]">★</span>
+                </strong>
+                <span className="mt-3 block text-[9px] text-white/70 uppercase">
                   500+ students
                 </span>
               </div>
-              <div className="flex flex-col items-start">
-                <strong className="text-[66px] leading-[.9] max-[600px]:text-5xl">
+
+              <div className="relative border-t border-l border-white/20 px-6 pt-8 pb-1 max-[600px]:px-4">
+                <strong className="text-[clamp(60px,8vw,105px)] leading-[.75] font-medium tracking-[-.07em]">
                   25
                 </strong>
-                <span className="mt-2 text-[8px] text-[#777] uppercase">+</span>
-                <span className="mt-2 text-[8px] text-[#777] uppercase">
+                <span className="absolute top-6 right-0 grid h-6 w-6 place-items-center rounded-full bg-[#c9c2ff] text-lg text-white">
+                  +
+                </span>
+                <span className="mt-6 block text-[9px] text-white/70 uppercase">
                   Years of experience
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-lg bg-[#222] max-[900px]:ml-auto max-[900px]:w-[min(520px,85%)] max-[600px]:w-full">
+          <div className="relative overflow-hidden rounded-[14px] bg-[#222] max-[900px]:mx-auto max-[900px]:w-full">
             <img
-              className="block aspect-[.9] w-full object-cover"
+              className="block aspect-[.94] w-full object-cover"
               src={internshipImage}
               alt="NovaFoundry internship creative"
             />
             <button
               className={mediaButtonClass}
-              aria-label="Play internship story"
+              aria-label="Pause internship story"
             >
-              <Play size={15} fill="currentColor" />
+              <Pause size={15} fill="currentColor" />
             </button>
+          </div>
+        </section>
+
+        <section
+          className="overflow-hidden py-[140px] max-[600px]:py-[90px]"
+          aria-labelledby="client-comments-title"
+        >
+          <h2
+            className="mb-[70px] text-center text-[clamp(38px,5vw,68px)] font-medium tracking-[-.055em] text-[#101010] max-[600px]:mb-[45px]"
+            id="client-comments-title"
+          >
+            Client&apos;s comments
+          </h2>
+
+          <div className="space-y-3">
+            {[clientComments.slice(0, 4), clientComments.slice(4)].map(
+              (comments, rowIndex) => (
+                <motion.div
+                  className="flex w-max will-change-transform"
+                  initial={{
+                    x: rowIndex === 0 ? "-50%" : "0%",
+                  }}
+                  animate={{
+                    x: rowIndex === 0 ? "0%" : "-50%",
+                  }}
+                  transition={{
+                    duration: 36,
+                    ease: "linear",
+                    repeat: Infinity,
+                  }}
+                  key={rowIndex}
+                >
+                  {[0, 1].map((copy) => (
+                    <div
+                      className="flex gap-3 pr-3"
+                      aria-hidden={copy === 1}
+                      key={copy}
+                    >
+                      {comments.map((comment) => (
+                        <CommentCard
+                          comment={comment}
+                          key={`${copy}-${comment.name}`}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </motion.div>
+              ),
+            )}
           </div>
         </section>
 

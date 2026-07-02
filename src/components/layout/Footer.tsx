@@ -92,21 +92,21 @@ function Footer() {
       </div>
 
       <div
-        className={`${contentWidth} flex justify-between border-t border-[#282828] py-[35px] text-[8px] text-[#777] max-[600px]:flex-col max-[600px]:gap-2.5`}
+        className={`${contentWidth} flex flex-col justify-between border-t border-[#282828] py-[35px] text-[8px] text-[#777] max-[600px]:flex-col max-[600px]:gap-2.5`}
       >
         <p>Designed by NovaFoundry Agency. Powered by NovaFoundry.</p>
         <p>● Bedfordshire, United Kingdom</p>
       </div>
 
       <div
-        className={`${contentWidth} grid grid-cols-[auto_1fr_auto] items-center gap-[70px] max-[900px]:gap-[30px] max-[600px]:grid-cols-[50px_1fr] max-[600px]:gap-5 max-[600px]:pt-[45px]`}
+        className={`${contentWidth} grid grid-cols-[auto_1fr] items-center gap-[70px] max-[900px]:gap-[30px] max-[600px]:grid-cols-[50px_1fr] max-[600px]:gap-5 max-[600px]:pt-[45px]`}
       >
         <img
           className="w-[115px] max-[600px]:w-[50px]"
           src={starDesign}
           alt=""
         />
-        <strong className="justify-self-center text-[clamp(46px,9vw,80px)] tracking-[-.07em] max-[600px]:text-[44px]">
+        <strong className="justify-self-end text-[clamp(46px,9vw,80px)] tracking-[-.07em] max-[600px]:text-[34px]">
           Novafoundry
         </strong>
       </div>

@@ -37,7 +37,7 @@ function Navbar() {
   };
 
   return (
-    <header className="relative z-5 mx-auto flex w-[calc(100%-104px)] items-center justify-between border-b border-black/8 py-6 max-[900px]:w-[calc(100%-36px)]">
+    <header className="relative z-5 flex w-full items-center justify-between border-b border-black/8 px-[52px] py-2 max-[00px]:px-[18px]">
       <a
         href="/"
         aria-label="NovaFoundry home"
@@ -51,7 +51,7 @@ function Navbar() {
 
       <nav
         aria-label="Primary navigation"
-        className={`${menuOpen ? "max-[900px]:flex" : "max-[900px]:hidden"} flex gap-[30px] text-[13px] max-[900px]:absolute max-[900px]:top-[68px] max-[900px]:right-0 max-[900px]:left-0 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:rounded-lg max-[900px]:bg-[#f6f6f4] max-[900px]:p-3 max-[900px]:shadow-[0_12px_40px_rgba(0,0,0,.12)]`}
+        className={`${menuOpen ? "max-[900px]:flex" : "max-[900px]:hidden"} flex gap-[20px] text-[11px] max-[900px]:absolute max-[900px]:top-[68px] max-[900px]:right-0 max-[900px]:left-0 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:rounded-lg max-[900px]:bg-[#f6f6f4] max-[900px]:p-3 max-[900px]:shadow-[0_12px_40px_rgba(0,0,0,.12)]`}
       >
         {navItems.map(({ label, href }) => (
           <a
