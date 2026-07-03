@@ -366,12 +366,12 @@ function App() {
           </div>
         </section>
 
-        <div className="my-20 flex items-center gap-4 text-center text-[10px] text-[#393939] max-[600px]:my-[55px]">
+        <div className="my-10 flex items-center gap-4 text-center text-[10px] text-[#393939] max-[600px]:my-[30px]">
           <TrustedPartners />
         </div>
 
         <section
-          className={`${contentWidth} grid min-h-[520px] grid-cols-[1.25fr_.75fr] items-center gap-[110px] py-20 max-[900px]:grid-cols-1 max-[900px]:gap-[60px] max-[600px]:pt-[50px]`}
+          className={`${contentWidth} grid min-h-[520px] grid-cols-[1.25fr_.75fr] items-center gap-[110px] py-10 max-[900px]:grid-cols-1 max-[900px]:gap-[60px] max-[600px]:pt-[30px]`}
           id="about"
         >
           <div>
@@ -419,7 +419,7 @@ function App() {
         </section>
 
         <section
-          className={`${contentWidth} mb-40 grid grid-cols-[repeat(4,minmax(0,1fr))_160px] gap-3 max-[900px]:grid-cols-2 max-[600px]:mb-[100px] max-[600px]:gap-2`}
+          className={`${contentWidth} mb-20 grid grid-cols-[repeat(4,minmax(0,1fr))_160px] gap-3 max-[900px]:grid-cols-2 max-[600px]:mb-[60px] max-[600px]:gap-2`}
           aria-label="Company statistics"
         >
           {stats.map((stat) => (
@@ -460,7 +460,7 @@ function App() {
         </section>
 
         <section
-          className={`${contentWidth} grid grid-cols-2 items-center gap-[120px] px-[35px] pt-[150px] pb-[260px] max-[900px]:grid-cols-1 max-[900px]:gap-[70px] max-[900px]:px-0 max-[900px]:pb-[180px] max-[600px]:pt-[90px] max-[600px]:pb-[130px]`}
+          className={`${contentWidth} grid grid-cols-2 items-center gap-[120px] px-[35px] pt-[60px] pb-[100px] max-[900px]:grid-cols-1 max-[900px]:gap-[70px] max-[900px]:px-0 max-[900px]:pb-[80px] max-[600px]:pt-[40px] max-[600px]:pb-[60px]`}
           id="internship-intro"
         >
           <div>
@@ -480,7 +480,7 @@ function App() {
        
 
         <section
-          className={`${contentWidth} px-0 pt-[60px] pb-[460px] max-[900px]:pb-[250px] max-[600px]:py-[35px] max-[600px]:pb-[180px]`}
+          className={`${contentWidth} px-0 pt-[40px] pb-[120px] max-[900px]:pb-[80px] max-[600px]:py-[25px] max-[600px]:pb-[70px]`}
         >
           <Eyebrow>Client feedback</Eyebrow>
           <div className="relative mt-[34px] h-[clamp(320px,48vw,620px)] overflow-hidden rounded-xl bg-[#171717] max-[600px]:h-[280px]">
@@ -564,7 +564,7 @@ function App() {
         </section>
 
          <section
-          className={`${contentWidth} pb-[190px] max-[900px]:pb-[140px] max-[600px]:pb-[100px]`}
+          className={`${contentWidth} pb-[80px] max-[900px]:pb-[60px] max-[600px]:pb-[50px]`}
           id="solutions"
         >
           <p className="mb-7 text-[9px] tracking-[0.02em] uppercase">
@@ -579,7 +579,7 @@ function App() {
             <Button className="mt-1 shrink-0" />
           </div>
 
-          <div className="mt-[85px] grid grid-cols-[minmax(0,.82fr)_minmax(390px,1.18fr)] items-start gap-[clamp(60px,10vw,150px)] max-[900px]:mt-[60px] max-[900px]:grid-cols-1 max-[900px]:gap-10">
+          <div className="mt-[45px] grid grid-cols-[minmax(0,.82fr)_minmax(390px,1.18fr)] items-start gap-[clamp(60px,10vw,150px)] max-[900px]:mt-[30px] max-[900px]:grid-cols-1 max-[900px]:gap-10">
             <div>
               <div className="overflow-hidden rounded-[14px] bg-[#d9d9d7]">
                 <img
@@ -636,10 +636,10 @@ function App() {
         </section>
 
         <section
-          className={`${contentWidth} px-0 pt-[100px] pb-[180px] max-[600px]:pb-[100px]`}
+          className={`${contentWidth} px-0 pt-[60px] pb-[80px] max-[600px]:pb-[50px]`}
           id="work"
         >
-          <div className="mb-[100px] max-[600px]:mb-[60px]">
+          <div className="mb-[50px] max-[600px]:mb-[30px]">
             <Eyebrow>Selected projects · 2024—2026</Eyebrow>
             <h2 className="mt-[22px] max-w-[680px] text-[clamp(42px,6vw,82px)] leading-[.95] font-medium tracking-[-.06em]">
               Work shaped around{" "}
@@ -755,11 +755,11 @@ function App() {
         </section>
 
         <section
-          className="overflow-hidden py-[140px] max-[600px]:py-[90px]"
+          className="overflow-hidden py-[80px] max-[600px]:py-[50px]"
           aria-labelledby="client-comments-title"
         >
           <h2
-            className="mb-[70px] text-center text-[clamp(38px,5vw,68px)] font-medium tracking-[-.055em] text-[#101010] max-[600px]:mb-[45px]"
+            className="mb-[40px] text-center text-[clamp(38px,5vw,68px)] font-medium tracking-[-.055em] text-[#101010] max-[600px]:mb-[25px]"
             id="client-comments-title"
           >
             Client&apos;s comments
@@ -804,9 +804,9 @@ function App() {
         </section>
 
         <section
-          className={`${contentWidth} px-[100px] pt-[130px] pb-40 max-[900px]:px-5 max-[600px]:px-0 max-[600px]:pt-20 max-[600px]:pb-[110px]`}
+          className={`${contentWidth} px-[100px] pt-[70px] pb-20 max-[900px]:px-5 max-[600px]:px-0 max-[600px]:pt-10 max-[600px]:pb-[60px]`}
         >
-          <h2 className="mb-[45px] text-center text-[clamp(38px,5vw,68px)] font-medium tracking-[-.05em] text-[#101010]">
+          <h2 className="mb-[30px] text-center text-[clamp(38px,5vw,68px)] font-medium tracking-[-.05em] text-[#101010]">
             Frequently asked questions
           </h2>
           <div className="grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
