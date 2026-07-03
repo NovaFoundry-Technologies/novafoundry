@@ -28,7 +28,7 @@ import Footer from "./components/layout/Footer";
 const SITE_URL = "https://novafoundry.org";
 const contentWidth =
   "mx-auto w-[min(1120px,calc(100%-48px))] max-[900px]:w-[min(calc(100%-32px),720px)]";
-const internshipLayout = `${contentWidth} grid grid-cols-[.9fr_1.1fr] items-center gap-[clamp(60px,8vw,130px)] rounded-[18px] bg-black px-[clamp(28px,5vw,80px)] py-[clamp(70px,8vw,120px)] text-white max-[900px]:grid-cols-1 max-[900px]:gap-[70px] max-[600px]:rounded-[12px] max-[600px]:px-5 max-[600px]:py-[65px]`;
+const internshipLayout = `mx-auto w-[95%] grid grid-cols-[.9fr_1.1fr] items-center gap-[clamp(60px,8vw,130px)] rounded-[18px] bg-black px-[clamp(28px,5vw,80px)] py-[clamp(70px,8vw,120px)] text-white max-[900px]:grid-cols-1 max-[900px]:gap-[70px] max-[600px]:rounded-[12px] max-[600px]:px-5 max-[600px]:py-[65px]`;
 
 const stats = [
   {
