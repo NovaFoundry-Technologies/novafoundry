@@ -4,6 +4,7 @@ import {
   Pause,
   Play,
   Plus,
+  Star,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "./Seo";
@@ -359,11 +360,37 @@ function App() {
                 )}
               </div>
             </div>
-
-            <span className="absolute bottom-[18px] left-[68px] text-sm text-[#ff6b16] max-[900px]:left-[25px]">
-              ✦
-            </span>
+            <div className="mx-[68px] flex w-[230px] flex-col items-start max-[900px]:mx-[25px] max-[600px]:w-[190px]">
+              <img
+                className="w-[46px] animate-spin [animation-duration:12s] motion-reduce:animate-none"
+                src={starDesign}
+                alt=""
+              />
+              <div className="mt-[52px] flex items-center pl-0.5">
+                {[avatar, formPic, man].map((image, index) => (
+                  <img
+                    className="-mr-3 h-[56px] w-[56px] rounded-full border-2 border-white object-cover shadow-[0_8px_18px_rgba(0,0,0,.18)] max-[600px]:h-[48px] max-[600px]:w-[48px]"
+                    src={image}
+                    alt=""
+                    key={image}
+                    style={{ zIndex: 4 - index }}
+                  />
+                ))}
+                <span className="relative z-0 grid h-[62px] w-[62px] place-items-center rounded-full border-2 border-white bg-[linear-gradient(145deg,#8d91e8_0%,#b8b9ee_45%,#ead9ca_100%)] text-[34px] font-light text-white shadow-[0_8px_18px_rgba(0,0,0,.18)] max-[600px]:h-[54px] max-[600px]:w-[54px]">
+                  +
+                </span>
+              </div>
+              <span className="mt-3 flex items-center gap-1 text-[15px] font-semibold text-black">
+                4.9
+                <Star
+                  className="fill-[#ff9d00] text-[#ff9d00]"
+                  size={13}
+                  aria-hidden="true"
+                />
+              </span>
+            </div>
           </div>
+
         </section>
 
         <div className="my-20 flex items-center gap-4 text-center text-[10px] text-[#393939] max-[600px]:my-[55px]">
@@ -392,21 +419,23 @@ function App() {
               )}
             </div>
             <Button className="mt-7" />
-            <div className="mt-[50px] flex items-center">
-              {[avatar, feedbackPoster, internshipImage].map((image, index) => (
-                <img
-                  className="-mr-2 h-[52px] w-[52px] rounded-sm border-2 border-[#050505] object-cover max-[600px]:h-[42px] max-[600px]:w-[42px]"
-                  src={image}
-                  alt=""
-                  key={index}
-                />
-              ))}
-              <p className="m-0 ml-[25px] text-[10px] leading-[1.6] text-[#777]">
-                <b className="text-[#050505]">4.9/5</b>
-                <br />
-                from ambitious teams
-              </p>
-            </div>
+            <figure className="m-0 mt-[50px] grid w-full max-w-[280px] grid-cols-3 items-center gap-[clamp(10px,1vw,24px)]">
+              <img
+                className="aspect-square w-full rounded-[8px] object-cover"
+                src={man}
+                alt="NovaFoundry team member"
+              />
+              <img
+                className="aspect-square w-full rounded-full object-cover object-top"
+                src={internshipImage}
+                alt="NovaFoundry team member"
+              />
+              <img
+                className="aspect-square w-full rounded-[8px] object-cover"
+                src={feedbackPoster}
+                alt="NovaFoundry team member"
+              />
+            </figure>
           </div>
 
           <div className="bg-[#f6f6f4] p-[18px] max-[900px]:ml-auto max-[900px]:w-[min(430px,85%)]">
@@ -547,7 +576,11 @@ function App() {
 
             <article className="flex flex-col gap-4 rounded-3xl bg-black p-[30px] max-[900px]:col-span-2 max-[900px]:min-h-[160px] max-[600px]:col-auto gap-4">
               <div className="flex flex-row items-center gap-4">
-                <img className="w-[65px] max-[300px]:w-[30px]"  src={starDesign} />
+                <img
+                  className="w-[65px] animate-spin [animation-duration:12s] max-[300px]:w-[30px] motion-reduce:animate-none"
+                  src={starDesign}
+                  alt=""
+                />
                 <div className="h-4 w-4 rounded-lg bg-[#ff6b16] text-[9px]"></div>
               </div>
               

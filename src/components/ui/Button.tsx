@@ -261,7 +261,7 @@ function Button({ className = "" }: ButtonProps) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`inline-flex items-center justify-center gap-2 rounded-[5px] border border-[#242424] bg-[#0c0c0c] px-[18px] py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 hover:border-[#444] hover:bg-[#171717] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${className}`}
+        className={`inline-flex items-center justify-center gap-2 rounded-[10px] border border-[#242424] bg-[#0c0c0c] px-[18px] py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 hover:border-[#444] hover:bg-[#171717] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${className}`}
       >
         Book a free call
         <FiArrowUpRight size={14} aria-hidden="true" />

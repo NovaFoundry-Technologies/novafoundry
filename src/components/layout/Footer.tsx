@@ -102,7 +102,7 @@ function Footer() {
         className={`${contentWidth} grid grid-cols-[auto_1fr] items-center gap-[70px] max-[900px]:gap-[30px] max-[600px]:grid-cols-[50px_1fr] max-[600px]:gap-5 max-[600px]:pt-[45px]`}
       >
         <img
-          className="w-[115px] max-[600px]:w-[50px]"
+          className="w-[115px] animate-spin [animation-duration:12s] max-[600px]:w-[50px]"
           src={starDesign}
           alt=""
         />
