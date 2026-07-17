@@ -51,7 +51,7 @@ function Navbar() {
 
       <nav
         aria-label="Primary navigation"
-        className={`${menuOpen ? "max-[900px]:flex" : "max-[900px]:hidden"} flex gap-[20px] text-[16px] max-[900px]:absolute max-[900px]:top-[68px] max-[900px]:right-0 max-[900px]:left-0 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:rounded-lg max-[900px]:bg-[#f6f6f4] max-[900px]:p-3 max-[900px]:shadow-[0_12px_40px_rgba(0,0,0,.12)]`}
+        className={`${menuOpen ? "max-[900px]:flex" : "max-[900px]:hidden"} flex gap-[20px] text-[13px] max-[900px]:absolute max-[900px]:top-[68px] max-[900px]:right-0 max-[900px]:left-0 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:rounded-lg max-[900px]:bg-[#f6f6f4] max-[900px]:p-3 max-[900px]:shadow-[0_12px_40px_rgba(0,0,0,.12)]`}
       >
         {navItems.map(({ label, href }) => (
           <a
