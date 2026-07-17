@@ -6,15 +6,21 @@ import NovaFoundry from "../../assets/NovaFoundry.svg";
 const contentWidth =
   "mx-auto w-[min(1120px,calc(100%-48px))] max-[900px]:w-[min(calc(100%-32px),720px)]";
 
+// Replace each placeholder with your profile URL, or add another entry.
+const socialLinks = [
+  { label: "Instagram", href: "https://www.instagram.com/nova_foundry_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/tiwaloluwa-ayodeji-4bb25b417?utm_source=share_via&utm_content=profile&utm_medium=member_ios" },
+];
+
 const linkColumns = [
   [
     ["Home", "#hero"],
-    [ "About", "#about"],
+    ["About", "#about"],
     ["Service", "#work"],
 
-  [ "Portfolio",  "#work"],
-  [ "Internship", "#internship"],
-  [ "Contact", "#contact"],
+    ["Portfolio", "#work"],
+    ["Internship", "#internship"],
+    ["Contact", "#contact"],
   ],
   [
     ["Portfolio one", "#work"],
@@ -26,7 +32,6 @@ const linkColumns = [
     ["Privacy", "#"],
     ["Style guide", "#"],
     ["Changelog", "#"],
-    ["404", "#"],
   ],
 ];
 
@@ -48,28 +53,25 @@ function Footer() {
           <small className="mt-[17px] text-[8px] text-[#777] uppercase">
             Mail:
           </small>
-          <a
-            className="mt-[5px] text-xs"
-            href="mailto:contact@novafoundry.org"
-          >
+          <a className="mt-[5px] text-xs" href="mailto:contact@novafoundry.org">
             contact@novafoundry.org
           </a>
           <small className="mt-[17px] text-[8px] text-[#777] uppercase">
             Call:
           </small>
-          <a className="mt-[5px] text-xs" href="tel:+447405864013">
-            +44 7405 864013
+          <a className="mt-[5px] text-xs" href="tel:+2347045259387">
+            +234 704 5259 387
           </a>
         </div>
 
-        <div className="flex flex-col items-start gap-[13px]">
-          {["Dribbble", "Instagram", "LinkedIn"].map((social) => (
+        <div className="socialLinks flex flex-col items-start gap-[13px]">
+          {socialLinks.map(({ label, href }) => (
             <a
               className="flex items-center gap-2 border-b border-[#888] text-[17px]"
-              href="#"
-              key={social}
+              href={href}
+              key={label}
             >
-              {social}
+              {label}
               <ArrowUpRight size={15} />
             </a>
           ))}
@@ -95,7 +97,7 @@ function Footer() {
         className={`${contentWidth} flex flex-col justify-between border-t border-[#282828] py-[35px] text-[8px] text-[#777] max-[600px]:flex-col max-[600px]:gap-2.5`}
       >
         <p>Designed by NovaFoundry Agency. Powered by NovaFoundry.</p>
-        <p>● Bedfordshire, United Kingdom</p>
+        <p>● Lagos, Nigeria</p>
       </div>
 
       <div
