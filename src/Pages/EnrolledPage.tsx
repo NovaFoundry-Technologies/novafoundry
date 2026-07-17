@@ -163,8 +163,8 @@ function EnrolledPage() {
         url="https://novafoundry.org/internship"
       />
 
-      <main className="min-h-screen overflow-hidden bg-amber-50 text-[#090909]">
-        <div className="bg-[radial-gradient(circle_at_86%_18%,rgba(235,182,242,.62),transparent_34%),radial-gradient(circle_at_48%_6%,rgba(198,203,255,.65),transparent_32%),linear-gradient(145deg,#fffdf8_28%,#fff_72%)]">
+      <main className="min-h-screen overflow-hidden bg-[#fefefe] text-[#050505]">
+        <div className="bg-[radial-gradient(circle_at_83%_12%,rgba(255,210,246,.78),transparent_35%),radial-gradient(circle_at_55%_3%,rgba(207,208,255,.8),transparent_35%),linear-gradient(145deg,#fefefe_35%,#fff_70%)]">
           <Navbar />
 
           <section
@@ -319,13 +319,13 @@ function EnrolledPage() {
                   </p>
                 </div>
               </div>
-              <div className="relative flex min-h-[270px] items-center justify-center overflow-hidden rounded-xl bg-[#f3f0e9]">
+              <div className="relative flex min-h-[270px] items-center justify-center overflow-hidden rounded-xl bg-[#f6f6f4]">
                 {[heroPortrait, man, formPic, avatar].map((image, index) => (
                   <img
                     key={image}
                     src={image}
                     alt=""
-                    className="absolute h-20 w-20 rounded-full border-4 border-amber-50 object-cover"
+                    className="absolute h-20 w-20 rounded-full border-4 border-white object-cover"
                     style={{
                       left: `${12 + (index % 2) * 42}%`,
                       top: `${10 + Math.floor(index / 2) * 43}%`,
@@ -411,7 +411,7 @@ function EnrolledPage() {
                 key={image}
                 src={image}
                 alt=""
-                className="absolute h-14 w-14 rounded-lg border-4 border-amber-50 object-cover shadow-sm max-[640px]:hidden"
+                className="absolute h-14 w-14 rounded-lg border-4 border-white object-cover shadow-sm max-[640px]:hidden"
                 style={{
                   left: `${4 + (index % 3) * 43}%`,
                   top: `${12 + Math.floor(index / 3) * 58}%`,
@@ -419,7 +419,7 @@ function EnrolledPage() {
               />
             ),
           )}
-          <div className="relative mx-auto max-w-[620px] bg-amber-50 px-8">
+          <div className="relative mx-auto max-w-[620px] bg-[#fefefe] px-8">
             <Sparkles className="mx-auto mb-5 text-[#ff6b16]" size={22} />
             <h2 className="text-[clamp(38px,5vw,62px)] leading-[.95] font-semibold tracking-[-.06em]">
               Start your learning journey today!
