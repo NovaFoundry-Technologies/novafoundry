@@ -76,6 +76,10 @@ function Footer() {
           <small className="mt-5 text-[10px] font-bold tracking-[.08em] text-white/40 uppercase">
             Call
           </small>
+          <a className="mt-1.5 text-[14px] font-semibold text-white/90 transition hover:text-[#ffc85b]" 
+              href="tel:+447405864013">
+            +44 7405 864013
+          </a>
           <a
             className="mt-1.5 text-[14px] font-semibold text-white/90 transition hover:text-[#ffc85b]"
             href="tel:+2347045259387"
