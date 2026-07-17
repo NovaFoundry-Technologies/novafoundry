@@ -438,7 +438,7 @@ function App() {
           </div>
         </section>
 
-        <div className="my-20 flex items-center gap-4 text-center text-[10px] text-[#393939] max-[600px]:my-[55px]">
+        <div className="my-10 flex items-center gap-4 text-center text-[10px] text-[#393939] max-[600px]:my-[30px]">
           <TrustedPartners />
         </div>
 
@@ -709,10 +709,10 @@ function App() {
         </section>
 
         <section
-          className={`${contentWidth} px-0 pt-[100px] pb-[180px] max-[600px]:pb-[100px]`}
+          className={`${contentWidth} px-0 pt-[60px] pb-[80px] max-[600px]:pb-[50px]`}
           id="work"
         >
-          <div className="mb-[100px] max-[600px]:mb-[60px]">
+          <div className="mb-[50px] max-[600px]:mb-[30px]">
             <Eyebrow>Selected projects · 2024—2026</Eyebrow>
             <h2 className="mt-[22px] max-w-[720px] text-[clamp(42px,6vw,82px)] leading-[.96] font-bold tracking-[-.055em] max-[600px]:text-[clamp(38px,11vw,54px)]">
               Work shaped around{" "}
@@ -864,7 +864,7 @@ function App() {
         </section>
 
         <section
-          className="overflow-hidden py-[140px] max-[600px]:py-[90px]"
+          className="overflow-hidden py-[80px] max-[600px]:py-[50px]"
           aria-labelledby="client-comments-title"
         >
           <h2

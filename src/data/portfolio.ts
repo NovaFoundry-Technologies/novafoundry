@@ -32,7 +32,7 @@ export const portfolioItems: PortfolioItem[] = [
     year: "2024 - 2025",
     category: "HealthTech",
     image: mediprep,
-    link: "https://mediprep.online",
+    link: "https://www.mediprep.net",
     width: 389,
     height: 490,
   },
