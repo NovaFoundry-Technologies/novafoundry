@@ -4,110 +4,151 @@ import starDesign from "../../assets/starDesign.svg";
 import NovaFoundry from "../../assets/NovaFoundry.svg";
 
 const contentWidth =
-  "mx-auto w-[min(1120px,calc(100%-48px))] max-[900px]:w-[min(calc(100%-32px),720px)]";
+  "mx-auto w-[min(1120px,calc(100%-48px))] max-[600px]:w-[calc(100%-32px)] max-[380px]:w-[calc(100%-24px)]";
+
+// Replace each placeholder with your profile URL, or add another entry.
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/nova_foundry_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/tiwaloluwa-ayodeji-4bb25b417?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+  },
+];
 
 const linkColumns = [
-  [
-    ["Home", "#hero"],
-    [ "About", "#about"],
-    ["Service", "#work"],
-
-  [ "Portfolio",  "#work"],
-  [ "Internship", "#internship"],
-  [ "Contact", "#contact"],
-  ],
-  [
-    ["Portfolio one", "#work"],
-    ["Portfolio two", "#work"],
-    ["Portfolio three", "#work"],
-    ["Internship", "#internship"],
-  ],
-  [
-    ["Privacy", "#"],
-    ["Style guide", "#"],
-    ["Changelog", "#"],
-    ["404", "#"],
-  ],
+  {
+    title: "Explore",
+    links: [
+      ["Home", "#home"],
+      ["About us", "#about"],
+      ["Our solutions", "#solutions"],
+    ],
+  },
+  {
+    title: "Services",
+    links: [
+      ["Product design", "#services"],
+      ["Development", "#services"],
+      ["Brand strategy", "#services"],
+    ],
+  },
+  {
+    title: "Discover",
+    links: [
+      ["Selected work", "#work"],
+      ["Internship program", "#internship"],
+      ["Contact us", "#contact"],
+    ],
+  },
 ];
 
 function Footer() {
   return (
     <footer
-      className="w-full bg-[#050505] px-[35px] pt-[110px] pb-[50px] text-[#f5f5f5] max-[900px]:px-0 max-[600px]:pt-[70px] max-[600px]:pb-[150px]"
+      className="w-full overflow-hidden bg-[#050505] px-[35px] pt-[110px] pb-[50px] text-[#f5f5f5] max-[900px]:px-0 max-[600px]:pt-20 max-[600px]:pb-10"
       id="contact"
     >
       <div
-        className={`${contentWidth} grid grid-cols-[1.15fr_.8fr_1.6fr] gap-[70px] pb-[70px] max-[900px]:grid-cols-2 max-[600px]:grid-cols-1`}
+        className={`${contentWidth} grid grid-cols-[1.1fr_.7fr_1.35fr] gap-[clamp(48px,7vw,90px)] pb-20 max-[900px]:grid-cols-2 max-[900px]:gap-x-10 max-[900px]:gap-y-16 max-[600px]:grid-cols-1 max-[600px]:gap-12 max-[600px]:pb-14`}
       >
         <div className="flex flex-col items-start">
           <img
-            className="mb-[25px] h-auto w-[180px] brightness-0 invert"
+            className="mb-6 h-auto w-[190px] brightness-0 invert max-[600px]:w-[170px]"
             src={NovaFoundry}
             alt="NovaFoundry"
           />
-          <small className="mt-[17px] text-[8px] text-[#777] uppercase">
-            Mail:
+          <p className="mb-5 max-w-[300px] text-[13px] leading-[1.7] font-medium text-white/55">
+            We design and build thoughtful digital products that help ambitious
+            ideas move from concept to launch.
+          </p>
+          <small className="mt-3 text-[10px] font-bold tracking-[.08em] text-white/40 uppercase">
+            Email
           </small>
           <a
-            className="mt-[5px] text-xs"
+            className="mt-1.5 text-[14px] font-semibold text-white/90 transition hover:text-[#ffc85b]"
             href="mailto:contact@novafoundry.org"
           >
             contact@novafoundry.org
           </a>
-          <small className="mt-[17px] text-[8px] text-[#777] uppercase">
-            Call:
+          <small className="mt-5 text-[10px] font-bold tracking-[.08em] text-white/40 uppercase">
+            Call
           </small>
-          <a className="mt-[5px] text-xs" href="tel:+447405864013">
-            +44 7405 864013
+          <a
+            className="mt-1.5 text-[14px] font-semibold text-white/90 transition hover:text-[#ffc85b]"
+            href="tel:+2347045259387"
+          >
+            +234 704 5259 387
           </a>
         </div>
 
-        <div className="flex flex-col items-start gap-[13px]">
-          {["Dribbble", "Instagram", "LinkedIn"].map((social) => (
+        <div className="socialLinks flex flex-col items-start gap-4">
+          <span className="mb-1 text-[10px] font-bold tracking-[.08em] text-white/40 uppercase">
+            Follow us
+          </span>
+          {socialLinks.map(({ label, href }) => (
             <a
-              className="flex items-center gap-2 border-b border-[#888] text-[17px]"
-              href="#"
-              key={social}
+              className="group flex min-h-10 items-center gap-2 border-b border-white/30 text-[18px] font-bold transition hover:border-[#ffc85b] hover:text-[#ffc85b]"
+              href={href}
+              key={label}
+              target="_blank"
+              rel="noreferrer"
             >
-              {social}
-              <ArrowUpRight size={15} />
+              {label}
+              <ArrowUpRight
+                className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                size={16}
+                aria-hidden="true"
+              />
             </a>
           ))}
         </div>
 
-        <div className="grid grid-cols-3 gap-[35px] max-[900px]:col-span-2 max-[600px]:col-auto max-[600px]:gap-[15px]">
-          {linkColumns.map((column, index) => (
-            <div
-              className="flex flex-col gap-4 text-[10px] text-[#777]"
-              key={index}
-            >
-              {column.map(([label, href]) => (
-                <a className="hover:text-white" href={href} key={label}>
+        <nav
+          className="grid grid-cols-3 gap-[clamp(24px,4vw,52px)] max-[900px]:col-span-2 max-[600px]:col-auto max-[480px]:grid-cols-2 max-[480px]:gap-y-10"
+          aria-label="Footer navigation"
+        >
+          {linkColumns.map(({ title, links }) => (
+            <div className="flex flex-col items-start gap-3.5" key={title}>
+              <span className="mb-1 text-[10px] font-bold tracking-[.08em] text-white/40 uppercase">
+                {title}
+              </span>
+              {links.map(([label, href]) => (
+                <a
+                  className="text-[13px] font-semibold text-white/65 transition hover:translate-x-0.5 hover:text-white"
+                  href={href}
+                  key={label}
+                >
                   {label}
                 </a>
               ))}
             </div>
           ))}
-        </div>
+        </nav>
       </div>
 
       <div
-        className={`${contentWidth} flex flex-col justify-between border-t border-[#282828] py-[35px] text-[8px] text-[#777] max-[600px]:flex-col max-[600px]:gap-2.5`}
+        className={`${contentWidth} flex items-center justify-between gap-6 border-t border-white/15 py-8 text-[11px] font-semibold text-white/45 max-[600px]:items-start max-[600px]:py-6 max-[480px]:flex-col max-[480px]:gap-2`}
       >
-        <p>Designed by NovaFoundry Agency. Powered by NovaFoundry.</p>
-        <p>● Bedfordshire, United Kingdom</p>
+        <p className="m-0">Designed and powered by NovaFoundry Agency.</p>
+        <p className="m-0 flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#ffc85b]" />
+          Lagos, Nigeria
+        </p>
       </div>
 
       <div
-        className={`${contentWidth} grid grid-cols-[auto_1fr] items-center gap-[70px] max-[900px]:gap-[30px] max-[600px]:grid-cols-[50px_1fr] max-[600px]:gap-5 max-[600px]:pt-[45px]`}
+        className={`${contentWidth} grid grid-cols-[auto_1fr] items-end gap-[clamp(28px,6vw,70px)] pt-5 max-[600px]:grid-cols-[52px_minmax(0,1fr)] max-[600px]:items-center max-[600px]:gap-4 max-[600px]:pt-8`}
       >
         <img
-          className="w-[115px] max-[600px]:w-[50px]"
+          className="w-[100px] animate-spin [animation-duration:12s] motion-reduce:animate-none max-[600px]:w-[52px]"
           src={starDesign}
           alt=""
         />
-        <strong className="justify-self-end text-[clamp(46px,9vw,80px)] tracking-[-.07em] max-[600px]:text-[34px]">
-          Novafoundry
+        <strong className="min-w-0 justify-self-end text-right text-[clamp(52px,9vw,112px)] leading-[.82] font-bold tracking-[-.075em] text-white max-[600px]:text-[clamp(34px,10vw,52px)] max-[380px]:tracking-[-.055em]">
+          NovaFoundry
         </strong>
       </div>
     </footer>
