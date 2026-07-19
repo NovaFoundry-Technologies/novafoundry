@@ -73,7 +73,7 @@ const projects = [
     title: "MediPrep",
     type: "HealthTech · Web platform",
     image: mediprep,
-    href: "https://mediprep.online",
+    href: "https://mediprep.net",
     aspect: "aspect-[1.65]",
   },
   {
@@ -371,7 +371,7 @@ function App() {
                   action="mailto:contact@novafoundry.org"
                 >
                   <input
-                    className="min-w-0 flex-1 rounded-l-lg border border-black/25 bg-white/70 px-4 text-sm font-semibold outline-none transition placeholder:font-medium placeholder:text-black/40 focus:border-black/60 focus:bg-white focus:ring-4 focus:ring-black/[.05] max-[600px]:h-12 max-[600px]:w-full max-[600px]:rounded-lg"
+                    className="min-w-0 flex-1 rounded-l-lg border border-black/25 bg-white/70 px-4 text-sm font-semibold outline-none transition placeholder:font-medium placeholder:text-black/40 focus:border-black/60 focus:bg-white focus:ring-4 focus:ring-black/[.05] max-[600px]:h-12 max-[600px]:min-h-12 max-[600px]:w-full max-[600px]:flex-none max-[600px]:rounded-lg"
                     type="email"
                     aria-label="Email address"
                     placeholder="your@email.com"

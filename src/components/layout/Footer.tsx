@@ -18,6 +18,21 @@ const socialLinks = [
   },
 ];
 
+const contactLocations = [
+  {
+    country: "United Kingdom",
+    phone: "+44 7405 864013",
+    phoneHref: "tel:+447405864013",
+    address: "Bedfordshire, United Kingdom",
+  },
+  {
+    country: "Nigeria",
+    phone: "+234 707 7660 475",
+    phoneHref: "tel:+2347077660475",
+    address: "Ile-Ife, Osun, Nigeria",
+  },
+];
+
 const linkColumns = [
   {
     title: "Explore",
@@ -73,19 +88,31 @@ function Footer() {
           >
             contact@novafoundry.org
           </a>
-          <small className="mt-5 text-[10px] font-bold tracking-[.08em] text-white/40 uppercase">
-            Call
-          </small>
-          <a className="mt-1.5 text-[14px] font-semibold text-white/90 transition hover:text-[#ffc85b]" 
-              href="tel:+447405864013">
-            +44 7405 864013
-          </a>
-          <a
-            className="mt-1.5 text-[14px] font-semibold text-white/90 transition hover:text-[#ffc85b]"
-            href="tel:+2347045259387"
-          >
-            +234 704 5259 387
-          </a>
+          <div className="mt-7 grid w-full gap-3">
+            {contactLocations.map(({ country, phone, phoneHref, address }) => (
+              <address
+                className="rounded-xl border-b-2 border-white/10 w-[80%] p-4 -mx-4 not-italic transition hover:border-white/20"
+                key={country}
+              >
+                <span className="text-[10px] font-bold tracking-[.08em] text-white/40 uppercase">
+                  {country}
+                </span>
+                <p className="mt-2 mb-0 flex items-start gap-2 text-[12px] leading-[1.55] font-medium text-white/55">
+                  <span
+                    className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#ffc85b]"
+                    aria-hidden="true"
+                  />
+                  {address}
+                </p>
+                <a
+                  className="mt-3 inline-flex text-[14px] font-bold text-white/90 transition hover:text-[#ffc85b]"
+                  href={phoneHref}
+                >
+                  {phone}
+                </a>
+              </address>
+            ))}
+          </div>
         </div>
 
         <div className="socialLinks flex flex-col items-start gap-4">
@@ -134,13 +161,9 @@ function Footer() {
       </div>
 
       <div
-        className={`${contentWidth} flex items-center justify-between gap-6 border-t border-white/15 py-8 text-[11px] font-semibold text-white/45 max-[600px]:items-start max-[600px]:py-6 max-[480px]:flex-col max-[480px]:gap-2`}
+        className={`${contentWidth} border-t border-white/15 py-8 text-[11px] font-semibold text-white/45 max-[600px]:py-6`}
       >
         <p className="m-0">Designed and powered by NovaFoundry Agency.</p>
-        <p className="m-0 flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#ffc85b]" />
-          Lagos, Nigeria
-        </p>
       </div>
 
       <div
