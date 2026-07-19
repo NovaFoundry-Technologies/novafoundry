@@ -21,13 +21,13 @@ const socialLinks = [
 const contactLocations = [
   {
     country: "United Kingdom",
-    phone: "+44 7405 864013",
+    phone: "+44 7405 864 013",
     phoneHref: "tel:+447405864013",
     address: "Bedfordshire, United Kingdom",
   },
   {
     country: "Nigeria",
-    phone: "+234 707 7660 475",
+    phone: "+234 707 766 0475",
     phoneHref: "tel:+2347077660475",
     address: "Ile-Ife, Osun, Nigeria",
   },
