@@ -59,17 +59,8 @@ export const generatePageSpeedAudit = async (website: string): Promise<AuditRepo
     throw new Error("Please enter a valid public website address.");
   }
 
-  const endpoint = new URL(
-    "https://www.googleapis.com/pagespeedonline/v5/runPagespeed",
-  );
+  const endpoint = new URL("/api/pagespeed", window.location.origin);
   endpoint.searchParams.set("url", target.toString());
-  endpoint.searchParams.set("strategy", "mobile");
-  ["performance", "accessibility", "best-practices", "seo"].forEach(
-    (category) => endpoint.searchParams.append("category", category),
-  );
-
-  const apiKey = import.meta.env.VITE_PAGESPEED_API_KEY as string | undefined;
-  if (apiKey) endpoint.searchParams.set("key", apiKey);
 
   const response = await fetch(endpoint);
   const data = (await response.json()) as PageSpeedResponse;

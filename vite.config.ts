@@ -1,9 +1,10 @@
-import { defineConfig, type Plugin, type PluginOption } from "vite";
+import { defineConfig, loadEnv, type Plugin, type PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import auditHandler from "./api/audit";
+import pageSpeedHandler from "./api/pagespeed";
 
 const localAuditApi = (): Plugin => ({
   name: "local-audit-api",
@@ -45,12 +46,46 @@ const localAuditApi = (): Plugin => ({
   },
 });
 
+const localPageSpeedApi = (): Plugin => ({
+  name: "local-pagespeed-api",
+  apply: "serve",
+  configureServer(server) {
+    server.middlewares.use("/api/pagespeed", async (req, res) => {
+      const requestUrl = new URL(req.url ?? "", "http://localhost");
+
+      await pageSpeedHandler(
+        {
+          method: req.method,
+          query: { url: requestUrl.searchParams.get("url") ?? undefined },
+        },
+        {
+          status(statusCode) {
+            res.statusCode = statusCode;
+            return {
+              json(payload) {
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify(payload));
+              },
+            };
+          },
+        },
+      );
+    });
+  },
+});
+
 export default defineConfig(({ mode }) => {
   const shouldAnalyze = mode === "analyze";
+  const serverEnv = loadEnv(mode, process.cwd(), "");
+
+  if (serverEnv.PAGESPEED_API_KEY) {
+    process.env.PAGESPEED_API_KEY = serverEnv.PAGESPEED_API_KEY;
+  }
 
   return {
     plugins: [
       localAuditApi(),
+      localPageSpeedApi(),
       react(),
       tailwindcss(),
       ViteImageOptimizer({

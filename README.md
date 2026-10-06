@@ -120,13 +120,13 @@ GMAIL_APP_PASSWORD=
 ### Free Audit
 
 ```env
-VITE_PAGESPEED_API_KEY=
+PAGESPEED_API_KEY=
 AUDIT_INTAKE_ENDPOINT=
 ```
 
-`VITE_PAGESPEED_API_KEY` is optional. The PageSpeed API works without it, but Google recommends a key for frequent automated requests. Because this value is sent from the browser, restrict the key to the PageSpeed Insights API and the production site's HTTP referrer in Google Cloud Console.
+`PAGESPEED_API_KEY` is optional and remains server-side. Restrict it to the PageSpeed Insights API in Google Cloud Console. Do not add a `VITE_` prefix, because Vite exposes prefixed variables to browser JavaScript.
 
-The browser posts lead details to `/api/audit`, which forwards them to the Google Apps Script web app. The browser calls Google PageSpeed Insights directly for the Lighthouse report. Setup for lead capture is documented at the top of `google-apps-script/audit-intake.gs`. `AUDIT_INTAKE_ENDPOINT` can override the default deployed `/exec` URL on the server without rebuilding the frontend.
+The browser posts lead details to `/api/audit`, which forwards them to the Google Apps Script web app. `/api/pagespeed` calls Google PageSpeed Insights server-side so its API key remains private. Setup for lead capture is documented at the top of `google-apps-script/audit-intake.gs`. `AUDIT_INTAKE_ENDPOINT` can override the default deployed `/exec` URL on the server without rebuilding the frontend.
 
 The Apps Script rejects repeat submissions from the same email and phone within 30 minutes.
 
