@@ -638,7 +638,7 @@ function App() {
 
 <section
   id="process"
-  className="bg-[#FCFCFC] px-[12px] pt-[36px] pb-[48px] sm:px-[20px] lg:px-[40px]"
+  className="bg-[#F7F7F5] px-[12px] pt-[36px] pb-[48px] sm:px-[20px] lg:px-[40px]"
 >
 {/* Header */}
 <div className="mx-auto mb-[68px] max-w-[760px] text-center">
