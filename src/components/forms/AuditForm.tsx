@@ -17,8 +17,9 @@ import {
 } from "../../data/audit";
 
 type Step = "website" | "details" | "sent";
+type AuditTarget = "website" | "social";
 
-type Errors = Partial<Record<"name" | "email" | "phone", string>>;
+type Errors = Partial<Record<"target" | "name" | "email" | "phone", string>>;
 
 const inputClass =
   "h-[54px] w-full border-b border-black/15 bg-transparent px-0 text-[16px] text-[#111] outline-none transition-colors placeholder:text-[#a2abba] focus:border-[#2f2297]";
@@ -31,6 +32,7 @@ const selectClass =
 
 const AuditForm = () => {
   const [step, setStep] = useState<Step>("website");
+  const [auditTarget, setAuditTarget] = useState<AuditTarget>("website");
   const [website, setWebsite] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -47,7 +49,13 @@ const AuditForm = () => {
   const detailsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleStart = () => {
+    const handleStart = (event: Event) => {
+      const target =
+        event instanceof CustomEvent && event.detail?.target === "social"
+          ? "social"
+          : "website";
+
+      setAuditTarget(target);
       setStep("details");
       setStatus("idle");
 
@@ -69,6 +77,7 @@ const AuditForm = () => {
 
   const goToDetails = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setAuditTarget("website");
     setStep("details");
     setStatus("idle");
 
@@ -95,6 +104,10 @@ const AuditForm = () => {
     event.preventDefault();
 
     const nextErrors: Errors = {};
+
+    if (!website.trim()) {
+      nextErrors.target = `Please enter your ${auditTarget === "social" ? "social media link" : "website address"}`;
+    }
 
     if (name.trim().length < 2) {
       nextErrors.name = "Please enter your name";
@@ -127,17 +140,15 @@ const AuditForm = () => {
     }
 
     try {
-      if (!website.trim()) {
-        throw new Error("Enter a website address to generate a Lighthouse audit.");
-      }
-
       let generatedReport: AuditReport | null = null;
       let auditError: unknown = null;
 
-      try {
-        generatedReport = await generatePageSpeedAudit(website);
-      } catch (error) {
-        auditError = error;
+      if (auditTarget === "website") {
+        try {
+          generatedReport = await generatePageSpeedAudit(website);
+        } catch (error) {
+          auditError = error;
+        }
       }
 
       // Save the lead even when PageSpeed fails. The same-origin API forwards
@@ -150,6 +161,7 @@ const AuditForm = () => {
           email,
           phone,
           website,
+          auditType: auditTarget,
           industry,
           timeline,
           goals,
@@ -169,14 +181,14 @@ const AuditForm = () => {
         );
       }
 
-      if (!generatedReport) {
+      if (auditTarget === "website" && !generatedReport) {
         throw auditError instanceof Error
           ? auditError
           : new Error("The lead was saved, but the audit could not be generated.");
       }
 
       setReport(generatedReport);
-      setIsReportOpen(true);
+      setIsReportOpen(Boolean(generatedReport));
       setStep("sent");
     } catch (error) {
       setStatus("error");
@@ -230,21 +242,25 @@ const AuditForm = () => {
           </span>
 
           <h3 className="mt-[22px] text-[clamp(24px,2.4vw,32px)] leading-[1.08] font-semibold tracking-[-0.045em] text-[#101010]">
-            Your audit is ready
+            {report ? "Your audit is ready" : "Your audit request is in"}
           </h3>
 
           <p className="mx-auto mt-[16px] max-w-[520px] text-[15px] leading-[1.6] tracking-[-0.015em] text-[#555555]">
-            We generated an initial digital presence audit for {website || "your business"}.
+            {report
+              ? `We generated an initial digital presence audit for ${website}.`
+              : `We’ll review ${website} and send your social media audit within two hours.`}
           </p>
 
-          <button
-            type="button"
-            onClick={() => setIsReportOpen(true)}
-            className="mt-[26px] inline-flex h-[46px] cursor-pointer items-center gap-[10px] rounded-[5px] bg-black px-[26px] text-[13px] font-medium text-white transition hover:bg-[#1b1b1b]"
-          >
-            View my audit
-            <ArrowUpRight size={15} />
-          </button>
+          {report ? (
+            <button
+              type="button"
+              onClick={() => setIsReportOpen(true)}
+              className="mt-[26px] inline-flex h-[46px] cursor-pointer items-center gap-[10px] rounded-[5px] bg-black px-[26px] text-[13px] font-medium text-white transition hover:bg-[#1b1b1b]"
+            >
+              View my audit
+              <ArrowUpRight size={15} />
+            </button>
+          ) : null}
         </div>
 
         {report && isReportOpen ? (
@@ -268,18 +284,21 @@ const AuditForm = () => {
 
         <button
           type="button"
-          onClick={() => setStep("website")}
+          onClick={() => {
+            setAuditTarget("website");
+            setStep("website");
+          }}
           className="inline-flex cursor-pointer items-center gap-[7px] text-[12px] font-medium text-[#555] transition hover:text-[#2f2297]"
         >
           <ArrowLeft size={14} />
-          Change URL
+          {auditTarget === "social" ? "Use a website instead" : "Change URL"}
         </button>
       </div>
 
       <div ref={detailsRef} className="mt-[30px] grid gap-x-[28px] gap-y-[24px] sm:grid-cols-2">
         <div>
           <label className={labelClass} htmlFor="audit-website">
-            Website
+            {auditTarget === "social" ? "Social media link" : "Website"}
           </label>
           <input
             id="audit-website"
@@ -289,9 +308,17 @@ const AuditForm = () => {
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setWebsite(event.target.value)
             }
-            placeholder="yoursite.com — leave blank if you don't have one"
+            placeholder={
+              auditTarget === "social"
+                ? "instagram.com/yourbusiness"
+                : "yoursite.com"
+            }
+            aria-invalid={Boolean(errors.target)}
             className={inputClass}
           />
+          {errors.target ? (
+            <p className="mt-[8px] text-[12px] text-[#c0392b]">{errors.target}</p>
+          ) : null}
         </div>
 
         <div>
@@ -465,11 +492,11 @@ const AuditForm = () => {
           {status === "sending" ? (
             <>
               <Loader2 size={17} className="animate-spin" />
-              Generating audit…
+              {auditTarget === "social" ? "Sending request…" : "Generating audit…"}
             </>
           ) : (
             <>
-              Generate my audit
+              {auditTarget === "social" ? "Request my audit" : "Generate my audit"}
               <ArrowUpRight size={19} strokeWidth={1.6} />
             </>
           )}

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   ChevronLeft,
@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import Seo from "./Seo";
 import AuditForm from "./components/forms/AuditForm";
-import { startAudit } from "./lib/auditCta";
+import { startAudit, startSocialMediaAudit } from "./lib/auditCta";
 
 import feedbackPoster from "./assets/IMG_20260524_191845.png";
 import avatar from "./assets/foodmartex-boss.jpg";
@@ -17,6 +17,12 @@ import formPic from "./assets/tiwa.jpg";
 import man from "./assets/man.png";
 import examprep from "./assets/examprep.png";
 import foodmartex from "./assets/foodmartex.png";
+import foodmartexLogo from "./assets/foodmartex_logo.png";
+import perfumeGardenLogo from "./assets/perfumegarden.png";
+import mediPrepLogo from "./assets/mediprep.png";
+import examPreps360Logo from "./assets/exampreps360.svg";
+import emeritusLogo from "./assets/emeritus.png";
+import tFalconLogo from "./assets/tfalcon.png";
 
 const SITE_URL = "https://novafoundry.org";
 const contentWidth =
@@ -93,6 +99,15 @@ const testimonials = [
   },
 ];
 
+const trustedBrands = [
+  { name: "Foodmartex", logo: foodmartexLogo },
+  { name: "Perfume Garden", logo: perfumeGardenLogo },
+  { name: "Mediprep", logo: mediPrepLogo },
+  { name: "Exampreps-360", logo: examPreps360Logo },
+  { name: "Emeritus", logo: emeritusLogo },
+  { name: "T-Falcon", logo: tFalconLogo },
+];
+
 const faqs = [
   [
     "What services does NovaFoundry provide?",
@@ -152,7 +167,17 @@ function LogoMark() {
 
 function App() {
   const [activeAudit, setActiveAudit] = useState(0);
+  const [isNavScrolled, setIsNavScrolled] = useState(false);
   const testimonialTrackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateNavbar = () => setIsNavScrolled(window.scrollY > 24);
+
+    updateNavbar();
+    window.addEventListener("scroll", updateNavbar, { passive: true });
+
+    return () => window.removeEventListener("scroll", updateNavbar);
+  }, []);
 
   const scrollTestimonials = (direction: number) => {
     testimonialTrackRef.current?.scrollBy({
@@ -173,21 +198,27 @@ function App() {
         className="min-h-screen bg-[#f7f7f5] text-[#101010] antialiased"
         style={{ fontFamily: '"Creato Display", sans-serif' }}
       >
-        <header className="relative z-50 px-4 py-[32px] sm:px-6 lg:px-8">
-          <div className="mx-auto flex h-[64px] w-full max-w-[1120px] items-center rounded-[5px] border border-black/[0.08] bg-white px-[22px] sm:px-[30px] lg:px-[34px]">
+        <header className="sticky top-0 z-50 px-4 py-4 sm:px-6 lg:px-8">
+          <div
+            className={`mx-auto flex h-[64px] w-full max-w-[1120px] items-center rounded-[7px] border bg-white/95 px-[22px] backdrop-blur-md transition-[box-shadow,border-color,transform] duration-300 ease-out motion-reduce:transition-none sm:px-[30px] lg:px-[34px] ${
+              isNavScrolled
+                ? "translate-y-0 border-black/[0.06] shadow-[0_10px_35px_rgba(30,24,80,0.12)]"
+                : "border-black/[0.08] shadow-[0_2px_10px_rgba(30,24,80,0.03)]"
+            }`}
+          >
             <LogoMark />
 
             <nav className="mx-auto hidden items-center gap-[34px] whitespace-nowrap text-[14px] font-medium tracking-[-0.025em] text-[#0d0d0d] lg:flex xl:gap-[36px]">
-              <a className="transition-opacity hover:opacity-55" href="#sample-report">
+              <a className="nav-link" href="#sample-report">
                 Sample report
               </a>
-              <a className="transition-opacity hover:opacity-55" href="#process">
+              <a className="nav-link" href="#process">
                 How it works
               </a>
-              <a className="transition-opacity hover:opacity-55" href="#testimonials">
+              <a className="nav-link" href="#testimonials">
                 Testimonials
               </a>
-              <a className="transition-opacity hover:opacity-55" href="#faq">
+              <a className="nav-link" href="#faq">
                 Frequently asked questions
               </a>
             </nav>
@@ -195,10 +226,14 @@ function App() {
             <button
               type="button"
               onClick={startAudit}
-              className="ml-auto inline-flex h-[34px] shrink-0 cursor-pointer items-center justify-center gap-[12px] rounded-[5px] bg-[#2d218d] px-[20px] text-[10px] font-bold text-white transition hover:bg-[#241a77] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d218d] sm:min-w-[143px]"
+              className="group ml-auto inline-flex h-[34px] shrink-0 cursor-pointer items-center justify-center gap-[12px] rounded-[5px] bg-[#2d218d] px-[20px] text-[10px] font-bold text-white shadow-[0_5px_12px_rgba(45,33,141,0.16)] transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-[#241a77] hover:shadow-[0_8px_18px_rgba(45,33,141,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d218d] motion-reduce:transform-none motion-reduce:transition-none sm:min-w-[143px]"
             >
               Get my free audit
-              <ArrowUpRight size={11} strokeWidth={1.9} />
+              <ArrowUpRight
+                size={11}
+                strokeWidth={1.9}
+                className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+              />
             </button>
           </div>
         </header>
@@ -235,7 +270,7 @@ function App() {
     No website yet?{" "}
     <button
       type="button"
-      onClick={startAudit}
+      onClick={startSocialMediaAudit}
       className="cursor-pointer text-[#6658d7] transition hover:text-[#2f2297]"
     >
       get a free check-up
@@ -253,28 +288,39 @@ function App() {
       </p>
     </div>
 
-    <div className="mt-[25px] flex flex-wrap items-center justify-center gap-x-[22px] gap-y-[18px] text-black">
-      <span className="text-[13px] font-black tracking-[-0.07em]">
-        Foodmartex
-      </span>
-
-      <span className="text-[14px] font-extrabold tracking-[-0.06em]">
-        Emeritus
-      </span>
-
-      <span className="font-serif text-[12px] tracking-[-0.05em]">
-        Perfume Gardens
-      </span>
-
-      <span className="text-[14px] font-extrabold tracking-[-0.06em]">
-        Emeritus
-      </span>
+    <div
+      className="trusted-brands-marquee mx-auto mt-[22px] max-w-[760px] overflow-hidden"
+      aria-label="Trusted brands"
+    >
+      <div className="trusted-brands-track flex w-max items-center">
+        {[0, 1].map((setIndex) => (
+          <div
+            key={setIndex}
+            className="flex shrink-0 items-center gap-[16px] pr-[16px]"
+            aria-hidden={setIndex === 1}
+          >
+            {trustedBrands.map((brand) => (
+              <div
+                key={`${setIndex}-${brand.name}`}
+                className="flex h-[32px] w-[108px] shrink-0 items-center justify-center"
+              >
+                <img
+                  src={brand.logo}
+                  alt={setIndex === 0 ? `${brand.name} logo` : ""}
+                  loading="lazy"
+                  className="max-h-[28px] max-w-full object-contain opacity-75 transition-opacity duration-200 hover:opacity-100 motion-reduce:transition-none"
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
         <section id="sample-report" className="relative z-0 px-3 pb-0 sm:px-5 lg:px-8 xl:px-4">
-          <div className="mx-auto w-full max-w-[1304px] overflow-hidden rounded-[16px] bg-white shadow-[0_20px_55px_rgba(0,0,0,0.08)] xl:max-w-[1600px]">
+          <div className="mx-auto w-full max-w-[1304px] overflow-hidden rounded-[16px] bg-[#FFFDFB] shadow-[0_20px_55px_rgba(0,0,0,0.08)] xl:max-w-[1600px]">
             <div className="flex h-[48px] items-center gap-[5px] px-[16px] sm:px-[18px]">
               <span className="h-[8px] w-[8px] rounded-full bg-[#98A1AD]" />
               <span className="h-[8px] w-[8px] rounded-full bg-[#98A1AD]" />
@@ -369,7 +415,7 @@ function App() {
   className="relative z-10 -mt-[16px] bg-[#FCFCFC] px-[24px] py-[52px]"
 >
   {/* INNER WHITE RESULTS BACKGROUND */}
-  <div className="mx-auto w-full bg-[#FFFFFF] px-4 pt-[30px] pb-[118px] sm:px-6 lg:px-8">
+  <div className="mx-auto w-full bg-[#FCFCFC] px-4 pt-[30px] pb-[118px] sm:px-6 lg:px-8">
     
     <div className="mx-auto max-w-[960px]">
       
@@ -592,7 +638,7 @@ function App() {
 
 <section
   id="process"
-  className="bg-white px-[12px] pt-[36px] pb-[48px] sm:px-[20px] lg:px-[40px]"
+  className="bg-[#FCFCFC] px-[12px] pt-[36px] pb-[48px] sm:px-[20px] lg:px-[40px]"
 >
 {/* Header */}
 <div className="mx-auto mb-[68px] max-w-[760px] text-center">
@@ -773,7 +819,7 @@ function App() {
 
 <section
   id="faq"
-  className="bg-[#FFFFFF] px-[20px] pt-[82px] pb-[128px] sm:px-[28px]"
+  className="bg-[#FCFCFC] px-[20px] pt-[82px] pb-[128px] sm:px-[28px]"
 >
   <div className="mx-auto max-w-[820px]">
 
@@ -1098,7 +1144,7 @@ function App() {
   </div>
 </section>
 
-        <footer className="border-t border-black/[0.05] bg-white">
+        <footer className="border-t border-black/[0.05] bg-[#FCFCFC]">
           <div className={`${contentWidth} flex flex-col gap-4 py-8 text-[9px] font-medium text-black/40 sm:flex-row sm:items-center sm:justify-between`}>
             <LogoMark />
             <span>© {new Date().getFullYear()} NovaFoundry Technologies. All rights reserved.</span>

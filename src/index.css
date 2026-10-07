@@ -23,6 +23,99 @@ body {
   background: #050505;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 112px;
+}
+
+.nav-link {
+  position: relative;
+  padding-block: 8px;
+  transition: color 180ms ease;
+}
+
+.nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  left: 0;
+  height: 1.5px;
+  border-radius: 999px;
+  background: #5d50cf;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: #4538b5;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@keyframes trusted-brands-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.trusted-brands-marquee {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 7%,
+    black 93%,
+    transparent
+  );
+}
+
+.trusted-brands-track {
+  animation: trusted-brands-scroll 24s linear infinite;
+  will-change: transform;
+}
+
+.trusted-brands-marquee:hover .trusted-brands-track,
+.trusted-brands-marquee:focus-within .trusted-brands-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .nav-link,
+  .nav-link::after {
+    transition: none;
+  }
+
+  .trusted-brands-marquee {
+    mask-image: none;
+    overflow: visible;
+  }
+
+  .trusted-brands-track {
+    width: 100%;
+    animation: none;
+  }
+
+  .trusted-brands-track > div:first-child {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .trusted-brands-track > div:last-child {
+    display: none;
+  }
+}
+
 .audit-phone-input .PhoneInputCountry {
   margin-right: 12px;
 }
