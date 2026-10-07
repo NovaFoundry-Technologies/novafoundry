@@ -273,7 +273,7 @@ function App() {
       onClick={startSocialMediaAudit}
       className="cursor-pointer text-[#6658d7] transition hover:text-[#2f2297]"
     >
-      get a free check-up
+      input your social media link for a check-up
     </button>{" "}
     anyway
   </p>
